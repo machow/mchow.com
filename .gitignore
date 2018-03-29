@@ -1,5 +1,2 @@
 # Vim swapfiles
 .*.swp
-
-# will be orphaned gh-pages branch
-public

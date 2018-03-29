@@ -3,17 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://machow.github.io/categories/</loc>
+    <loc>https://machow.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://machow.github.io/</loc>
+    <loc>https://machow.github.io/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://machow.github.io/tags/</loc>
+    <loc>https://machow.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   

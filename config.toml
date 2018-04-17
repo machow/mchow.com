@@ -4,6 +4,8 @@ title = "Michael Chow"
 theme = "hucore"
 copyright = "&copy; 2017 | Follow on <a href=\"https://twitter.com/mgjohansen\" target=\"_blank\">Twitter</a> | <a href=\"https://github.com/mgjohansen/hucore.git\" target=\"_blank\">Hucore theme</a> & <a href=\"http://gohugo.io\" target=\"_blank\">Hugo</a> ♥"
 
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
 [taxonomies]
 tag = "tags"
 category = "categories"

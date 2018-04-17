@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://machow.github.io/posts/data-science-cbk/</loc>
+    <lastmod>2018-04-05T11:17:07-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://machow.github.io/post/yo-it-s-me-blogdown/</loc>
     <lastmod>2018-03-29T00:00:00+00:00</lastmod>
   </url>
@@ -14,7 +19,13 @@
   
   <url>
     <loc>https://machow.github.io/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-05T11:17:07-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://machow.github.io/posts/</loc>
+    <lastmod>2018-04-05T11:17:07-04:00</lastmod>
     <priority>0</priority>
   </url>
   

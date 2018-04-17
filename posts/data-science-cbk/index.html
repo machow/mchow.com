@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="keyword 1, keyword 2, keyword 3" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Teaching Data Science to High Schoolers - Michael Chow">
+<meta property="og:url" content="https://machow.github.io/posts/data-science-cbk/">
+<meta property="og:description" content="Your description here">
+<meta property="og:type" content="website" />
+<title>Teaching Data Science to High Schoolers | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="https://machow.github.io//css/style.css">
+<link rel="shortcut icon" href="https://machow.github.io//wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+</head>
+
+<body>
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://machow.github.io/"><h1 class="title is-4">Michael Chow</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Teaching Data Science to High Schoolers</h1>
+    <h2 class="subtitle is-5">April 5, 2018 by Michael Chow</h2>
+    
+    <div class="content">
+      
+
+<p>Over the past year I&rsquo;ve worked on the tools to execute and grade code behind the scenes at DataCamp.
+This work has ranged from expanding our open source tools for grading R and Python code, to
+running SQL and bash exercises.
+However, while helping scale up education data science education to thousands of students is something
+I&rsquo;ve wanted to do since helping teach statistics in grad school,
+there&rsquo;s is a certain sanity in being in a room with handful of students.</p>
+
+<p>Recently, I had the chance to teach two short workshops, both with an emphasis on data science:</p>
+
+<ul>
+<li>Intro to Python (Princeton Public Library)</li>
+<li>Intro to R (Coded by Kids in Philadelphia)</li>
+</ul>
+
+<p>In both cases I wanted to follow the same general approach for content:</p>
+
+<ul>
+<li>Start with a deeply satisfying example, including plots.
+Let students drive example by changing a few strings.</li>
+<li>Work backward from the example, breaking it into several teachable skills.</li>
+<li>Over the workshop, follow the pattern of teaching a skill,
+then do a quick assignment.</li>
+</ul>
+
+<p>For both cases, the initial example students saw used the Spotify API.
+This API lets you find your favorite artists, and plot different characteristics of their songs.
+Characteristics include a song&rsquo;s &ldquo;danceability&rdquo;, &ldquo;energy&rdquo;, &ldquo;speechiness&rdquo;, and &ldquo;valence&rdquo; <sup class="footnote-ref" id="fnref:valence"><a href="#fn:valence">1</a></sup>.
+For example the plot below shows these characteristics for two famous Beatles ditties.</p>
+
+<p><img src="/04-intro-sentiment.png" alt="&quot;Everybody do the let it be&quot;" /></p>
+
+<h2 id="sorry-python">Sorry, Python</h2>
+
+<p>In general, running the Python workshop was much more challenging,
+in that it required teaching things like functions, lists, dictionaries, and pandas DataFrames.
+On the one hand, putting up a jupyterhub server let people get started right away.
+On the other hand, I was at a total loss on how to explain to people across a range of technical backgrounds
+how to do something as simple as open a jupyter notebook on their computer. <sup class="footnote-ref" id="fnref:imnotcrazy"><a href="#fn:imnotcrazy">2</a></sup></p>
+
+<p>By contrast, using R was a delight.
+By using the Rstudio Server, and a little bit of dplyr and ggplot, students were up and running right away.
+Inspired by simplicity of Dave Robinson&rsquo;s recent <a href="https://datacamp.com/courses/introduction-to-the-tidyverse">Introduction to the Tidyverse course</a>,
+and convenience of the <a href="https://github.com/charlie86/spotifyr">charlie86/spotifyr</a> returning data frames from the spotify API,
+I was able to leave out all mentions of functions, loops, and all that jazz <sup class="footnote-ref" id="fnref:thankschester"><a href="#fn:thankschester">3</a></sup>.
+We just got right into the data.</p>
+
+<p><strong>In a future post I&rsquo;d like to think about how to make a Python workshop work,
+but for the rest of this post I&rsquo;ll focus on R.</strong></p>
+
+<h2 id="workshop-flow-the-ends-justify-the-means">Workshop Flow: The ends justify the means</h2>
+
+<p>Every section used an example script, and then a worksheet.</p>
+
+<p>For example, the first 3 &ldquo;chunks&rdquo; were..</p>
+
+<ul>
+<li>Day 1-1: explore end product</li>
+<li>Day 1-2: Basic dplyr verbs (filter, select, arrange) <sup class="footnote-ref" id="fnref:badmutate"><a href="#fn:badmutate">4</a></sup></li>
+<li>Day 2-1: Basic ggplot</li>
+</ul>
+
+<p>I Won&rsquo;t go into detail on how to teach dplyr verbs and ggplot, since you can see them
+on the tidyverse course. Instead, I&rsquo;ll focus on the big example we used to work backwards.</p>
+
+<h2 id="exploring-the-end-product">Exploring the end product</h2>
+
+<p>Once students logged in to Rstudio Server<sup class="footnote-ref" id="fnref:rstudio-setup"><a href="#fn:rstudio-setup">5</a></sup>, I had them open an example
+script that looked up an artist, and then let them do three things:</p>
+
+<ol>
+<li>Run code to view the data in a &ldquo;spreadsheet&rdquo;.</li>
+<li>Run code to make a scatterplot of valence vs energy for an artist&rsquo;s album.</li>
+<li>Run code to make a barchart of 4 different characteristics for some songs.</li>
+</ol>
+
+<p>In each of these steps they could modify a string to change the selected artist, album, or characteristics.
+One goal of this script was to make the pieces that could be modified so clear they didn&rsquo;t require programming knowledge to change.</p>
+
+<h3 id="1-view-data-as-spreadsheet">1) View data as &ldquo;spreadsheet&rdquo;</h3>
+
+<pre><code class="language-r">artist &lt;- get_artist_audio_features(&quot;The Beatles&quot;)
+
+# view data -------------------------------------------------------------------
+# drop some uneccessary columns, and sort by popularity (higher is more popular)
+artist %&gt;%
+  select(-album_uri, -album_img, -track_uri, -track_preview_url) %&gt;%
+  arrange(track_popularity) %&gt;%
+  View()
+</code></pre>
+
+<p><img src="/01-spotify-beatles-view.png" alt="" /></p>
+
+<p>In this case, students were shown how to run code, and instructed to run these lines (using their line numbers).</p>
+
+<p>I like that they can quickly sort songs by popularity and use the search bar in the view pane to find songs and albums.
+Also, it has a convenient option to filter using any of the columns.
+While they leafed around the data, we discussed which columns they thought looked like song characteristics<sup class="footnote-ref" id="fnref:ness"><a href="#fn:ness">6</a></sup>.</p>
+
+<p>After going through the rest of the examples below, I had them try changing &ldquo;The Beatles&rdquo; to their favorite band.
+(and learned that for some students choosing a favorite is a harrowing decision).</p>
+
+<p>Concepts:</p>
+
+<ul>
+<li>select, arrange, View</li>
+<li>strings (not explained in detail)</li>
+<li>variables (not explained in detail)</li>
+</ul>
+
+<h3 id="2-scatterplot-of-energy-vs-valence">2) Scatterplot of energy vs valence</h3>
+
+<pre><code class="language-r"># energy vs valence -----------------------------------------------------------
+# get only 1 album, store result as &quot;album&quot;
+album &lt;- artist %&gt;%
+  filter(album_name == &quot;Abbey Road (Remastered)&quot;) %&gt;%
+  select(album_name, track_name, energy, valence, track_popularity)
+
+# make a scatterplot of energy vs valence
+ggplot(album) +
+  geom_point(aes(x = energy, y = valence)) +
+  geom_text(aes(x = energy, y = valence, label = track_name),
+            hjust = 'left', size = 2, nudge_x = .01)
+</code></pre>
+
+<p><img src="/02-spotify-valence-energy.png" alt="" /></p>
+
+<p>In this case, students saw a scatterplot of energy vs valence for a single album.
+When we went through it the first time, I briefly mentioned that the filter function was cutting out rows of the data,
+just like they had done when filtering in the View pane.</p>
+
+<p>After they had selected their own favorite artist in the previous example, I had them find an album via the View pane,
+and write it in to the filter statement above<sup class="footnote-ref" id="fnref:filtering"><a href="#fn:filtering">7</a></sup>.</p>
+
+<p>New Concepts:</p>
+
+<ul>
+<li>filter</li>
+<li>ggplot, geom_point, geom_text</li>
+</ul>
+
+<h3 id="3-barchart-of-4-characteristics-for-some-songs">3) Barchart of 4 characteristics for some songs</h3>
+
+<pre><code class="language-r"># view other song features ----------------------------------------------------
+library(tidyr)
+top6 &lt;- artist %&gt;%
+  arrange(desc(track_popularity)) %&gt;%
+  top_n(6) %&gt;%
+  select(track_name, danceability, energy, speechiness, valence) %&gt;%
+  gather(sentiment, value, -track_name)
+
+ggplot(top6) +
+  geom_col(aes(sentiment, value, fill = sentiment)) +
+  facet_wrap(~track_name) + theme(axis.text.x = element_blank())
+</code></pre>
+
+<p><img src="/03-spotify-sentiment.png" alt="" /></p>
+
+<p>Right off the bat, let me just note two things</p>
+
+<ul>
+<li>I originally didn&rsquo;t want to do reshaping, but felt compelled by the plot.
+Whether this decision was right or wrong, being brought to these decisions is the true value of backward design.
+In the end I decided to put it in, but not cover how to reshape in detail.</li>
+<li>I screwed up and meant to select the 6 most popular songs, but used <code>top_n</code> wrong<sup class="footnote-ref" id="fnref:top-n"><a href="#fn:top-n">8</a></sup>.</li>
+</ul>
+
+<p>When modifying the script to explore their favorite band,
+I had them try changing the characteristics selected (e.g. adding acousticness to the plot).</p>
+
+<p>New Concepts:</p>
+
+<ul>
+<li>basic idea behind reshaping (i.e. data can be reshaped)</li>
+<li>facetting</li>
+<li>geom_col</li>
+</ul>
+
+<h2 id="take-homes">Take Homes</h2>
+
+<h3 id="what-worked">What worked</h3>
+
+<ul>
+<li>To modify the example, students just need to make basic changes.</li>
+<li>As they go through the workshop, they can manipulate more parts of the example.</li>
+<li>Students see through examples right away what data science can do for them.</li>
+</ul>
+
+<h3 id="gotchas">Gotchas</h3>
+
+<ul>
+<li>Explaining the phrase &ldquo;Run Code&rdquo;</li>
+<li>Explaining the phrase &ldquo;Pipe x into&hellip;&rdquo;</li>
+<li>I am still trying to figure out the best way to introduce ggplot</li>
+</ul>
+
+<h3 id="next-steps">Next Steps</h3>
+
+<p>Seeing students engage with data right off really shook me up!
+Based on some feedback from the workshop, I&rsquo;m really interested to try creating
+compelling examples using game data, sports data (e.g. www.sportsdatabase.com),
+and whatever else students might find compelling.</p>
+
+<p>My plan is to clean up the repo used, and to maintain the examples there.<br />
+If you&rsquo;re interested in tackling the challenge of getting students into the world of data,
+definitely get in touch.</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:valence"><p>valence is roughly how happy or sad something is, where something more valent is more happy.
+        For a less rough definition, see <a href="https://en.wikipedia.org/wiki/Valence_(psychology)">wikipedia</a></p>
+ <a class="footnote-return" href="#fnref:valence"><sup>[return]</sup></a></li>
+<li id="fn:imnotcrazy">If you think I&rsquo;ve gone crazy, check out the instructions in the <a href="http://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/execute.html">jupyter notebook beginner guide</a>.
+ <a class="footnote-return" href="#fnref:imnotcrazy"><sup>[return]</sup></a></li>
+<li id="fn:thankschester">A big thanks to my coworker Chester Ismay for suggesting this course as a good outline for the workshop.
+ <a class="footnote-return" href="#fnref:thankschester"><sup>[return]</sup></a></li>
+<li id="fn:badmutate">I also tried to teach mutate here, and it was probably overkill.
+ <a class="footnote-return" href="#fnref:badmutate"><sup>[return]</sup></a></li>
+<li id="fn:rstudio-setup">see here
+ <a class="footnote-return" href="#fnref:rstudio-setup"><sup>[return]</sup></a></li>
+
+<li id="fn:ness"><p>I&rsquo;m a big fan of adjectivizing words by putting -ness all over my everyday speech,
+     so I felt pretty in my element discussing acousticness, instrumentalness, speechiness, etc..</p>
+ <a class="footnote-return" href="#fnref:ness"><sup>[return]</sup></a></li>
+<li id="fn:filtering">One challenge was that the string had to match exactly, or it would filter out all the data.
+ <a class="footnote-return" href="#fnref:filtering"><sup>[return]</sup></a></li>
+
+<li id="fn:top-n"><p>This function takes an extra argument, which a variable which decides the order of the data frame.
+      So the tracks they saw weren&rsquo;t necessarily the most popular! :/. The plot shown is corrected to show
+      the most popular by spotify&rsquo;s track_popularity rating.</p>
+ <a class="footnote-return" href="#fnref:top-n"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; 2017 | Follow on <a href="https://twitter.com/mgjohansen" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>

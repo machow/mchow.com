@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>https://machow.github.io/post/yo-it-s-me-blogdown/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://machow.github.io/categories/</loc>
     <priority>0</priority>
   </url>
@@ -26,12 +21,6 @@
   <url>
     <loc>https://machow.github.io/posts/</loc>
     <lastmod>2018-04-05T11:17:07-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://machow.github.io/post/</loc>
-    <lastmod>2018-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

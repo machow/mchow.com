@@ -21,14 +21,5 @@
       <description>Over the past year I&amp;rsquo;ve worked on the tools to execute and grade code behind the scenes at DataCamp. This work has ranged from expanding our open source tools for grading R and Python code, to running SQL and bash exercises. However, while helping scale up education data science education to thousands of students is something I&amp;rsquo;ve wanted to do since helping teach statistics in grad school, there&amp;rsquo;s is a certain sanity in being in a room with handful of students.</description>
     </item>
     
-    <item>
-      <title>Yo it&#39;s me blogdown</title>
-      <link>https://machow.github.io/post/yo-it-s-me-blogdown/</link>
-      <pubDate>Thu, 29 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://machow.github.io/post/yo-it-s-me-blogdown/</guid>
-      <description>plot(1:10, 1:10) </description>
-    </item>
-    
   </channel>
 </rss>

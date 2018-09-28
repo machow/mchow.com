@@ -1,29 +1,35 @@
 ---
-title: Using R and the A* Algorithm to Cruise Around Minecraft
+title: "Using R and the A* Algorithm: Turning Cats into Dogs"
 author: Michael Chow
 date: '2018-06-05'
-slug: r-and-astar-with-minecraft
+slug: r-and-astar-cats-to-dogs
 categories: []
 tags: []
-draft: yes
+no_index: true
 ---
 
-In case you haven't heard, there are a bunch of cool ways you can interact with minecraft from R.
-These include making a nice drawing of your mug, plotting a ggplot graph, and building mazes.
+Recently, I've come across a 3 problems that were solved quickly using the A* algorithm:
 
-Recently at the NYC R conference, I had the chance to see David Smith demo building a maze, and then navigate it using the left-hand rule.
-It was really cool!
-By the end of the talk, as we stepped out of the maze and my gaze turned to the lofty minecraft peaks in the distance, a gentle thought stirred.
+1. Splitting cantonese sentences (e.g. 我好肚餓 -> 我 - 好 - 肚餓)
+2. Comparing how similar sounding two english words are
+3. Cruising around minecraft
 
-![](https://78.media.tumblr.com/cee821069e82c19d5550ddad02d596f7/tumblr_oj0k02nccx1skcw00o7_r1_400.gif)
+Since I started on these problems using python, the `python-astar` package got me up and running quickly.
+However, when switching R I wasn't able to find it in any libraries, like igraph.
+I'm sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.
+After a couple hours I opted for the next best thing: writing an R library.
 
-I knew then that my heart belonged to finding the optimal path up one of those craggy slopes.
-
-In this post, I'll quickly go through an R package I put together for using the A* algorithm, and how to apply it to minecraft.
 
 ## Using A* in R
 
 The A* algorithm (pronounced "a star") is a search algorithm for finding the "shortest" path between two nodes in a graph.
+
+One common use is navigating between two points in space.
+
+<img src="/003-r-and-astar-2.png" style = "max-width: 300px; display: block; margin-left: auto; margin-right: auto;">
+
+The image above shows a search for a path from the bottom left of a grid to the top right, where an obstacle (grey "**¬**" shape) is in the way.
+Solid colors are nodes on the grid that have been checked, and an optimal path (solid green line) was found to the right of the obstacle.
 
 The `astar` function requires specifying functions that answer four questions for a given node:
 
@@ -32,13 +38,15 @@ The `astar` function requires specifying functions that answer four questions fo
 3. How far is it from a neighbor?
 4. (Approximately) how far is it from the goal?
 
-While this often takes the shape of navigating between two points in space,
-a lot of other problems can be solved by A* as well.
-One interesting example is Word Latters.
+While navigating in space is a common use case, a lot of other problems can be solved by A* as well!
+In order to demonstrate the A* package, I'll use another interesting case: word latters.
 
 ## Word Latters
 
-Word Latters involve two pieces:
+Word latters is a game where you are given a list of words.
+Each word can be considered a node.
+How you play is defined by two pieces: a rule for what makes nodes neighbors and a goal.
+In this post, we'll define those as..
 
 1. words that differ by only one letter are neighbors (e.g. "cat" and "bat")
 2. we want to find the path from one word to another (e.g. "cat" to "dog")
@@ -116,17 +124,4 @@ astar('cat', 'dog',
 [[4]]
 [1] "dog"
 ```
-
-
-## Cruising Around Minecraft
-
-Navigating minecraft involves three separate pieces:
-
-1. Coding A* to navigate a 3D space
-2. Getting a chunk of blocks from minecraft to navigate
-3. Placing blocks in minecraft as we go
-
-
-
-
 

@@ -3,29 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://machow.github.io/posts/data-science-cbk/</loc>
+    <loc>/posts/r-and-astar-cats-to-dogs/</loc>
+    <lastmod>2018-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/data-science-cbk/</loc>
     <lastmod>2018-04-05T11:17:07-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://machow.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://machow.github.io/</loc>
-    <lastmod>2018-04-05T11:17:07-04:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2018-06-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://machow.github.io/posts/</loc>
-    <lastmod>2018-04-05T11:17:07-04:00</lastmod>
+    <loc>/posts/</loc>
+    <lastmod>2018-06-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://machow.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   

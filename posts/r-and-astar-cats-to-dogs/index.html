@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="keyword 1, keyword 2, keyword 3" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Using R and the A* Algorithm: Turning Cats into Dogs - Michael Chow">
+<meta property="og:url" content="/posts/r-and-astar-cats-to-dogs/">
+<meta property="og:description" content="Your description here">
+<meta property="og:type" content="website" />
+<title>Using R and the A* Algorithm: Turning Cats into Dogs | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+</head>
+
+<body>
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="/"><h1 class="title is-4">Michael Chow</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Using R and the A* Algorithm: Turning Cats into Dogs</h1>
+    <h2 class="subtitle is-5">June 5, 2018 by Michael Chow</h2>
+    
+    <div class="content">
+      
+
+<p>Recently, I&rsquo;ve come across a 3 problems that were solved quickly using the A* algorithm:</p>
+
+<ol>
+<li>Splitting cantonese sentences (e.g. 我好肚餓 -&gt; 我 - 好 - 肚餓)</li>
+<li>Comparing how similar sounding two english words are</li>
+<li>Cruising around minecraft</li>
+</ol>
+
+<p>Since I started on these problems using python, the <code>python-astar</code> package got me up and running quickly.
+However, when switching R I wasn&rsquo;t able to find it in any libraries, like igraph.
+I&rsquo;m sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.
+After a couple hours I opted for the next best thing: writing an R library.</p>
+
+<h2 id="using-a-in-r">Using A* in R</h2>
+
+<p>The A* algorithm (pronounced &ldquo;a star&rdquo;) is a search algorithm for finding the &ldquo;shortest&rdquo; path between two nodes in a graph.</p>
+
+<p>One common use is navigating between two points in space.</p>
+
+<p><img src="/003-r-and-astar-2.png" style = "max-width: 300px; display: block; margin-left: auto; margin-right: auto;"></p>
+
+<p>The image above shows a search for a path from the bottom left of a grid to the top right, where an obstacle (grey &ldquo;<strong>¬</strong>&rdquo; shape) is in the way.
+Solid colors are nodes on the grid that have been checked, and an optimal path (solid green line) was found to the right of the obstacle.</p>
+
+<p>The <code>astar</code> function requires specifying functions that answer four questions for a given node:</p>
+
+<ol>
+<li>Is this the goal node?</li>
+<li>Who are its neighbors?</li>
+<li>How far is it from a neighbor?</li>
+<li>(Approximately) how far is it from the goal?</li>
+</ol>
+
+<p>While navigating in space is a common use case, a lot of other problems can be solved by A* as well!
+In order to demonstrate the A* package, I&rsquo;ll use another interesting case: word latters.</p>
+
+<h2 id="word-latters">Word Latters</h2>
+
+<p>Word latters is a game where you are given a list of words.
+Each word can be considered a node.
+How you play is defined by two pieces: a rule for what makes nodes neighbors and a goal.
+In this post, we&rsquo;ll define those as..</p>
+
+<ol>
+<li>words that differ by only one letter are neighbors (e.g. &ldquo;cat&rdquo; and &ldquo;bat&rdquo;)</li>
+<li>we want to find the path from one word to another (e.g. &ldquo;cat&rdquo; to &ldquo;dog&rdquo;)</li>
+</ol>
+
+<p>For example, the graph below shows some possible paths we could try for going from &ldquo;cat&rdquo; to &ldquo;dog&rdquo;. The red path makes it in a few steps, whereas the blue path takes a roundabout way, that meets up with the shorter path.</p>
+
+<p><img src="/003-r-and-astar-1.png" style = "max-width: 500px; display: block; margin-left: auto; margin-right: auto;"></p>
+
+<p>Below, I&rsquo;ll show how the A* algorithm can solve the problem of finding a path that takes the least number of steps.</p>
+
+<p>First we install the <code>astar</code> package..</p>
+
+<pre><code class="language-r">remotes::install_github('machow/astar-r')
+</code></pre>
+
+<p>Next, we define the nodes in our graph, along with tools to see how far they are from eachother..</p>
+
+<pre><code class="language-r">library(astar)
+words &lt;- c(
+  'cat', 'hat', 'bat', 'bet', 'cot', 'cut', 'bed', 'bud',
+  'bot', 'bit', 'pat', 'sat', 'pit', 'put', 'sit', 'mit',
+  'bog', 'bug', 'big', 'bag', 'cog', 'pig', 'hog', 'sag',
+  'dig', 'dug', 'dog'
+)
+
+split &lt;- function(s)               # breaks word into vector of letters
+  unlist(strsplit(s, &quot;&quot;))
+
+ltr_dist &lt;- function(s1, s2)       # number of letters that differ
+  sum(split(s1) != split(s2))
+</code></pre>
+
+<p>Then, we define four functions to answer each of the A* questions listed above.  In this case, I set all nodes connected as neighbors, but the distance between invalid nodes as infinite.</p>
+
+<pre><code class="language-r"># A* methods ----
+is_goal_reached &lt;- function(src, dst)     # should we stop?
+  src == dst
+
+neighbors &lt;- function(node)               # find neighbors
+  words[words != node]
+
+edge_distance &lt;- function(src, dst)       # how far is node from neighbor
+  if (ltr_dist(src, dst) == 1) 1 else Inf
+
+cost_estimate &lt;- function(node, goal)     # estimate how far node is from goal
+  as.numeric(ltr_dist(node, goal))        # best case estimate: min swaps left
+</code></pre>
+
+<p>Finally, we run the <code>astar</code> function with the starting and ending nodes..</p>
+
+<pre><code class="language-r"># Run ----
+astar('cat', 'dog', 
+      cost_estimate, edge_distance, neighbors, is_goal_reached
+      )
+</code></pre>
+
+<pre><code>[[1]]
+[1] &quot;cat&quot;
+
+[[2]]
+[1] &quot;cot&quot;
+
+[[3]]
+[1] &quot;cog&quot;
+
+[[4]]
+[1] &quot;dog&quot;
+</code></pre>
+
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; 2017 | Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-117743385-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>

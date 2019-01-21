@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 | Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Tue, 05 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,11 +15,21 @@
     <item>
       <title>Using R and the A* Algorithm: Turning Cats into Dogs</title>
       <link>/posts/r-and-astar-cats-to-dogs/</link>
-      <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/posts/r-and-astar-cats-to-dogs/</guid>
       <description>Recently, I&amp;rsquo;ve come across a 3 problems that were solved quickly using the A* algorithm:
- Splitting cantonese sentences (e.g. 我好肚餓 -&amp;gt; 我 - 好 - 肚餓) Comparing how similar sounding two english words are Cruising around minecraft  Since I started on these problems using python, the python-astar package got me up and running quickly. However, when switching R I wasn&amp;rsquo;t able to find it in any libraries, like igraph.</description>
+ Splitting cantonese sentences into words (e.g. 我好肚餓 -&amp;gt; 我 - 好 - 肚餓). Comparing how similar sounding two english words are. Cruising around minecraft.  Since I started on these problems using python, the python-astar package got me up and running quickly. However, when switching to R I wasn&amp;rsquo;t able to find it in any libraries, like igraph.</description>
+    </item>
+    
+    <item>
+      <title>Using R and the A* Algorithm: Turning Cats into Dogs</title>
+      <link>/posts/r-and-astar-cats-to-dogs/</link>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/r-and-astar-cats-to-dogs/</guid>
+      <description>Recently, I&amp;rsquo;ve come across a 3 problems that were solved quickly using the A* algorithm:
+ Splitting cantonese sentences into words (e.g. 我好肚餓 -&amp;gt; 我 - 好 - 肚餓). Comparing how similar sounding two english words are. Cruising around minecraft.  Since I started on these problems using python, the python-astar package got me up and running quickly. However, when switching to R I wasn&amp;rsquo;t able to find it in any libraries, like igraph.</description>
     </item>
     
     <item>

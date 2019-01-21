@@ -64,7 +64,7 @@
 <section class="section">
   <div class="container">
     <h1 class="title">Using R and the A* Algorithm: Turning Cats into Dogs</h1>
-    <h2 class="subtitle is-5">June 5, 2018 by Michael Chow</h2>
+    <h2 class="subtitle is-5">January 21, 2019 by Michael Chow</h2>
     
     <div class="content">
       
@@ -72,15 +72,16 @@
 <p>Recently, I&rsquo;ve come across a 3 problems that were solved quickly using the A* algorithm:</p>
 
 <ol>
-<li>Splitting cantonese sentences (e.g. 我好肚餓 -&gt; 我 - 好 - 肚餓)</li>
-<li>Comparing how similar sounding two english words are</li>
-<li>Cruising around minecraft</li>
+<li>Splitting cantonese sentences into words (e.g. 我好肚餓 -&gt; 我 - 好 - 肚餓).</li>
+<li>Comparing how similar sounding two english words are.</li>
+<li>Cruising around minecraft.</li>
 </ol>
 
 <p>Since I started on these problems using python, the <code>python-astar</code> package got me up and running quickly.
-However, when switching R I wasn&rsquo;t able to find it in any libraries, like igraph.
-I&rsquo;m sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.
-After a couple hours I opted for the next best thing: writing an R library.</p>
+However, when switching to R I wasn&rsquo;t able to find it in any libraries, like igraph.
+I&rsquo;m sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.</p>
+
+<p>After a couple hours I opted for the next best thing: writing a quick R package (<a href="https://github.com/machow/astar-r">machow/astar-r</a>).</p>
 
 <h2 id="using-a-in-r">Using A* in R</h2>
 
@@ -90,15 +91,15 @@ After a couple hours I opted for the next best thing: writing an R library.</p>
 
 <p><img src="/003-r-and-astar-2.png" style = "max-width: 300px; display: block; margin-left: auto; margin-right: auto;"></p>
 
-<p>The image above shows a search for a path from the bottom left of a grid to the top right, where an obstacle (grey &ldquo;<strong>¬</strong>&rdquo; shape) is in the way.
+<p>The image above, taken from <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">wikipedia</a>, shows a search for a path from the bottom left of a grid to the top right, where an obstacle (grey &ldquo;<strong>¬</strong>&rdquo; shape) is in the way.
 Solid colors are nodes on the grid that have been checked, and an optimal path (solid green line) was found to the right of the obstacle.</p>
 
-<p>The <code>astar</code> function requires specifying functions that answer four questions for a given node:</p>
+<p>In the package, the <code>astar</code> function requires specifying functions that answer four questions for a given node:</p>
 
 <ol>
 <li>Is this the goal node?</li>
 <li>Who are its neighbors?</li>
-<li>How far is it from a neighbor?</li>
+<li>How far is it from a given neighbor?</li>
 <li>(Approximately) how far is it from the goal?</li>
 </ol>
 
@@ -123,7 +124,7 @@ In this post, we&rsquo;ll define those as..</p>
 
 <p>Below, I&rsquo;ll show how the A* algorithm can solve the problem of finding a path that takes the least number of steps.</p>
 
-<p>First we install the <code>astar</code> package..</p>
+<p>First we install the <a href="https://github.com/machow/astar-r"><code>astar</code> package</a>..</p>
 
 <pre><code class="language-r">remotes::install_github('machow/astar-r')
 </code></pre>
@@ -131,6 +132,7 @@ In this post, we&rsquo;ll define those as..</p>
 <p>Next, we define the nodes in our graph, along with tools to see how far they are from eachother..</p>
 
 <pre><code class="language-r">library(astar)
+
 words &lt;- c(
   'cat', 'hat', 'bat', 'bet', 'cot', 'cut', 'bed', 'bud',
   'bot', 'bit', 'pat', 'sat', 'pit', 'put', 'sit', 'mit',
@@ -145,7 +147,7 @@ ltr_dist &lt;- function(s1, s2)       # number of letters that differ
   sum(split(s1) != split(s2))
 </code></pre>
 
-<p>Then, we define four functions to answer each of the A* questions listed above.  In this case, I set all nodes connected as neighbors, but the distance between invalid nodes as infinite.</p>
+<p>Then, we define four functions to answer each of the A* questions listed above.  In this case, I set all nodes to be connected as neighbors, but the distance between invalid neighbors as infinite.</p>
 
 <pre><code class="language-r"># A* methods ----
 is_goal_reached &lt;- function(src, dst)     # should we stop?
@@ -181,6 +183,14 @@ astar('cat', 'dog',
 [[4]]
 [1] &quot;dog&quot;
 </code></pre>
+
+<p>The output matches the red (shortest) path in the word ladder graph!</p>
+
+<h2 id="the-world-is-full-of-problems-a-can-solve">The World is Full of Problems A* can Solve</h2>
+
+<p>While A* is often taught as a spatial pathfinding algorithm, it can solve a surprisingly diverse set of problems. More detailed explanations of the algorithm can be found on <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">wikipedia</a>, or this <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">interactive article</a>.</p>
+
+<p>If you use the <a href="https://github.com/machow/astar-r">R astar package</a> to solve any nifty problems, or encounter any bugs, let me know on Twitter (<a href="https://twitter.com/chowthedog">\@chowthedog</a>) or on <a href="https://github.com/machow/astar-r/issues">github</a>!</p>
 
     </div>
     

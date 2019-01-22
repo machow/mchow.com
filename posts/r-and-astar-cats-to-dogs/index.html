@@ -77,11 +77,10 @@
 <li>Cruising around minecraft.</li>
 </ol>
 
-<p>Since I started on these problems using python, the <code>python-astar</code> package got me up and running quickly.
-However, when switching to R I wasn&rsquo;t able to find it in any libraries, like igraph.
-I&rsquo;m sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.</p>
+<p>Since I started on these problems using python, the p<code>python-astar</code>](<a href="https://github.com/jrialland/python-astar">https://github.com/jrialland/python-astar</a>) package got me up and running quickly.
+However, when switching to R I wasn&rsquo;t able to find it in any libraries, like igraph.</p>
 
-<p>After a couple hours I opted for the next best thing: writing a quick R package (<a href="https://github.com/machow/astar-r">machow/astar-r</a>).</p>
+<p>I&rsquo;m sure it exists somewhere, but after a couple hours of searching I opted for the next best thing: writing a quick R package (<a href="https://github.com/machow/astar-r">machow/astar-r</a>).</p>
 
 <h2 id="using-a-in-r">Using A* in R</h2>
 
@@ -104,11 +103,11 @@ Solid colors are nodes on the grid that have been checked, and an optimal path (
 </ol>
 
 <p>While navigating in space is a common use case, a lot of other problems can be solved by A* as well!
-In order to demonstrate the A* package, I&rsquo;ll use another interesting case: word latters.</p>
+In order to demonstrate the A* package, I&rsquo;ll use another interesting case: word ladders.</p>
 
-<h2 id="word-latters">Word Latters</h2>
+<h2 id="word-ladders">Word Ladders</h2>
 
-<p>Word latters is a game where you are given a list of words.
+<p>Word ladders is a game where you are given a list of words.
 Each word can be considered a node.
 How you play is defined by two pieces: a rule for what makes nodes neighbors and a goal.
 In this post, we&rsquo;ll define those as..</p>

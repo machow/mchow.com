@@ -13,11 +13,11 @@ Recently, I've come across a 3 problems that were solved quickly using the A* al
 2. Comparing how similar sounding two english words are.
 3. Cruising around minecraft.
 
-Since I started on these problems using python, the `python-astar` package got me up and running quickly.
+Since I started on these problems using python, the [`python-astar`](https://github.com/jrialland/python-astar) package got me up and running quickly.
 However, when switching to R I wasn't able to find it in any libraries, like igraph.
-I'm sure it exists somewhere, but searching for an algorithm and programming language that are altogether 2 letters and an asterix did not work out well for me.
 
-After a couple hours I opted for the next best thing: writing a quick R package ([machow/astar-r](https://github.com/machow/astar-r)).
+
+I'm sure it exists somewhere, but after a couple hours of searching I opted for the next best thing: writing a quick R package ([machow/astar-r](https://github.com/machow/astar-r)).
 
 
 ## Using A* in R
@@ -39,11 +39,11 @@ In the package, the `astar` function requires specifying functions that answer f
 4. (Approximately) how far is it from the goal?
 
 While navigating in space is a common use case, a lot of other problems can be solved by A* as well!
-In order to demonstrate the A* package, I'll use another interesting case: word latters.
+In order to demonstrate the A* package, I'll use another interesting case: word ladders.
 
-## Word Latters
+## Word Ladders
 
-Word latters is a game where you are given a list of words.
+Word ladders is a game where you are given a list of words.
 Each word can be considered a node.
 How you play is defined by two pieces: a rule for what makes nodes neighbors and a goal.
 In this post, we'll define those as..

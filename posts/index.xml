@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 | Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Animated pathfinding with R and gganimate</title>
+      <link>/posts/r-and-astar-maze-viz/</link>
+      <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/r-and-astar-maze-viz/</guid>
+      <description>This post is the second part of a series on using the A* algorithm in R.
+While my previous post introduced the machow/astar-r library, and how it works, in this one I&amp;rsquo;ll focus on visualizing it finding a solution with gganimate. Below is an outline of what I&amp;rsquo;ll cover.
+ manually define a maze and plot it with ggplot use an example class from the astar library to navigate it add a bonus picture of a gnome to the maze use a single line of gganimate to animate the A* search  Drawing the maze First, we&amp;rsquo;ll load in the necessary libraries, and create a simple maze to navigate.</description>
+    </item>
     
     <item>
       <title>Using R and the A* Algorithm: Turning Cats into Dogs</title>

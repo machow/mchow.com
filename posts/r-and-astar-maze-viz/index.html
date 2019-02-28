@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="keyword 1, keyword 2, keyword 3" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Animated pathfinding with R and gganimate - Michael Chow">
+<meta property="og:url" content="/posts/r-and-astar-maze-viz/">
+<meta property="og:description" content="Your description here">
+<meta property="og:type" content="website" />
+<title>Animated pathfinding with R and gganimate | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+</head>
+
+<body>
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="/"><h1 class="title is-4">Michael Chow</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Animated pathfinding with R and gganimate</h1>
+    <h2 class="subtitle is-5">February 27, 2019 by Michael Chow</h2>
+    
+    <div class="content">
+      
+
+<p>This post is the second part of a series on using the A* algorithm in R.</p>
+
+<p>While my <a href="https://mchow.com/posts/r-and-astar-cats-to-dogs/">previous post</a> introduced the <a href="https://github.com/machow/astar-r">machow/astar-r library</a>, and how it works,
+in this one I&rsquo;ll focus on visualizing it finding a solution with <a href="https://gganimate.com/">gganimate</a>.
+Below is an outline of what I&rsquo;ll cover.</p>
+
+<ul>
+<li>manually define a maze and plot it with ggplot</li>
+<li>use an example class from the astar library to navigate it</li>
+<li>add a bonus picture of a gnome to the maze</li>
+<li>use a single line of gganimate to animate the A* search</li>
+</ul>
+
+<h2 id="drawing-the-maze">Drawing the maze</h2>
+
+<p>First, we&rsquo;ll load in the necessary libraries, and create a simple maze to navigate.</p>
+
+<pre><code class="language-r"># Create maze
+library(astar)
+library(gganimate)
+library(dplyr)
+
+M &lt;- matrix(ncol = 8, byrow = TRUE, c(
+  0,0,0,0,0,0,1,0,
+  0,0,1,1,0,1,1,0,
+  1,0,0,0,0,0,1,0,
+  0,0,1,1,1,1,1,0,
+  1,0,1,0,0,0,0,0,
+  0,0,0,0,1,1,0,0
+  ))
+</code></pre>
+
+<p>Note that this task is pretty straightforward.
+The one important piece that makes it easy to read is setting <code>byrow = TRUE</code>.
+Otherwise, it will appear rotated 90 degrees.</p>
+
+<p>Below, I make a quick plot of the maze, by creating a data.frame where each
+row is the coordinate of a piece of wall.</p>
+
+<pre><code class="language-r">walls &lt;-
+  which(M == 1, arr.ind = TRUE) %&gt;%
+  as.data.frame() %&gt;%
+  transmute(y = row, x = col)
+
+walls %&gt;%
+  ggplot(aes(x,y)) +
+  geom_tile(width = 1, height = 1, fill = &quot;#623B17&quot;) +
+  scale_y_reverse() +
+  scale_x_continuous(breaks = seq(0, 8, 1), limits = c(0, 8.5), minor_breaks = NULL)
+</code></pre>
+
+<p><img src="/posts/draft-r-and-astar-maze-viz_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+
+<p>Note that the plot uses <code>scale_y_reverse</code>, to take care of the fact that a matrix uses a y index that counts down (e.g. walls[1,] is the top row), but
+ggplot&rsquo;s y index counts up.</p>
+
+<h2 id="navigating-through-and-saving-our-path">Navigating through and saving our path</h2>
+
+<p>Once the maze is defined, we can use the MazeGazer R6 class to run through it.
+This class keeps a history of all the spots that the A* algorithm searched from,
+so we can visualize them later.</p>
+
+<pre><code class="language-r"># Run maze
+
+mg &lt;- MazeGazer$new(M)
+goal_path &lt;- mg$run(c(1,1), c(1,8))
+
+history &lt;- mg$history %&gt;% bind_rows()
+
+head(history)
+</code></pre>
+
+<pre><code>##   round y x
+## 1     1 1 1
+## 2     2 1 1
+## 3     2 1 2
+## 4     3 1 1
+## 5     3 1 2
+## 6     3 1 3
+</code></pre>
+
+<p>Note that the astar library has a base class called AStar, that you can use as a template (or subclass) when writing your own tools.</p>
+
+<h2 id="loading-up-the-infer-gnome">Loading up the infer gnome</h2>
+
+<p>Probably the most critical step of the process is loading in the infer gnome hex sticker.
+Without this sticker, there would be no incentive to get to the end of the maze.</p>
+
+<pre><code class="language-r">library(png)
+library(grid)
+
+# download to computer
+gnome &lt;- &quot;https://github.com/tidymodels/infer/raw/master/figs/infer_gnome.png&quot;
+download.file(gnome, &quot;./gnome.png&quot;)
+
+# load that gnome up!
+img &lt;- readPNG(&quot;./gnome.png&quot;)
+g &lt;- rasterGrob(img, interpolate=TRUE)
+</code></pre>
+
+<p>With gnome in hand, we&rsquo;re ready to chart our course through the maze.</p>
+
+<h2 id="making-the-run">Making the run!</h2>
+
+<p>Below is the code to animate the trip through the maze.
+Notice that it only needs a single line of gganimate!</p>
+
+<pre><code class="language-r">ggplot(history, aes(x, y)) +
+  # ggplot maze part
+  geom_tile(width = 1, height = 1, fill = &quot;#623B17&quot;, data = walls) +
+  geom_point(aes(group = round)) +
+  scale_y_reverse(breaks = seq(6, 0, -1), limits = c(6, 0), minor_breaks = NULL) +
+  scale_x_continuous(breaks = seq(0, 100, 1), limits = c(0, 9.5), minor_breaks = NULL) +
+  coord_fixed() +
+  # ggplot gnome part
+  annotation_custom(g, xmin = 7.30, xmax = 8.70, ymin = -.3, ymax = -1.70) +
+  # gganimate
+  transition_time(round)
+</code></pre>
+
+<p><img src="draft-r-and-astar-maze-viz_files/figure-html/unnamed-chunk-6-1.gif" alt="" /><!-- --></p>
+
+<h2 id="summary">Summary</h2>
+
+<p>Overall, I was amazed that gganimate is so easy to get into, and did its job in a single line of code! To be sure, it took more lines of code to load the gnome hex sticker than to use gganimate. I&rsquo;d be curious to know how large the maze (and the history log) can get before making the plot takes too long. I&rsquo;m also curious if there&rsquo;s a way with gganimate to only specify the dots we want to add or take away after each round, rather than logging the full path.</p>
+
+<p>If you use the <a href="https://github.com/machow/astar-r">astar package</a> solve any interesting problems, or encounter any bugs, let me know on <a href="https://github.com/machow/astar-r/issues">github</a>! If you have strong opinions on gnomes feel free to share them with me on twitter (<a href="https://twitter.com/chowthedog">\@chowthedog</a>).</p>
+
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; 2017 | Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-117743385-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>

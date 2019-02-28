@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta content="keyword 1, keyword 2, keyword 3" name="keywords">
 <meta content="Michael Chow" name="author">
-<meta property="og:title" content="Animated pathfinding with R and gganimate - Michael Chow">
+<meta property="og:title" content="Using R and the A* Algorithm: Animated Pathfinding with gganimate - Michael Chow">
 <meta property="og:url" content="/posts/r-and-astar-maze-viz/">
 <meta property="og:description" content="Your description here">
 <meta property="og:type" content="website" />
-<title>Animated pathfinding with R and gganimate | Michael Chow</title>
+<title>Using R and the A* Algorithm: Animated Pathfinding with gganimate | Michael Chow</title>
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -63,7 +63,7 @@
 
 <section class="section">
   <div class="container">
-    <h1 class="title">Animated pathfinding with R and gganimate</h1>
+    <h1 class="title">Using R and the A* Algorithm: Animated Pathfinding with gganimate</h1>
     <h2 class="subtitle is-5">February 27, 2019 by Michael Chow</h2>
     
     <div class="content">
@@ -120,7 +120,7 @@ walls %&gt;%
   scale_x_continuous(breaks = seq(0, 8, 1), limits = c(0, 8.5), minor_breaks = NULL)
 </code></pre>
 
-<p><img src="/posts/draft-r-and-astar-maze-viz_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/posts/2019-02-27-r-and-astar-maze-gganimate_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 
 <p>Note that the plot uses <code>scale_y_reverse</code>, to take care of the fact that a matrix uses a y index that counts down (e.g. walls[1,] is the top row), but
 ggplot&rsquo;s y index counts up.</p>
@@ -189,7 +189,7 @@ Notice that it only needs a single line of gganimate!</p>
   transition_time(round)
 </code></pre>
 
-<p><img src="draft-r-and-astar-maze-viz_files/figure-html/unnamed-chunk-6-1.gif" alt="" /><!-- --></p>
+<p><img src="2019-02-27-r-and-astar-maze-gganimate_files/figure-html/unnamed-chunk-6.gif" alt="" /><!-- --></p>
 
 <h2 id="summary">Summary</h2>
 

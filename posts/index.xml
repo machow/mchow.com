@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 | Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Wed, 27 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using R and the A* Algorithm: Cruising Around Minecraft</title>
+      <link>/posts/r-and-astar-with-minecraft/</link>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/r-and-astar-with-minecraft/</guid>
+      <description>(This article is the last in a series on using the A* algorithm in R. See the first and second posts for more.)
+Last year at the NYC R conference, I had the chance to see David Smith demonstrate building and navigate a Minecraft maze, using the miner package. It was really cool! At the end of the talk, as we stepped out of the maze, my gaze turned to the lofty minecraft peaks in the distance.</description>
+    </item>
     
     <item>
       <title>Using R and the A* Algorithm: Animated Pathfinding with gganimate</title>

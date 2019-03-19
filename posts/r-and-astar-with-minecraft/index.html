@@ -69,7 +69,7 @@
     <div class="content">
       <p>(This article is the last in a series on using the A* algorithm in R.
 See the <a href="/r-and-astar-cats-to-dogs">first</a> and <a href="r-and-astar-maze-viz">second</a> posts for more.)</p>
-<p>Last year at the NYC R conference, I had the chance to see David Smith demonstrate building and navigate a Minecraft maze, using the <code>miner</code> package.
+<p>Last year at the NYC R conference, I had the chance to see David Smith demonstrate building and navigating a Minecraft maze, using the <code>miner</code> package.
 It was really cool!
 At the end of the talk, as we stepped out of the maze, my gaze turned to the lofty minecraft peaks in the distance.</p>
 <p><img src="/004-astar-minecraft-craggyslope.png" /></p>
@@ -86,7 +86,8 @@ At the end of the talk, as we stepped out of the maze, my gaze turned to the lof
 <video style = "width: 100%" controls>
 <source src="https://s3.amazonaws.com/mchow/posts/004-astar-craggyslope.mp4">
 </video>
-<p>One potentially frustrating part in the video is that the algorithm searches so close to the goal, but then keeps on searching, rather than taking the few steps it would need to connect to the the endpoint. Why does it do this? The reason is that it’s not just looking for a path to the goal, but <strong>the best path</strong>, so it spends a lot of rounds going back and looking to avoid the dip at the end.</p>
+<p>One potentially frustrating part in the video is that the algorithm searches so close to the goal, but then keeps on searching, rather than taking the few steps it would need to connect to the the endpoint. Why does it do this?</p>
+<p>The reason is that it’s not just looking for a path to the goal, but <strong>the best path</strong>, so it spends a lot of rounds going back and looking to avoid the dip at the end.</p>
 <p>If you’re interested, you can take a look at the <a href="https://github.com/machow/astar-r/tree/master/inst/example_minecraft">code for the video above</a>. In the following sections I’ll go over the basics of how it used the <code>astar</code> and <code>miner</code> packages, and how it was extended it to 3D.</p>
 </div>
 <div id="slinging-blocks-in-minecraft-with-the-miner-library" class="section level2">
@@ -163,7 +164,7 @@ If you’re interested in trying it for yourself, check out the following links.
 <li><a href="https://github.com/machow/astar-r/tree/master/inst/example_minecraft">minecraft example directory</a></li>
 </ul></li>
 </ul>
-<p>In the off-chance that you develop any elaborate 3D mazes to navigate in minecraft, I would love to see, or am happy to run the algorithm through them! (let me know on the <a href="https://github.com/machow/astar-r/issues">astar repo</a> or twitter <a href="https://twitter.com/chowthedog">@chowthedog</a>).</p>
+<p>In the off-chance that you develop any elaborate 3D mazes to navigate in minecraft, I would love to see, or am happy to run the algorithm through them! (let me know on the <a href="https://github.com/machow/astar-r/issues">astar repo</a> or on twitter <a href="https://twitter.com/chowthedog">@chowthedog</a>).</p>
 </div>
 
     </div>

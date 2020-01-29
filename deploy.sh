@@ -4,7 +4,9 @@ set -e
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project.
-hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
+mv public/.git public_git
+hugo --cleanDestinationDir # if using a theme, replace with `hugo -t <YOURTHEME>`
+mv public_git public/.git
 
 # Go To Public folder
 cd public

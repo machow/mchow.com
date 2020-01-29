@@ -1,3 +1,5 @@
 # Vim swapfiles
 .*.swp
 .Rproj.user
+
+.ipynb_checkpoints

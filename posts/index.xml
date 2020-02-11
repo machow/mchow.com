@@ -23,6 +23,27 @@
     </item>
     
     <item>
+      <title>(DRAFT) Single dispatch for democratizing data science tools</title>
+      <link>/posts/2020-01-single-dispatch-data-science/</link>
+      <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2020-01-single-dispatch-data-science/</guid>
+      <description>.tabs__link--active { background-color: #eee; } .tabs ul { align-items: baseline; margin-left: 0px; margin-right: 0px; }  Imagine you had to implement a standard action across 60 packages.
+For example,
+ Jupyter notebooks needs represent python classes as custom html. The broom package in R uses its tidy() function to create summaries of many statistical models.  In this post I will discuss two approaches they could take to do this.</description>
+    </item>
+    
+    <item>
+      <title>Using R and the A* Algorithm: Cruising Around Minecraft</title>
+      <link>/posts/r-and-astar-with-minecraft/</link>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/r-and-astar-with-minecraft/</guid>
+      <description>(This article is the last in a series on using the A* algorithm in R. See the first and second posts for more.)
+Last year at the NYC R conference, I had the chance to see David Smith demonstrate building and navigating a Minecraft maze, using the miner package. It was really cool! At the end of the talk, as we stepped out of the maze, my gaze turned to the lofty minecraft peaks in the distance.</description>
+    </item>
+    
+    <item>
       <title>Using R and the A* Algorithm: Animated Pathfinding with gganimate</title>
       <link>/posts/r-and-astar-maze-viz/</link>
       <pubDate>Wed, 27 Feb 2019 00:00:00 +0000</pubDate>

@@ -10,7 +10,7 @@
 <meta property="og:description" content="Your description here">
 <meta property="og:type" content="website" />
 <meta property="og:title" content="What would it take to recreate dplyr in python?" />
-<meta property="og:description" content="Three key challenges of pandas groupby: index tax, type conversion tax, and composability" />
+<meta property="og:description" content="Three key challenges of pandas groupby: the index tax, the type conversion tax, and composability" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/2020-02-11-dplyr-in-python/" />
 
@@ -261,11 +261,11 @@ result.head()
 </code></pre>
 
 <pre><code>student_id
-0    [22, 10, 14, 17, 27, 100, 93, 44, 81, 57]
-1      [59, 67, 78, 91, 54, 41, 40, 12, 20, 7]
-2      [51, 18, 19, 64, 59, 26, 25, 36, 5, 61]
-3     [80, 67, 54, 86, 10, 96, 56, 17, 20, 95]
-4      [5, 26, 95, 92, 39, 96, 16, 27, 37, 84]
+0    [42, 77, 66, 61, 60, 76, 74, 16, 48, 84]
+1    [97, 29, 23, 59, 38, 56, 85, 38, 86, 78]
+2    [62, 32, 91, 24, 21, 50, 29, 55, 45, 13]
+3    [97, 99, 99, 87, 50, 75, 53, 75, 78, 41]
+4    [12, 54, 34, 31, 94, 94, 45, 44, 47, 13]
 dtype: object
 </code></pre>
 
@@ -274,17 +274,17 @@ ser_combined = pd.Series(flat_arr)
 ser_combined
 </code></pre>
 
-<pre><code>0         22
-1         10
-2         14
-3         17
-4         27
+<pre><code>0         42
+1         77
+2         66
+3         61
+4         60
           ..
-499995     8
-499996    81
-499997    32
-499998    16
-499999    40
+499995    83
+499996    55
+499997    24
+499998    31
+499999    15
 Length: 500000, dtype: int64
 </code></pre>
 
@@ -357,16 +357,16 @@ mutate(g_students, demeaned = score - mean(score))
 # Groups:   student_id [50,000]
    student_id course_id score demeaned
         &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
- 1          0         0    21    -24.5
- 2          0         1     9    -36.5
- 3          0         2    13    -32.5
- 4          0         3    16    -29.5
- 5          0         4    26    -19.5
- 6          0         5    99     53.5
- 7          0         6    92     46.5
- 8          0         7    43     -2.5
- 9          0         8    80     34.5
-10          0         9    56     10.5
+ 1          0         0    41  -18.4  
+ 2          0         1    76   16.6  
+ 3          0         2    65    5.6  
+ 4          0         3    60    0.6  
+ 5          0         4    59   -0.400
+ 6          0         5    75   15.6  
+ 7          0         6    73   13.6  
+ 8          0         7    15  -44.4  
+ 9          0         8    47  -12.4  
+10          0         9    83   23.6  
 # … with 499,990 more rows
 </code></pre>
 
@@ -399,7 +399,7 @@ from siuba import _
 fast_mutate(g_students, result = _.score + 1)
 </code></pre>
 
-<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x11b7900f0&gt;
+<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x122c720f0&gt;
 </code></pre>
 
 <p>Because it&rsquo;s a light wrapper around the SeriesGroupBy methods, it runs at roughly the same speed.

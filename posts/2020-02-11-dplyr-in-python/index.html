@@ -258,11 +258,11 @@ result.head()
 </code></pre>
 
 <pre><code>student_id
-0     [33, 99, 32, 10, 97, 92, 9, 60, 24, 95]
-1    [16, 53, 25, 86, 23, 27, 41, 76, 56, 72]
-2    [23, 98, 23, 89, 55, 32, 70, 57, 64, 89]
-3      [8, 3, 34, 12, 70, 63, 58, 69, 41, 36]
-4      [40, 29, 53, 11, 4, 99, 62, 84, 8, 65]
+0    [50, 25, 51, 49, 77, 78, 54, 60, 72, 88]
+1    [75, 97, 34, 21, 88, 22, 65, 99, 95, 10]
+2    [90, 95, 72, 93, 60, 34, 15, 19, 32, 67]
+3    [79, 39, 12, 53, 10, 12, 94, 21, 13, 65]
+4    [49, 61, 63, 25, 26, 96, 84, 40, 87, 65]
 dtype: object
 </code></pre>
 
@@ -271,17 +271,17 @@ ser_combined = pd.Series(flat_arr)
 ser_combined
 </code></pre>
 
-<pre><code>0         33
-1         99
-2         32
-3         10
-4         97
-          ..
-499995    71
-499996    76
-499997    28
-499998    19
-499999    92
+<pre><code>0          50
+1          25
+2          51
+3          49
+4          77
+         ... 
+499995     64
+499996     41
+499997     17
+499998    100
+499999     16
 Length: 500000, dtype: int64
 </code></pre>
 
@@ -354,24 +354,25 @@ mutate(g_students, demeaned = score - mean(score))
 # Groups:   student_id [50,000]
   student_id course_id score demeaned
        &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-1          0         0    32    -22.1
-2          0         1    98     43.9
-3          0         2    31    -23.1
-4          0         3     9    -45.1
-5          0         4    96     41.9
+1          0         0    49   -10.4 
+2          0         1    24   -35.4 
+3          0         2    50    -9.40
+4          0         3    48   -11.4 
+5          0         4    76    16.6 
 # … with 5e+05 more rows
 </code></pre>
 
 <p>In pandas, composing grouped operations like this looks like&hellip;</p>
 
-<pre><code class="language-python">user_courses = user_courses.score - g_students.score.transform('mean')
+<pre><code class="language-python">demeaned = user_courses.score - g_students.score.transform('mean')
+user_courses['demeaned'] = demeaned
 </code></pre>
 
 <p>Two things stick out in the pandas version:</p>
 
 <ul>
 <li><strong>two objects:</strong> we need to refer to both the grouped AND the ungrouped data</li>
-<li><strong>result length dependent operations:</strong> to calculate a mean in this case we have to pass the string &ldquo;mean&rdquo;. This tells pandas that the result should be the same length as the original data.</li>
+<li><strong>result length dependent operations:</strong> to calculate a mean in this case we have to pass the string &ldquo;mean&rdquo; to transform. This tells pandas that the result should be the same length as the original data.</li>
 </ul>
 
 <p>In dplyr users don&rsquo;t need to worry about either of things. <strong>dplyr allows users to decouple the specification of operations, result length, and grouping.</strong></p>
@@ -386,12 +387,20 @@ mutate(g_students, demeaned = score - mean(score))
 </ul>
 
 <pre><code class="language-python">from siuba.experimental.pd_groups import fast_mutate
-from siuba import _
+from siuba import _, ungroup
 
-fast_mutate(g_students, result = _.score + 1)
+# note: need to ungroup since grouped DataFrames don't have nice repr
+fast_mutate(g_students, result = _.score + 1) &gt;&gt; ungroup()
 </code></pre>
 
-<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x11af5c080&gt;
+<pre><code>        student_id  course_id  score  demeaned  result
+0                0          0     49     -10.4      50
+1                0          1     24     -35.4      25
+...            ...        ...    ...       ...     ...
+499998       49999          8     99      56.1     100
+499999       49999          9     15     -27.9      16
+
+[500000 rows x 5 columns]
 </code></pre>
 
 <p>Because it&rsquo;s a light wrapper around the SeriesGroupBy methods, it runs at roughly the same speed.

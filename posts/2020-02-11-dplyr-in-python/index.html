@@ -181,7 +181,7 @@ g_students = user_courses.groupby(&quot;student_id&quot;)
 <li>whether to add 1 to a group&rsquo;s Series, or its underlying array.</li>
 </ul>
 
-<p>For example, here is the apply method on an underlying array.</p>
+<p>For example, here is the apply method on a Series.</p>
 
 <pre><code class="language-python">g_students.apply(lambda d: d.score + 1)
 </code></pre>
@@ -258,11 +258,11 @@ result.head()
 </code></pre>
 
 <pre><code>student_id
-0    [50, 25, 51, 49, 77, 78, 54, 60, 72, 88]
-1    [75, 97, 34, 21, 88, 22, 65, 99, 95, 10]
-2    [90, 95, 72, 93, 60, 34, 15, 19, 32, 67]
-3    [79, 39, 12, 53, 10, 12, 94, 21, 13, 65]
-4    [49, 61, 63, 25, 26, 96, 84, 40, 87, 65]
+0    [82, 36, 2, 96, 14, 52, 19, 63, 86, 27]
+1    [26, 51, 40, 71, 72, 88, 34, 4, 44, 23]
+2    [30, 2, 15, 52, 57, 79, 34, 63, 44, 44]
+3    [9, 41, 22, 33, 15, 16, 28, 35, 27, 87]
+4    [16, 50, 7, 31, 68, 76, 26, 35, 66, 89]
 dtype: object
 </code></pre>
 
@@ -271,17 +271,17 @@ ser_combined = pd.Series(flat_arr)
 ser_combined
 </code></pre>
 
-<pre><code>0          50
-1          25
-2          51
-3          49
-4          77
-         ... 
-499995     64
-499996     41
-499997     17
-499998    100
-499999     16
+<pre><code>0         82
+1         36
+2          2
+3         96
+4         14
+          ..
+499995    34
+499996    94
+499997    22
+499998     2
+499999    26
 Length: 500000, dtype: int64
 </code></pre>
 
@@ -343,7 +343,7 @@ result = ser + 1
 <p>This is extremely convenient, but we run into problems when we need to combine these fast methods.
 They cannot be easily combined.</p>
 
-<p>For instance, consider the dplyr code below&hellip;</p>
+<p>For instance, consider how simple demeaning a column is in dplyr.</p>
 
 <pre><code class="language-r">library(dplyr)
 
@@ -354,15 +354,15 @@ mutate(g_students, demeaned = score - mean(score))
 # Groups:   student_id [50,000]
   student_id course_id score demeaned
        &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-1          0         0    49   -10.4 
-2          0         1    24   -35.4 
-3          0         2    50    -9.40
-4          0         3    48   -11.4 
-5          0         4    76    16.6 
+1          0         0    81     34.3
+2          0         1    35    -11.7
+3          0         2     1    -45.7
+4          0         3    95     48.3
+5          0         4    13    -33.7
 # … with 5e+05 more rows
 </code></pre>
 
-<p>In pandas, composing grouped operations like this looks like&hellip;</p>
+<p>In pandas, doing the same operation like this looks like&hellip;</p>
 
 <pre><code class="language-python">demeaned = user_courses.score - g_students.score.transform('mean')
 user_courses['demeaned'] = demeaned
@@ -394,11 +394,11 @@ fast_mutate(g_students, result = _.score + 1) &gt;&gt; ungroup()
 </code></pre>
 
 <pre><code>        student_id  course_id  score  demeaned  result
-0                0          0     49     -10.4      50
-1                0          1     24     -35.4      25
+0                0          0     81      34.3      82
+1                0          1     35     -11.7      36
 ...            ...        ...    ...       ...     ...
-499998       49999          8     99      56.1     100
-499999       49999          9     15     -27.9      16
+499998       49999          8      1     -36.1       2
+499999       49999          9     25     -12.1      26
 
 [500000 rows x 5 columns]
 </code></pre>

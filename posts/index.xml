@@ -25,10 +25,10 @@ For example,
     
     <item>
       <title>What would it take to recreate dplyr in python?</title>
-      <link>/posts/2020-02-24-dplyr-in-python/</link>
-      <pubDate>Mon, 24 Feb 2020 00:00:00 +0000</pubDate>
+      <link>/posts/2020-02-11-dplyr-in-python/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2020-02-24-dplyr-in-python/</guid>
+      <guid>/posts/2020-02-11-dplyr-in-python/</guid>
       <description>Recently, I left my job as a data scientist at DataCamp to focus full time on two areas:
  co-directing the non-profit Code for Philly bringing the magic of dplyr to python  In order to do the second part, I&amp;rsquo;ve worked over the past year on a data analysis library called siuba. As part of this work, I&amp;rsquo;ve found myself often discussing siuba&amp;rsquo;s hardest job: making grouped operations a delight.</description>
     </item>

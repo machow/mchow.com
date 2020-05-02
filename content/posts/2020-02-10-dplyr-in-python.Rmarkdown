@@ -3,9 +3,12 @@ title: What would it take to recreate dplyr in python?
 author: Michael Chow
 date: '2020-02-11'
 slug: 2020-02-11-dplyr-in-python
+description: "Three key challenges of pandas groupby: the index tax, the type conversion tax, and composability"
+images:
+  - "https://mchow.com/005-transform-profile2.png"
 categories: []
 tags: []
-draft: no
+draft: false
 ---
 
 Recently, I left my job as a data scientist at DataCamp to focus full time on two areas:
@@ -13,7 +16,7 @@ Recently, I left my job as a data scientist at DataCamp to focus full time on tw
 * co-directing the non-profit Code for Philly
 * bringing the magic of dplyr to python
 
-In order to do the second part, I've worked over the past year on data analysis library called [siuba](https://github.com/machow/siuba).
+In order to do the second part, I've worked over the past year on a data analysis library called [siuba](https://github.com/machow/siuba).
 As part of this work, I've found myself often discussing siuba's hardest job: making grouped operations a delight.
 
 In this post I'll provide a high-level overview of three key challenges for porting [dplyr](https://github.com/tidyverse/dplyr) to python. Because the [pandas library](https://github.com/pandas-dev/pandas) is the most popular python implementation of both a DataFrame AND performing split-apply-combine on it, I'll focus mostly on the challenges of building dplyr on top of pandas. **Note that all of these challenges arise during the process of split-apply-combine**.
@@ -24,10 +27,11 @@ Here are the three challenges:
 2. **The type conversion tax** - Series run slow type checks multiple times per group.
 3. **Grouped operations are not composable** - DataFrame and DataFrameGroupBy methods are focused around performing a single action, like calculating a mean. They become verbose when you need to combine actions, like subtracting the mean of a column from itself.
 
-The reason these challenges are important can be illustrated in the code below.
+The reason these challenges are important can be illustrated in the dplyr code below.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(comment = "")
+options(tibble.print_min = 5)
 ```
 
 
@@ -36,12 +40,14 @@ library(dplyr)
 my_arbitrary_func <- function(x) x + 1
 
 # group data by cyl
-g_cyl <- mtcars %>% select(cyl, hp) %>% group_by(cyl)
 
-g_cyl %>% mutate(
+mtcars %>%
+  select(cyl, hp) %>%
+  group_by(cyl) %>%
+  mutate(
     dumb_result = my_arbitrary_func(hp),     # custom function
     demeaned = hp - mean(hp)                 # complex expression
-    )
+  )
 ```
 
 dplyr absolutely nails two features for grouped operations, even if the data has many groups:
@@ -90,7 +96,7 @@ Consider a trivial operation: a function that adds 1 to each students score. Thi
 * whether to use the `.apply` or `.transform` method.
 * whether to add 1 to a group's Series, or its underlying array.
 
-For example, here is the apply method on an underlying array.
+For example, here is the apply method on a Series.
 
 ```{python, cache = TRUE}
 g_students.apply(lambda d: d.score + 1)
@@ -190,7 +196,7 @@ This happens in two ways:
 This is extremely convenient, but we run into problems when we need to combine these fast methods.
 They cannot be easily combined.
 
-For instance, consider the dplyr code below...
+For instance, consider how simple demeaning a column is in dplyr.
 
 ```{r, include = FALSE}
 library(dplyr)
@@ -205,16 +211,17 @@ library(dplyr)
 mutate(g_students, demeaned = score - mean(score))
 ```
 
-In pandas, composing grouped operations like this looks like...
+In pandas, doing the same operation like this looks like...
 
 ```{python}
-user_courses = user_courses.score - g_students.score.transform('mean')
+demeaned = user_courses.score - g_students.score.transform('mean')
+user_courses['demeaned'] = demeaned
 ```
 
 Two things stick out in the pandas version:
 
 * **two objects:** we need to refer to both the grouped AND the ungrouped data
-* **result length dependent operations:** to calculate a mean in this case we have to pass the string "mean". This tells pandas that the result should be the same length as the original data.
+* **result length dependent operations:** to calculate a mean in this case we have to pass the string "mean" to transform. This tells pandas that the result should be the same length as the original data.
 
 In dplyr users don't need to worry about either of things. **dplyr allows users to decouple the specification of operations, result length, and grouping.**
 
@@ -225,12 +232,17 @@ In order to decouple operations, result length, and grouping, siuba does two thi
 * wraps Series(GroupBy) methods in a way that makes them composable
 * uses its port of dplyr verbs, like `mutate` to handle result length
 
+```{python, echo = FALSE}
+pd.set_option('min_rows', 5)
+```
+
 
 ```{python}
 from siuba.experimental.pd_groups import fast_mutate
-from siuba import _
+from siuba import _, ungroup
 
-fast_mutate(g_students, result = _.score + 1)
+# note: need to ungroup since grouped DataFrames don't have nice repr
+fast_mutate(g_students, result = _.score + 1) >> ungroup()
 ```
 
 Because it's a light wrapper around the SeriesGroupBy methods, it runs at roughly the same speed.
@@ -248,4 +260,4 @@ However, this strategy largely involves wrapping pandas groupoed Series methods.
 
 In follow-up articles, I will dive more deeply into strategies for more naturally allowing custom operations, by alleviating the index, and type checking tax, so that DataFrames can be quickly split, applied, and combined.
 
-If you have questions about siuba, or grouped operations--feel free reach me on twitter [@chowthedog](https://twitter.com/home).
+If you have questions about siuba, or grouped operations--feel free reach me on twitter [@chowthedog](https://twitter.com/chowthedog).

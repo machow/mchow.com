@@ -1,5 +1,11 @@
 # Vim swapfiles
 .*.swp
-.Rproj.user
 
+# R ----
+.Rproj.user
+.Rhistory
+
+# Python ----
 .ipynb_checkpoints
+.python-version
+Untitled*.ipynb

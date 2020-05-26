@@ -5,6 +5,9 @@
 .Rproj.user
 .Rhistory
 
+# blogdown folder (holds e.g. cached objects)
+blogdown
+
 # Python ----
 .ipynb_checkpoints
 .python-version

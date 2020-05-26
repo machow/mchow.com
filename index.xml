@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 | Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Mon, 24 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pandas has a hard job (and does it well)</title>
+      <link>/posts/pandas-has-a-hard-job/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/pandas-has-a-hard-job/</guid>
+      <description>I&amp;rsquo;ve had to dive into the pandas code over the last year for a project (siuba), and my attitude has shifted dramatically from..
+ old attitude: why does pandas have to make things so hard? new attitude: pandas has a crazy difficult job.  I think this is most apparent in the functions that decide what dtype a Block&amp;ndash;the most basic thing that stores data in pandas&amp;ndash;should be.
+For the ubiquitous Object dtype, it often figures out which of the many possible more specific types to cast it to.</description>
+    </item>
     
     <item>
       <title>Single dispatch for democratizing data science tools</title>
@@ -31,16 +42,6 @@ For example,
       <guid>/posts/2020-02-11-dplyr-in-python/</guid>
       <description>Recently, I left my job as a data scientist at DataCamp to focus full time on two areas:
  co-directing the non-profit Code for Philly bringing the magic of dplyr to python  In order to do the second part, I&amp;rsquo;ve worked over the past year on a data analysis library called siuba. As part of this work, I&amp;rsquo;ve found myself often discussing siuba&amp;rsquo;s hardest job: making grouped operations a delight.</description>
-    </item>
-    
-    <item>
-      <title>Using R and the A* Algorithm: Cruising Around Minecraft</title>
-      <link>/posts/r-and-astar-with-minecraft/</link>
-      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/r-and-astar-with-minecraft/</guid>
-      <description>(This article is the last in a series on using the A* algorithm in R. See the first and second posts for more.)
-Last year at the NYC R conference, I had the chance to see David Smith demonstrate building and navigating a Minecraft maze, using the miner package. It was really cool! At the end of the talk, as we stepped out of the maze, my gaze turned to the lofty minecraft peaks in the distance.</description>
     </item>
     
     <item>

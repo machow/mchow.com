@@ -224,6 +224,14 @@ One of siuba&rsquo;s main job is to reset them, so that as much data as possible
 
 <p>When doing data analysis, having to do this kind of fine-grained index and name fiddling is probably not what you want. However, as a developer, this kind of granularity is pretty powerful&mdash;and it made implementing <code>spread()</code> a quick task!</p>
 
+<p>Altogether, the final siuba code to produce the above result is more of a convenience wrapper.</p>
+
+<pre><code class="language-python">from siuba import _, spread
+
+# spreading from longer to wider format
+spread(long, _.key, _.value)
+</code></pre>
+
 <p>(Note: siuba uses the unstack method in its spread implementation, rather than pivot_table, but the idea is the same.)</p>
 
 <h3 id="pandas-flexibility-makes-more-powerful-functions-possible">pandas&rsquo; flexibility makes more powerful functions possible</h3>

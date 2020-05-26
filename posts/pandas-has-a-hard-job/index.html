@@ -10,8 +10,8 @@
 <meta property="og:description" content="Your description here">
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Pandas has a hard job (and does it well)" />
-<meta property="og:description" content="I&rsquo;ve had to dive into the pandas code over the last year for a project (siuba), and my attitude has shifted dramatically from..
- old attitude: why does pandas have to make things so hard? new attitude: pandas has a crazy difficult job.  I think this is most apparent in the functions that decide what dtype a Block&ndash;the most basic thing that stores data in pandas&ndash;should be.
+<meta property="og:description" content="I&rsquo;ve had to dive into pandas&rsquo; code base over the last year for a project (siuba), and my attitude has shifted dramatically from..
+ old attitude: why does pandas have to make things so hard? new attitude: pandas has a crazy difficult job.  I think this is most apparent in the functions that decide what dtype a Block&mdash;the most basic thing that stores data in pandas&mdash;should be.
 For the ubiquitous Object dtype, it often figures out which of the many possible more specific types to cast it to." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/pandas-has-a-hard-job/" />
@@ -92,14 +92,14 @@ For the ubiquitous Object dtype, it often figures out which of the many possible
     <div class="content">
       
 
-<p>I&rsquo;ve had to dive into the pandas code over the last year for <a href="https://github.com/machow/siuba">a project (siuba)</a>, and my attitude has shifted dramatically from..</p>
+<p>I&rsquo;ve had to dive into pandas&rsquo; code base over the last year for <a href="https://github.com/machow/siuba">a project (siuba)</a>, and my attitude has shifted dramatically from..</p>
 
 <ul>
 <li><strong>old attitude:</strong> why does pandas have to make things so hard?</li>
 <li><strong>new attitude:</strong> pandas has a crazy difficult job.</li>
 </ul>
 
-<p>I think this is most apparent <a href="https://github.com/pandas-dev/pandas/blob/238e04fce87b30923eeb4a0a0606dd492b0e52f0/pandas/core/internals/blocks.py#L2662">in the functions</a> that decide what dtype a Block&ndash;the most basic thing that stores data in pandas&ndash;should be.</p>
+<p>I think this is most apparent <a href="https://github.com/pandas-dev/pandas/blob/238e04fce87b30923eeb4a0a0606dd492b0e52f0/pandas/core/internals/blocks.py#L2662">in the functions</a> that decide what dtype a Block&mdash;the most basic thing that stores data in pandas&mdash;should be.</p>
 
 <p>For the ubiquitous Object dtype, it often figures out which of the many possible more specific types to cast it to.</p>
 
@@ -171,7 +171,7 @@ Often, I am just wrapping a couple pandas methods, handling some edge cases, and
 
 <p>The data is transformed so that each kind of measurement gets its own column.</p>
 
-<p>For example, the figure below&ndash;taken from <a href="https://r4ds.had.co.nz/tidy-data.html">R for Data Science</a>&ndash;shows the original data on the left, which measures &ldquo;cases&rdquo; and &ldquo;population&rdquo; for different countries over time. Here, the measure column is named <code>key</code>.
+<p>For example, the figure below&mdash;taken from <a href="https://r4ds.had.co.nz/tidy-data.html">R for Data Science</a>&mdash;shows the original data on the left, which measures &ldquo;cases&rdquo; and &ldquo;population&rdquo; for different countries over time. Here, the measure column is named <code>key</code>.
 It shows how <code>spread()</code> maps the values to create the data on the right.</p>
 
 <p><img src="/007-spread.png" alt="" /></p>
@@ -222,13 +222,13 @@ One of siuba&rsquo;s main job is to reset them, so that as much data as possible
 5        China  2000  213766  1280428583
 </code></pre>
 
-<p>When doing data analysis, having to do this kind of fine-grained index and name fiddling is probably not what you want. However, as a developer, this kind of granularity is pretty powerful&ndash;and it made implementing <code>spread()</code> a quick task!</p>
+<p>When doing data analysis, having to do this kind of fine-grained index and name fiddling is probably not what you want. However, as a developer, this kind of granularity is pretty powerful&mdash;and it made implementing <code>spread()</code> a quick task!</p>
 
 <p>(Note: siuba uses the unstack method in its spread implementation, rather than pivot_table, but the idea is the same.)</p>
 
 <h3 id="pandas-flexibility-makes-more-powerful-functions-possible">pandas&rsquo; flexibility makes more powerful functions possible</h3>
 
-<p>Recently, dplyr released more general versions of spread, and gather&ndash;called <code>pivot_wider</code> and <code>pivot_longer</code>.
+<p>Recently, dplyr released more general versions of spread, and gather&mdash;called <code>pivot_wider</code> and <code>pivot_longer</code>.
 As a testament to pandas flexibility, it looks like all the functionality to port these functions is already there.</p>
 
 <h2 id="summary">Summary</h2>

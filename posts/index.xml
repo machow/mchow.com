@@ -18,8 +18,8 @@
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/pandas-has-a-hard-job/</guid>
-      <description>I&amp;rsquo;ve had to dive into the pandas code over the last year for a project (siuba), and my attitude has shifted dramatically from..
- old attitude: why does pandas have to make things so hard? new attitude: pandas has a crazy difficult job.  I think this is most apparent in the functions that decide what dtype a Block&amp;ndash;the most basic thing that stores data in pandas&amp;ndash;should be.
+      <description>I&amp;rsquo;ve had to dive into pandas&amp;rsquo; code base over the last year for a project (siuba), and my attitude has shifted dramatically from..
+ old attitude: why does pandas have to make things so hard? new attitude: pandas has a crazy difficult job.  I think this is most apparent in the functions that decide what dtype a Block&amp;mdash;the most basic thing that stores data in pandas&amp;mdash;should be.
 For the ubiquitous Object dtype, it often figures out which of the many possible more specific types to cast it to.</description>
     </item>
     

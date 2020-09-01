@@ -1,11 +1,10 @@
 ---
 title: Pandas has a hard job (and does it well)
-author: ''
+author: 'Michael Chow'
 date: '2020-05-26'
 slug: pandas-has-a-hard-job
 categories: []
 tags: []
-draft: yes
 ---
 
 ```{r setup, include = FALSE}
@@ -13,12 +12,12 @@ reticulate::use_virtualenv(path.expand("~/.virtualenvs/machow-web2"))
 knitr::opts_chunk$set(comment = "")
 ```
 
-I've had to dive into the pandas code over the last year for [a project (siuba)](https://github.com/machow/siuba), and my attitude has shifted dramatically from..
+I've had to dive into pandas' code base over the last year for [a project (siuba)](https://github.com/machow/siuba), and my attitude has shifted dramatically from..
 
 * **old attitude:** why does pandas have to make things so hard?
 * **new attitude:** pandas has a crazy difficult job.
 
-I think this is most apparent [in the functions](https://github.com/pandas-dev/pandas/blob/238e04fce87b30923eeb4a0a0606dd492b0e52f0/pandas/core/internals/blocks.py#L2662) that decide what dtype a Block--the most basic thing that stores data in pandas--should be.
+I think this is most apparent [in the functions](https://github.com/pandas-dev/pandas/blob/238e04fce87b30923eeb4a0a0606dd492b0e52f0/pandas/core/internals/blocks.py#L2662) that decide what dtype a Block---the most basic thing that stores data in pandas---should be.
 
 For the ubiquitous Object dtype, it often figures out which of the many possible more specific types to cast it to.
 
@@ -90,7 +89,7 @@ The `spread` function in dplyr focuses on shaping data from a longer to a wider 
 
 The data is transformed so that each kind of measurement gets its own column.
 
-For example, the figure below--taken from [R for Data Science](https://r4ds.had.co.nz/tidy-data.html)--shows the original data on the left, which measures "cases" and "population" for different countries over time. Here, the measure column is named `key`.
+For example, the figure below---taken from [R for Data Science](https://r4ds.had.co.nz/tidy-data.html)---shows the original data on the left, which measures "cases" and "population" for different countries over time. Here, the measure column is named `key`.
 It shows how `spread()` maps the values to create the data on the right.
 
 ![](/007-spread.png)
@@ -129,13 +128,23 @@ As it turns out, this is a little bit complicated.
     )
 ```
 
-When doing data analysis, having to do this kind of fine-grained index and name fiddling is probably not what you want. However, as a developer, this kind of granularity is pretty powerful--and it made implementing `spread()` a quick task!
+When doing data analysis, having to do this kind of fine-grained index and name fiddling is probably not what you want. However, as a developer, this kind of granularity is pretty powerful---and it made implementing `spread()` a quick task!
+
+Altogether, the final siuba code to produce the above result is more of a convenience wrapper.
+
+```{python, eval = FALSE}
+from siuba import _, spread
+
+# spreading from longer to wider format
+spread(long, _.key, _.value)
+```
+
 
 (Note: siuba uses the unstack method in its spread implementation, rather than pivot_table, but the idea is the same.)
 
 ### pandas' flexibility makes more powerful functions possible
 
-Recently, dplyr released more general versions of spread, and gather--called `pivot_wider` and `pivot_longer`.
+Recently, dplyr released more general versions of spread, and gather---called `pivot_wider` and `pivot_longer`.
 As a testament to pandas flexibility, it looks like all the functionality to port these functions is already there.
 
 

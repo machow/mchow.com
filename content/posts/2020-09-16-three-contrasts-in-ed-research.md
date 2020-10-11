@@ -5,7 +5,7 @@ date: '2020-09-16'
 slug: three-contrasts-in-ed-research
 categories: []
 tags: []
-draft: yes
+show: false
 ---
 
 Over the past several years, while designing skill assessment tools, I've stewed on something that might seem obvious: educational and cognitive psychology are distinct fields. Researchers in these fields often go to different conferences, cite different people in their papers, and sometimes use the same concept in ways foreign to the other field.

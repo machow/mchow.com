@@ -1,7 +1,7 @@
 ---
-title: Three Contrasting Views in Education Research
+title: (DRAFT) Three Contrasting Views in Education Research
 author: Michael Chow
-date: '2020-09-16'
+date: '2020-10-11'
 slug: three-contrasts-in-ed-1-rigor-relevance
 categories: []
 tags: []

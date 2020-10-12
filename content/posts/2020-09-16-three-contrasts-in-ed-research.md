@@ -213,7 +213,7 @@ The interaction of learning processes and knowledge components is illustrated in
 
 #### Strengths and Limitations
 
-A major strength of the KLI Framework comes from its ability to analyze instructional principals at a finer, knowledge component grain (i.e. seconds vs minutes). For example, earlier in this post I mentioned the worked example effect, where showing students a worked out solution tends to be more effective than giving them a test problem to solve. Koedinger (2012) interpret this effect in terms of learning processes and knowledge components.
+A major strength of the KLI Framework comes from its ability to analyze instructional principals at a finer, knowledge component grain (i.e. seconds vs minutes). For example, earlier in this post I mentioned the worked example effect, where showing students a worked out solution tends to be more effective than giving them a test problem to solve. Koedinger (2012) interpret the **value of worked examples** in terms of learning processes and knowledge components.
 
 For learning processes:
 

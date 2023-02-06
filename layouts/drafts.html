@@ -1,4 +1,4 @@
-{{ $paginator := .Paginate (where (where (where .Site.Pages "Type" "in" site.Params.mainSections) ".Params.show" "!=" false) "IsPage" true) }}
+{{ $paginator := .Paginate (where .Pages ".Params.show" "!=" false) }}
 {{ partial "header" . }}
 {{ partial "nav" . }}
 <section class="section">

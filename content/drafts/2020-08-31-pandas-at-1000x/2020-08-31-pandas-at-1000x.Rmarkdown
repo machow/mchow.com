@@ -1,0 +1,201 @@
+---
+title: Pandas grouped operations at 1000x the speed
+author: Michael Chow
+date: '2020-08-31'
+slug: pandas-at-1000x
+categories: []
+tags: []
+draft: yes
+---
+
+When it comes to data analysis in python, pandas is hands down the most popular tool. Its CSV reader is designed to handle all kinds of cryptic edge cases, and many of its methods are deeply optimized for performance. However, **grouped operations in pandas can be a major challenge**, as they require a different style of coding and methods.
+
+In order to make working with grouped data more consistent, a number of **ports of the library dplyr** have popped up over the years. As someone who has been working on a dplyr port myself (siuba), I thought it'd be useful to review them. I'll cover three key points:
+
+* how they unify the syntax for grouped and ungrouped operations.
+* benchmarking the performance issues they hit.
+* how siuba overcomes these issues to run at the speed of optimized pandas code.
+
+At this point, I know of 5 ports of dplyr to python.
+Writing one might be some kind of rite of passage.
+Anyway, here's a table comparing some of their key features.
+
+(Note that I've left out [pandas-ply](https://github.com/coursera/pandas-ply), whose last commit was in 2015.)
+
+
+|                         | [siuba][siuba]      | [plydata][plydata]   | [dfply][dfply]     | [dplython][dplython]  |
+| ----------------------- | ---------- | --------- | --------- | --------- |
+| symbolic operations     | ✅          | ✅         | ✅         | ✅         |
+| unified grouping API    | ✅          | ✅         | ✅         | ✅         |
+| pipe operator           | ✅          | ✅         | ✅         | ✅         |
+| uses raw DataFrame      | ✅          | ✅         | ✅         | ❌         |
+| verbs like filter\_all  | ❌          | ✅         | ❌         | ❌         |
+| uses plain groupby      | ✅          | ❌         | ❌         | ❌         |
+| fast grouped operations | ✅          | ❌         | ❌         | ❌         |
+| SQL support             | ✅          | ❌         | ❌         | ❌         |
+| filter is named         | filter     | query     | mask      | sift      |
+| mutate is named         | mutate     | define    | mutate    | mutate    |
+| symbol style            | \_.mpg + 1 | "mpg + 1" | X.mpg + 1 | X.mpg + 1 |
+| last release            | 2020       | 2020      | 2018      | 2016      |
+
+[siuba]: http://github.com/machow/siuba
+[plydata]: https://github.com/has2k1/plydata
+[dfply]: https://github.com/kieferk/dfply
+[dplython]: https://github.com/dodger487/dplython
+
+## Symbolics, pipes, and unified grouped operations
+
+Suppose you have data on students at a school, and their scores on different courses.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(comment = "")
+reticulate::use_virtualenv(path.expand("~/.virtualenvs/machow-web2-2020-08"))
+```
+
+
+```{python, echo = FALSE}
+import numpy as np
+import pandas as pd
+
+def df_fact(size):
+    N_students = size
+    N_per = 3
+    N_ttl = N_students * N_per
+    students = pd.DataFrame({
+        'student_id': np.repeat(np.arange(N_students), N_per),
+        'course_id': np.tile(np.arange(N_per), N_students),
+        'score': np.random.randint(1, 100, N_ttl)
+    })
+    
+    return students
+
+np.random.seed(789) 
+students = df_fact(2).sort_values(["student_id", "course_id"])
+g_students = students.groupby("student_id")
+students
+```
+
+
+```{python, eval = FALSE}
+students.assign(
+    demeaned = students.score - students.score.mean()
+    )
+```
+
+
+```{python, eval = FALSE}
+g_students = students.groupby("student_id")
+
+students.assign(
+    demeaned = students.score - g_students.score.transform("mean")
+    )
+```
+
+However two issues pop up. First, in both versions you have to use the name of the data repeatedly. Second, in the grouped code `g_students` has to pass the string "mean" to a transform method, rather than the `.mean()` method in the ungrouped code. It's cumbersome having to switch things up depending on whether you group / ungroup the data.
+
+dplyr ports resolve this by providing a single syntax for both grouped and ungrouped situations.
+
+For example, here's the same operations using siuba.
+
+```{python, eval = FALSE}
+# note: also attaches methods like siu_mutate to the DataFrame
+from siuba import _
+
+students.siu_mutate(  demeaned = _.score - _.score.mean())
+g_students.siu_mutate(demeaned = _.score - _.score.mean())
+```
+
+```{python, echo = FALSE}
+from siuba import _
+
+students.siu_mutate  (demeaned = _.score - _.score.mean())
+```
+
+
+Notice that rather than using the name of the data repeatedly, we use a special underscore object. This is a **symbolic operation**, because it represents **what** we want to do to the data. It's similar to writing `lambda _: _.score - _.score.mean()`.
+
+Another feature available in dplyr ports is the **pipe operator**,
+which provides a convenient alternative to pandas `.pipe()` method.
+
+```{python, eval = FALSE}
+from siuba import _, mutate
+
+# manually pipe with pandas
+students.pipe(mutate, demeaned = _.score - _.score.mean())
+
+# using pipe operator: >>
+students >> mutate(demeaned = _.score - _.score.mean())
+```
+
+
+### What does mutate look like across dplyr ports?
+
+Mostly the same!
+
+| library | code |
+| ------- | ---- |
+| siuba | `mutate(demeaned = _.score - _.score.mean())` | 
+| dfply | `mutate(demeaned = X.score - X.score.mean())` |
+| dplython | `mutate(demeaned = X.score - X.score.mean())` |
+| plydata | `define(demeaned = "score - score.mean()")`  |
+
+`siuba` is identical to `dfply` and `dplython`, except its symbolic is `_` rather than `X`.
+The most unique approach comes from `plydata`, which uses a string to represent the operation, similar to pandas `DataFrame.eval()` and `DataFrame.query()` methods.
+
+While functions like mutate make it much simpler separate grouping from the operations you want to perform, this flexibility often comes at the cost of performance.
+
+## Benchmarking performance
+
+
+### Mutate: standardizing a column
+
+For this benchmark, I timed how long it takes to calculate `(score - score.mean()) / score.std()` within each group (e.g. a student).
+
+![](/008-benchmark-mutate.png)
+
+Here are the calculations used.
+
+| approach        | code                                                                                                                                    |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| siuba           | `mutate(g_students, demean = (_.score - _.score.mean()) / _.score.std())`                                                         |
+| dplython, dfply | same as siuba, but using X |
+| plydata         | `define(g_students, demean = "score - score.mean()) / score.std()")`                                                                     |
+| pd\_group       | `students.assign(` <br> `    demean = g_students.score.transform(lambda x: (x - x.mean()) / x.std())` <br> `)` |
+
+Note that `siuba_fast` is the same siuba code, but importing an new, optimized version of the mutate function. And it's lightning fast! Where other approaches take over 1 second with only 1,000 groups, it  takes basically no time at all.
+
+The above approach for pandas, `pd_group`, uses a custom transform--which is more general, but also slower. We can re-write it to use optimized pandas code.
+
+| approach        | code |
+| --- | --- |
+| pd\_fast\_group | `m = g_students.score.transform("mean")` <br> `sd = g_students.score.transform("std")` <br> `students.assign(demean = (students.scores - m) / sd)` |
+| siuba_fast      | `from siuba.experimental.pd_groups import fast_mutate as mutate`  |
+
+
+Below shows this optimal code compared to the fast siuba approach. Note that it is testing up to a million groups, rather than a thousand.
+
+![](/008-benchmark-mutate-fast.png)
+
+One surprising result is that siuba runs slightly faster than pandas here.
+This is because for each transform operation, pandas tries to cast the data as a numeric before and after the operation is run. This results in 4 fairly costly checks being run for the 2 transforms.
+
+### Filter: keeping lowest score for each student
+
+Another common operation is subsetting data using filter.
+For example, we might want to keep rows corresponding to each student's lowest score.
+To do this, we need to know--within each student--when `score == score.min()`.
+
+![](/008-benchmark-filter.png)
+
+![](/008-benchmark-filter-fast.png)
+
+
+| approach        | code                                                                            |
+| --------------- | ------------------------------------------------------------------------------- |
+| siuba           | `filter(g_students, _.score == _.score.min())`                             |
+| dplython, dfply | same as siuba, but using X                                                    |
+| plydata         | `query(g_students, "score == score.min()")`                                      |
+| pd_group       | `g_students.apply(` <br> `lambda d: d[d.score == d.score.min()]` <br> `)`     |
+| pd_fast_group | `indx = students.score == g_students.score.transform("min")` <br> `students[indx]` |
+| siuba_fast  | `from siuba.experimental.pd_groups import fast_filter as filter` |
+

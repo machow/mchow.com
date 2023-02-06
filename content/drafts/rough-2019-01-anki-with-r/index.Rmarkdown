@@ -1,0 +1,48 @@
+---
+title: Exploring anki with R
+author: ''
+date: '2019-01-26'
+slug: rough-2019-01-anki-with-r
+categories: []
+tags: []
+draft: yes
+---
+
+```{r}
+library(datamodelr)
+library(dplyr)
+library(tibble)
+library(RSQLite)
+
+db <- DBI::dbConnect(
+  RSQLite::SQLite(),
+  #"~/Users/machow/Library/Application Support/Anki2/User 1/collection.anki2"
+  "~/Desktop/collection.anki2"
+  )
+```
+
+
+```{r}
+inf = lapply(dbListTables(db), function(tb) {
+  fk = dbGetQuery(db, paste0("pragma foreign_key_list('", tb, "')")) %>%
+    mutate(from = as.character(from))
+  
+  dbGetQuery(db, paste0("pragma table_info('", tb, "')")) %>%
+    left_join(fk, by = c(name = 'from')) %>%
+    mutate(key = as.integer(pk>0)) %>%
+    select(column = 'name', key, ref = 'table', ref_col = 'to', mandatory = 'notnull', 
+              type, column_order='cid') %>%
+    add_column(table=tb, .before=1)
+}) %>%
+  bind_rows()
+
+as.data_model(inf) %>% 
+  dm_add_references(
+    cards$nid == notes$id,
+    revlog$cid == cards$id,
+    cards$did == col$decks,
+    notes$mid == col$models
+  ) %>%
+  dm_create_graph(rankdir = "RL")
+```
+

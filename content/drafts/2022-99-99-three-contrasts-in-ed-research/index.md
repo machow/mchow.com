@@ -3,9 +3,9 @@ title: (DRAFT) Three Contrasting Views in Education Research
 author: Michael Chow
 date: '2020-10-11'
 slug: three-contrasts-in-ed-1-rigor-relevance
-categories: []
-tags: []
-show: false
+categories: ["learning"]
+tags: ["learning"]
+draft: true
 ---
 
 Over the past several years, while designing skill assessment tools, I've stewed on something that might seem obvious: educational and cognitive psychology are distinct fields. Researchers in these fields often go to different conferences, cite different people in their papers, and sometimes use the same concept in ways foreign to the other field.
@@ -55,7 +55,7 @@ In the Koedinger paper, they introduce the concepts of rigor and relevance (p. 7
 They emphasize that whereas studies focused on relevance often measure performance after whole tasks (e.g. after minutes of activity), a key to connecting back to cognitive processes is to measure on the order of seconds. A nice illustration they use comes from Newell's time scales of human action:
 
 
-![](/009-newell-grain-size.png)
+![](009-newell-grain-size.png)
 
 A big job served by frameworks is to help bridge between timescales (and connect researchers focused on specific timescales). In this sense, both Cognitive Load Theory (framework) and the KLI framework take ideas abut low-level cognitive processes and give guidance for how they could be applyed to questions about instructional design.
 
@@ -67,7 +67,7 @@ The best way to get a feel for these frameworks is to read the papers themselves
 
 ## Two Frameworks of Cognition and Complex Learning
 
-In the following sections I'll discuss Cognitive Load Theory and the KLI framework, each with an emphasis on three key points:
+In the following sections I'll discuss Cognitive Load Theory (CLT; Sweller and Chandler, 1991) and the Knowledge-learning-instruction framework (KLI Framework; Koedinger et al., 2012), each with an emphasis on three key points:
 
 * The framework's main goal
 * How it relates cognition and instruction
@@ -181,7 +181,7 @@ The framework breaks down knowledge into what it calls knowledge components (KCs
 
 Below is a figure from their paper that depicts the framework.
 
-![](/009-kli-diagram.png)
+![](009-kli-diagram.png)
 
 #### More on Knowledge Components
 
@@ -208,7 +208,7 @@ In the KLI FrameworkKoedinger et al. (2012) emphasize 3 learning processes (orde
 
 The interaction of learning processes and knowledge components is illustrated in the figure below (derived from table 4 in Koedinger et al.).
 
-![](/009-learning-events-and-kcs-wide.png)
+![](009-learning-events-and-kcs-wide.png)
 
 
 #### Strengths and Limitations
@@ -228,7 +228,7 @@ For KCs:
 
 The figure below shows how learning processes and KCs might interact to produce instructional effects:
 
-![](/009-learning-events-effects.png)
+![](009-learning-events-effects.png)
 
 Note that on the diagonal (dark green) are where learning processes (y-axis) and KCs (x-axis) interact to produce classic effects like the test effect, worked examples, and self-explanation are commonly observed.
 
@@ -237,7 +237,7 @@ On the bottom row, the circled effects are conditions where the effects on the d
 **The first circled effect**. Optimal sequencing refers to how and when to switch from worked examples to test problems (e.g. through faded examples; possibly adaptive).
 The worked example effect and expertise reversal is discussed in detail by Salden et al. (2010), who review a line of studies examining when and how to fade from worked examples to test problems. I won't describe it in detail, but show one task they used below, to give a sense for what they look like. They used a geometry tutor, which combined worked out steps, with an input for self-explanation on the rule the steps were applying.
 
-![](/009-faded-example2.png)
+![](009-faded-example2.png)
 
 
 **The second circled effect**. Choking under pressure refers to research on how pressure-filled situations can decrease performance. Interestingly, there are two explanations for why this occurs: one for tasks that require attention, and one for tasks where attention hinders skilled performance. The second kind of task is described as a procedural learning task, which corresponds to the more complex, non-verbal KCs described here. Intriguingly, Beilock et al. (2002) found that--for students dribbling through a slalom course--explicitly monitoring the side of the foot touching the ball helps novices, but hinders skilled performers (compared to monitoring something outside the task at hand).

@@ -1,2 +1,2 @@
 build:
-	R -e "blogdown::build_site()"
+	hugo --cleanDestinationDir

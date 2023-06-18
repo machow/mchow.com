@@ -12,6 +12,6 @@ You scatter seed but do
 not weed for you hate it and
 season to season the strongest
 the ones that rise against all
-odds live on and though you can-
+odds live on although you can-
 not make a stew of the victor
 ```

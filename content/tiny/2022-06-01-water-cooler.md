@@ -5,6 +5,7 @@ date: '2022-06-01T12:01:07'
 slug: water-cooler
 categories: []
 tags: []
+draft: true
 ---
 
 ```raw

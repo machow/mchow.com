@@ -1,0 +1,22 @@
+{{ partial "header" . }}
+<body>
+{{ partial "nav" . }}
+<section class="section tiny">
+  <div class="container">
+    {{ if .Params.tags }}
+      {{ partial "tags" .Params.tags }}
+    {{ end }}
+    <div class="content">
+      {{ .Content }}
+    </div>
+    <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}</h1>
+
+    {{ if (ne ($.Param "sharingicons") false) }}
+    {{ partial "sharing.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ partial "disqus" . }}
+{{ partial "footer" . }}
+</body>
+

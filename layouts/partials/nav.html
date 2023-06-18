@@ -1,17 +1,25 @@
 <section class="section">
-  <div class="container">
-    <nav class="nav">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
       <div class="nav-left">
         <a class="nav-item" href="{{ .Site.BaseURL }}">
-          <h1 class="title is-4 is-hidden-mobile">{{ .Site.Title }}</h1>
+          <h1 class="title is-4">{{ .Site.Title }}</h1>
+          <!--
           <h1 class="title is-4 is-hidden-tablet">mchow</h1>          
+          -->
         </a>
       </div>
+      <!--
       <div class="nav-right">
-        <nav class="nav-item level is-mobile">
-          <a class="level-item" href="{{ .Site.BaseURL }}posts">posts</a>
-          <a class="level-item" href="{{ .Site.BaseURL }}thoughts">thoughts</a>
-          <a class="level-item" href="{{ .Site.BaseURL }}projects">work</a>          
+      -->
+        <nav class="nav-item is-mobile topnav__links-pages">
+          <a class="level-item" href="{{ .Site.BaseURL }}posts">longform</a>
+          <a class="level-item" href="{{ .Site.BaseURL }}thoughts">short</a>
+          <a class="level-item topnav__tiny-text" href="{{ .Site.BaseURL }}tiny">TINY</a>
+          <a class="level-item" href="{{ .Site.BaseURL }}projects">projects</a>          
+          <a class="level-item" href="{{ .Site.BaseURL }}about">about</a>          
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
           {{ range .Site.Params.social }}
           <a class="level-item" href="{{ .url }}" target="_blank">
             <span class="icon">
@@ -20,7 +28,9 @@
           </a>
           {{ end }}
         </nav>
+      <!--
       </div>
+      -->
     </nav>
   </div>
 </section>

@@ -1,0 +1,92 @@
+.container.topnav {
+  max-width: 1200px;
+}
+
+.topnav .level-item {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.topnav .topnav__links-pages {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.topnav .topnav__tiny-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.topnav .nav-left {
+  flex-basis: auto;
+}
+
+
+.topnav .topnav__links {
+  flex-wrap: wrap;
+}
+
+
+@media screen and (max-width: 769px) {
+  .topnav__links-pages {
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .topnav__links-social {
+    order: 1;
+  }
+
+  .topnav .nav .level-item {
+
+  }
+}
+
+
+/* TINY */
+
+.tiny__separator {
+  margin-top: 300px;
+  overflow: hidden;
+  text-align: right;
+  color: rgb(105, 112, 122);
+}
+
+.tiny .title {
+  font-size: 16px;
+  text-align: right;
+  margin-right: 10%;
+}
+
+.tiny__separator:before {
+  border-bottom: 1px dotted rgb(105, 112, 122);
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+  margin-left: -100%;
+  right: 0.5em;
+}
+
+.tiny .tiny__list-entry {
+  margin-top: 300px;
+}
+
+.tiny .content p {
+  margin-bottom: 0px;
+}
+
+.tiny .container {
+  max-width: 650px;
+
+}
+
+.tiny .content pre, .tiny .content code {
+  background: none; 
+  font-family: "游ゴシック",YuGothic,"ヒラギノ角ゴ Pro","Hiragino Kaku Gothic Pro","メイリオ","Meiryo",sans-serif;
+  font-size: 16px;
+  white-space: pre-wrap;
+  padding: 0px;
+}

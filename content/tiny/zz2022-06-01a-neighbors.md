@@ -5,6 +5,7 @@ date: '2022-06-01'
 slug: neighbors
 categories: []
 tags: []
+draft: true
 ---
 
 ```raw

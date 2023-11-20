@@ -8,5 +8,5 @@ tags: []
 ---
 
 ```raw
-If a doctor prescribed you 200mg of nerds it would be a sweet tart.
+If a doctor prescribed 200mg of nerds it would be a sweet tart.
 ```

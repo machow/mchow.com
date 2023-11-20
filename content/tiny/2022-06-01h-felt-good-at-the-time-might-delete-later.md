@@ -10,8 +10,8 @@ tags: []
 ```raw
 You were so busy
 deploying apps that
-you forgot about the
+we forgot about the
 greatest app of
-all this app we
+all this app they
 call life
 ```

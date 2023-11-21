@@ -2,7 +2,7 @@
 {{ partial "nav" . }}
 <section class="section tiny">
   <div class="container">
-    {{ range sort .Paginator.Pages }}
+    {{ range sort .Pages.Reverse }}
     <article class="tiny__list-entry">
       {{ if .Params.tags }}
         {{ partial "tags" .Params.tags }}
@@ -16,6 +16,5 @@
     {{ end }}
   </div>
 </section>
-{{ partial "pager" . }}
 {{ partial "footer" . }}
 

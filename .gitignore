@@ -12,3 +12,5 @@ blogdown
 .ipynb_checkpoints
 .python-version
 Untitled*.ipynb
+
+/.quarto/

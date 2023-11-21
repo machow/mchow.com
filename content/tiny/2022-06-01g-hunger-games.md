@@ -9,9 +9,9 @@ tags: []
 
 ```raw
 You scatter seed but do
-not weed for you hate it and
+not weed for we hate it and
 season to season the strongest
 the ones that rise against all
-odds live on although you can-
+odds live on although they can-
 not make a stew of the victor
 ```

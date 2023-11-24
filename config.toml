@@ -6,7 +6,7 @@ copyright = "&copy; 2017 | Follow on <a href=\"https://twitter.com/chowthedog\" 
 googleAnalytics = "UA-117743385-1"
 pluralizelisttitles = false
 
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "\\.qmd$", "\\.ipynb$", "\\.py$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "\\.qmd$", "\\.ipynb$", "\\.py$", "_cache$"]
 
 [markup.goldmark.renderer]
 unsafe= true

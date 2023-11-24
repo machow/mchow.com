@@ -59,7 +59,16 @@
 }
 
 @media screen and (max-width: 1201px) {
-  .toc-content {
+
+  .section.section-default {
+    display: block;
+  }
+
+  .container-article--toc {
+    display: none;
+  }
+
+  .container-article--left {
     display: none;
   }
 

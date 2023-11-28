@@ -14,6 +14,13 @@
   vertical-align: middle;
 }
 
+@media screen and (max-width: 400px) {
+  .topnav .topnav__links-pages .level-item {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 .topnav .topnav__tiny-text {
   font-size: 14px;
   font-weight: 600;
@@ -26,6 +33,10 @@
 
 .topnav .topnav__links {
   flex-wrap: wrap;
+}
+
+.nav-item .level-item:first-child {
+  margin-left: 0px;
 }
 
 /* Table of contents */

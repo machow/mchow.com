@@ -14,10 +14,17 @@
   vertical-align: middle;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .topnav .topnav__links-pages .level-item {
+    /* 
     padding-left: 10px;
     padding-right: 10px;
+    */
+    font-size: 16px;
+  }
+
+  .topnav .topnav__links-pages .level-item.topnav__tiny-text {
+    font-size: 14px;
   }
 }
 

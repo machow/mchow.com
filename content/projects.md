@@ -78,7 +78,7 @@ type: pages
 * [Leadership Philadelphia Keeper's Program (2020)](https://generocity.org/philly/2020/10/27/leadership-philadelphias-2020-2021-keepers-cohort/)
 * [Technical.ly Philly RealList Engineers (2020)](https://technical.ly/software-development/reallist-engineers-2020-influential-technologists-philadelphia/)
 
-## News n Stuff
+## News
 
 * [Philadelphia Social Justice Hackathon 2022 (Inquirer)](https://www.inquirer.com/news/philadelphia-social-justice-hackathon-coding-law-school-drexel-temple-villanova-penn-20221028.html)
 * [Interview on Co-directing Code for Philly in 2020 (Technical.ly)](https://technical.ly/civic-news/code-for-philly-2020-shifts/)

@@ -1,4 +1,7 @@
-# Vim swapfiles
+# Mac ----
+.DS_Store
+
+# Vim swapfiles ----
 .*.swp
 
 # R ----

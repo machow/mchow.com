@@ -5,7 +5,8 @@ date: '2020-10-11'
 slug: three-contrasts-in-ed-1-rigor-relevance
 categories: ["learning"]
 tags: ["learning"]
-draft: true
+draft: false
+toc: true
 ---
 
 Over the past several years, while designing skill assessment tools, I've stewed on something that might seem obvious: educational and cognitive psychology are distinct fields. Researchers in these fields often go to different conferences, cite different people in their papers, and sometimes use the same concept in ways foreign to the other field.
@@ -41,7 +42,7 @@ Koedinger's paper is out of intelligent tutoring systems--a field that includes 
 
 Note that here the concepts of theory and framework are important. In the paper, a framework is not a theory because it does not "lead directly to precise predictions" (p. 760), but can be elaborated with assumptions in order to become a theory. This doesn't mean frameworks are bad, and the goal of Koedinger's paper is to produce a framework that allows researchers to produce theories that both connect with theories of cognition, and are relevant to instruction in realistic settings.
 
-### Theories, Frameworks, and Cognitive Models
+## Theories, Frameworks, and Cognitive Models
 
 The most notable example of a framework mentioned in Koedinger's paper is likely [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom's_taxonomy), but Cognitive Load Theory--as reviewed by Van Merrienboer and Sweller (2005)--is noted as also being a framework, rather than a theory.
 

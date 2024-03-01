@@ -20,7 +20,8 @@ type: pages
 
 ## Talks
 
-* posit::conf() 2023: Siuba and Duckdb: Analyzing Everything Everywhere All at Once
+* PyCon US 2024: Making Beautiful, Publication Quality Tables in Python is Possible in 2024
+* posit::conf() 2023: [Siuba and Duckdb: Analyzing Everything Everywhere All at Once](https://youtu.be/j4B7ui5f5Xo?si=nGx5wdC1aGI6of4U)
 * Coalesce 2022: [The Accidental Analytics Engineer](https://www.youtube.com/live/EYdb1x1cO9U?si=iGo3NdVL1HdtQdiM)
 * posit::conf() 2021: [Bringing the Tidyverse to Python with Siuba](https://youtu.be/w4Mi0u4urbQ?si=px11w6C2_VrCXUtb)
 * DataPhilly 2020: [Data Analysis is Blitz Chess](https://youtu.be/3CgIeGksSvg?si=XL68V84c_lGMyyvn)

@@ -46,6 +46,12 @@
   margin-left: 0px;
 }
 
+.topnav .topnav__links a.level-item.active {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 10px;
+}
+
 /* Table of contents */
 
 .section-default {

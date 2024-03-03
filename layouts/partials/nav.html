@@ -1,3 +1,25 @@
+
+{{ define "partials/nav--links.html" }}
+  {{$m := slice
+    (dict "name" "longform" "folder" "posts" "cls" "")
+    (dict "name" "short" "folder" "thoughts" "cls" "")
+    (dict "name" "TINY" "folder" "tiny" "cls" " topnav__tiny-text")
+    (dict "name" "projects" "folder" "projects" "cls" "")
+    (dict "name" "about" "folder" "about" "cls" "")
+  }}
+  {{ range $m }}
+    {{ $active := "" }}
+    {{ if (eq $.Type .folder) }}
+      {{ $active = " active" }}
+    {{ else if (eq ($.GetPage .folder) $.Page)}}
+      {{ $active = " active" }}
+    {{ else if (and $.IsHome (eq .folder "posts"))}}
+      {{ $active = " active"}}
+    {{ end }}
+    <a class="level-item{{.cls}}{{$active}}" href="{{ $.Site.BaseURL }}{{.folder}}">{{.name}}</a>
+  {{ end }}
+{{ end }}
+
 <section class="section">
   <div class="container topnav">
     <nav class="nav topnav__links">
@@ -13,11 +35,7 @@
       <div class="nav-right">
       -->
         <nav class="nav-item is-mobile topnav__links-pages">
-          <a class="level-item" href="{{ .Site.BaseURL }}posts">longform</a>
-          <a class="level-item" href="{{ .Site.BaseURL }}thoughts">short</a>
-          <a class="level-item topnav__tiny-text" href="{{ .Site.BaseURL }}tiny">TINY</a>
-          <a class="level-item" href="{{ .Site.BaseURL }}projects">projects</a>          
-          <a class="level-item" href="{{ .Site.BaseURL }}about">about</a>          
+          {{ partial "nav--links.html" .}}
         </nav>
         <nav class="nav-item level is-mobile topnav__links-social">
           {{ range .Site.Params.social }}

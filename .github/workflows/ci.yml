@@ -97,7 +97,9 @@ jobs:
 
   deploy-docs:
     name: "Deploy Docs"
+    runs-on: ubuntu-latest
     if: "${{github.ref == 'refs/heads/main'}}"
+    needs: ["build-docs"]
     steps:
       - uses: actions/download-artifact@v3
         with:

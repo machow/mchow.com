@@ -33,7 +33,7 @@ type: pages
 | Year | Name        | Description |
 |------|-------------|-------------|
 | 2023 | [great_tables](https://github.com/posit-dev/great-tables) | (WIP) Beautiful table formatting in python (w/ Rich Iannone). |
-| 2023 | [quartodoc](https://github.com/machow/quartodoc) | Easy breezy API documentation in python. |
+| 2023 | [quartodoc](https://github.com/machow/quartodoc) | Easy breezy beautiful API documentation in python. |
 | 2022 | [pins-python](https://github.com/rstudio/pins-python) | Save and share data across a range of cloud backends. |
 | 2022 | [databackend](https://github.com/machow/databackend) | Depend on classes from other packages without importing them. |
 | 2020 | [wrestlr](https://github.com/machow/wrestlr) | Experiment to convert R code to python |

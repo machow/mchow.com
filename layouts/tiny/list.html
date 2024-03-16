@@ -1,0 +1,20 @@
+{{ partial "header" . }}
+{{ partial "nav" . }}
+<section class="section tiny">
+  <div class="container">
+    {{ range sort .Pages.Reverse }}
+    <article class="tiny__list-entry">
+      {{ if .Params.tags }}
+        {{ partial "tags" .Params.tags }}
+      {{ end }}
+      <div class="content">
+        {{ .Content }}
+      </div>
+      <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}</h1>
+      <h2 class="tiny__separator">{{ .Date.Format "January 2, 2006" }}</h2>
+    </article>
+    {{ end }}
+  </div>
+</section>
+{{ partial "footer" . }}
+

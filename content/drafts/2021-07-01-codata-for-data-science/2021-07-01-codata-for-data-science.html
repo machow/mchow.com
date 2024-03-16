@@ -1,0 +1,41 @@
+---
+title: Codata for democratizing data science tools
+author: Michael Chow
+date: '2021-07-01'
+slug: codata-for-data-science
+categories: []
+tags: []
+draft: yes
+show: false
+---
+
+
+
+<p>Takeaway: codata is about “subclassing” your actions</p>
+<ul>
+<li>singledispatch lets you add new actions to classes</li>
+<li>it requires you create a function to represent your action</li>
+<li>what if you only wanted to change the <strong>behavior</strong> of some actions?</li>
+</ul>
+<p>Example: Truncating a date in SQL</p>
+<ul>
+<li>postgresql: DATE_TRUNC(MONTH, column_name)</li>
+<li>bigquery: DATETIME_TRUNC(column_name, MONTH)</li>
+</ul>
+<p>Options:</p>
+<p>Common choices are either impossible, or change the user interface.</p>
+<ul>
+<li>subclass sql.column
+<ul>
+<li>often impossible for parent classes or ones shared across libraries</li>
+</ul></li>
+<li>create a visitor
+<ul>
+<li>poor ergonomics</li>
+<li>like if a data class always took an action as an argument</li>
+</ul></li>
+<li><strong>create a data decorator</strong>
+<ul>
+<li>retains same user interface</li>
+</ul></li>
+</ul>

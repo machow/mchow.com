@@ -1,0 +1,54 @@
+
+{{ define "partials/nav--links.html" }}
+  {{$m := slice
+    (dict "name" "longform" "folder" "posts" "cls" "")
+    (dict "name" "short" "folder" "thoughts" "cls" "")
+    (dict "name" "TINY" "folder" "tiny" "cls" " topnav__tiny-text")
+    (dict "name" "projects" "folder" "projects" "cls" "")
+    (dict "name" "about" "folder" "about" "cls" "")
+  }}
+  {{ range $m }}
+    {{ $active := "" }}
+    {{ if (eq $.Type .folder) }}
+      {{ $active = " active" }}
+    {{ else if (eq ($.GetPage .folder) $.Page)}}
+      {{ $active = " active" }}
+    {{ else if (and $.IsHome (eq .folder "posts"))}}
+      {{ $active = " active"}}
+    {{ end }}
+    <a class="level-item{{.cls}}{{$active}}" href="{{ $.Site.BaseURL }}{{.folder}}">{{.name}}</a>
+  {{ end }}
+{{ end }}
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="{{ .Site.BaseURL }}">
+          <h1 class="title is-4">{{ .Site.Title }}</h1>
+          <!--
+          <h1 class="title is-4 is-hidden-tablet">mchow</h1>          
+          -->
+        </a>
+      </div>
+      <!--
+      <div class="nav-right">
+      -->
+        <nav class="nav-item is-mobile topnav__links-pages">
+          {{ partial "nav--links.html" .}}
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          {{ range .Site.Params.social }}
+          <a class="level-item" href="{{ .url }}" target="_blank">
+            <span class="icon">
+              <i class="fa {{ .fa_icon }}"></i>
+            </span>
+          </a>
+          {{ end }}
+        </nav>
+      <!--
+      </div>
+      -->
+    </nav>
+  </div>
+</section>

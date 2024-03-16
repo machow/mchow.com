@@ -1,4 +1,7 @@
-# Vim swapfiles
+# Mac ----
+.DS_Store
+
+# Vim swapfiles ----
 .*.swp
 
 # R ----
@@ -12,3 +15,5 @@ blogdown
 .ipynb_checkpoints
 .python-version
 Untitled*.ipynb
+
+/.quarto/

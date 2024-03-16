@@ -1,0 +1,63 @@
+---
+title: Pandas grouped operations at 1000x the speed
+author: Michael Chow
+date: '2020-08-31'
+slug: pandas-at-1000x
+categories: []
+tags: []
+draft: yes
+---
+
+When it comes to data analysis in python, pandas is hands down the most popular tool. Its CSV reader is designed to handle all kinds of cryptic edge cases, and many of its methods are deeply optimized for performance. However, **grouped operations in pandas can be a major challenge**, as they require a different style of coding and methods.
+
+In order to make working with grouped data more consistent, a number of **ports of the library dplyr** have popped up over the years. As someone who has been working on a dplyr port myself (siuba), I thought it'd be useful to review them. I'll cover three key points:
+
+* how they unify the syntax for grouped and ungrouped operations.
+* benchmarking the performance issues they hit.
+* how siuba overcomes these issues to run at the speed of optimized pandas code.
+
+At this point, I know of 5 ports of dplyr to python.
+Writing one might be some kind of rite of passage.
+Anyway, here's a table comparing some of their key features.
+
+(Note that I've left out [pandas-ply](https://github.com/coursera/pandas-ply), whose last commit was in 2015.)
+
+
+|                         | [siuba][siuba]      | [plydata][plydata]   | [dfply][dfply]     | [dplython][dplython]  |
+| ----------------------- | ---------- | --------- | --------- | --------- |
+| symbolic operations     | ✅          | ✅         | ✅         | ✅         |
+| unified grouping API    | ✅          | ✅         | ✅         | ✅         |
+| pipe operator           | ✅          | ✅         | ✅         | ✅         |
+| uses raw DataFrame      | ✅          | ✅         | ✅         | ❌         |
+| verbs like filter\_all  | ❌          | ✅         | ❌         | ❌         |
+| uses plain groupby      | ✅          | ❌         | ❌         | ❌         |
+| fast grouped operations | ✅          | ❌         | ❌         | ❌         |
+| SQL support             | ✅          | ❌         | ❌         | ❌         |
+| filter is named         | filter     | query     | mask      | sift      |
+| mutate is named         | mutate     | define    | mutate    | mutate    |
+| symbol style            | \_.mpg + 1 | "mpg + 1" | X.mpg + 1 | X.mpg + 1 |
+| last release            | 2020       | 2020      | 2018      | 2016      |
+
+[siuba]: http://github.com/machow/siuba
+[plydata]: https://github.com/has2k1/plydata
+[dfply]: https://github.com/kieferk/dfply
+[dplython]: https://github.com/dodger487/dplython
+
+## Symbolics, pipes, and unified grouped operations
+
+Suppose you have data on students at a school, and their scores on different courses.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

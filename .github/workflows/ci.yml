@@ -94,3 +94,17 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: 'https://${{ steps.deployment.outputs.env }}--machow-web.netlify.app'
           logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+
+  deploy-docs:
+    name: "Deploy Docs"
+    if: "${{github.ref == 'refs/heads/main'}}"
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: public
+          path: public
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+

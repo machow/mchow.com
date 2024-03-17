@@ -52,6 +52,16 @@
   text-underline-offset: 10px;
 }
 
+/* Post titles */
+
+.container-article--content .content {
+  padding-top: 20px;
+}
+
+.container-article--content h2.subtitle {
+  font-size: 14px;
+}
+
 /* Table of contents */
 
 .section-default {

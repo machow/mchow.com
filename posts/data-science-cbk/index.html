@@ -131,7 +131,7 @@ then do a quick assignment.</li>
 This API lets you find your favorite artists, and plot different characteristics of their songs.
 Characteristics include a song&rsquo;s &ldquo;danceability&rdquo;, &ldquo;energy&rdquo;, &ldquo;speechiness&rdquo;, and &ldquo;valence&rdquo; <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
 For example the plot below shows these characteristics for two famous Beatles ditties.</p>
-<p><img src="/04-intro-sentiment.png" alt="&amp;ldquo;Everybody do the let it be&amp;rdquo;"></p>
+<p><img src="/04-intro-sentiment.png" alt="&ldquo;Everybody do the let it be&rdquo;"></p>
 <h2 id="sorry-python">Sorry, Python</h2>
 <p>In general, running the Python workshop was much more challenging,
 in that it required teaching things like functions, lists, dictionaries, and pandas DataFrames.
@@ -322,17 +322,18 @@ the most popular by spotify&rsquo;s track_popularity rating.&#160;<a href="#fnre
 <script>hljs.initHighlightingOnLoad();</script>
 
 
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', 'UA-117743385-1', 'auto');
 	
 	ga('send', 'pageview');
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>

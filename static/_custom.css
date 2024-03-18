@@ -62,6 +62,16 @@
   font-size: 14px;
 }
 
+/* Post content */
+
+@media screen and (max-width: 450px) {
+  /* give a little more content area to lists */
+  .content blockquote ul {
+    margin-left: 1.5em;
+    margin-right: 0px;
+  }
+}
+
 /* Table of contents */
 
 .section-default {

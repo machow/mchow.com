@@ -1,0 +1,398 @@
+---
+title: Single dispatch for democratizing data science tools
+author: Michael Chow
+date: '2020-02-24'
+slug: 2020-02-24-single-dispatch-data-science
+categories: []
+tags: []
+output: html_document
+
+# jupyter notebook info
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.3.3
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{r setup, include = FALSE}
+library(reticulate)
+#knitr::knit_engines$set(python = reticulate::eng_python)
+knitr::opts_chunk$set(comment = "")
+
+reticulate::use_virtualenv(path.expand('~/.virtualenvs/machow-web-test'), required = TRUE)
+```
+
+
+
+Imagine you had to implement some action across classes in 60 packages.
+You know what result you want, but may need to handle each class in a specific way.
+
+For example,
+  
+* [Jupyter notebooks][ipython] need to represent python classes as html.
+* The [broom package][broom] in R uses its `tidy()` function to summarize different statistical models.
+
+In this post I will discuss two approaches you could take to do this.
+
+1. **Class focused**: have people define a specific method name on their classes.
+2. **Action focused**: have people define class-specific behavior on a function.
+
+While the first approach makes it easy to find everything in one place (the class definition), it requires coordination and cooperation across packages. It also fattens the class up with additional responsibility.
+
+On the other hand, the second approach--which is single dispatch--makes it easy to focus on the action taking place (e.g. representing html output or summarizing a model), and separates a class's core job from additional behaviors.
+
+In this post, I will examine how IPython and the package broom use singledispatch to implement actions that (1) let class internals focus on a small set of responsibilities, (2) don't require going on a sixty package PR submitting spree, and (3) allow for users to cleanly experiment with new actions.
+
+**This post will be part of a series discussing why I chose single dispatch for my port of dplyr to python, [siuba](https://github.com/machow/siuba). For more context on that decision, see [this architecture doc](https://github.com/machow/siuba/blob/master/examples/architecture/004-user-defined-functions.ipynb)**
+
+[broom]: https://broom.tidyverse.org/articles/adding-tidiers.html#adding-new-tidiers-to-broom
+
+[ipython]: https://ipython.readthedocs.io/en/stable/config/integrating.html
+
+## What is single dispatch? Let's ask IPython.
+
+Python comes with many built in functions like `repr()`, which is short for "represent".
+You can think of this function as one that will essentially reproduce what you gave it when printed.
+
+For example, the code below shows printed representations of `1` and `"1"`.
+
+```{python}
+int_repr = repr(1)
+str_repr = repr('1')
+print(int_repr, str_repr)
+```
+
+While this works out of the box with built-in types, python also allows you to implement `repr` on your own classes. In order to do this, you define a method named `__repr__`.
+
+```{python}
+class Shout:
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+        return "Shout({})".format(repr(self.text))
+        
+print(repr(Shout("yo!")))
+```
+
+Notice that if I were to paste the representation from above into my code, it would essentially reproduce that shout object!
+
+There are many methods like `__repr__`, and they are foundational for creating new classes. But what if we wanted to create a new function, like `repr_html()`. This function could output an HTML representation of a class, which would be useful for displaying in jupyter notebooks!
+
+One approach is to ask classes to follow a **convention**. This is one approach taken by IPython, which essentially tells classes: 
+
+> **if** you name a method `_repr_html_`, **then** I will use it for displaying in a notebook.
+
+This is shown below.
+
+```{python}
+class Shout2(Shout):
+    # method name IPython knows to look for
+    def _repr_html_(self):
+        return "<h1>" + self.text + "</h1>"
+```
+
+In practice, when a jupyter notebook goes to represent an object--like `Shout2`--it will grab the `_repr_html_` method or fall back to `__repr__`.
+
+This approach can work well, but leaves open a major question: **what if classes don't follow our convention?** For example, the maintainer of another package might not want to add custom methods for every new action people want to perform.
+
+Fortunately IPython's html formatter allows an alternative approach. We can tell it that when it sees an object of a specific class, to call (dispatch) a specific function on it.
+
+
+```{python, eval = FALSE}
+def shout_html(shout_obj):
+    return '<h1>{}</h1>'.format(repr(shout_obj.text))
+
+# special ipython function to get the html formatter
+html_formatter = get_ipython().display_formatter.formatters['text/html']
+
+# when you see a Shout object, call the shout_html function on it
+html_formatter.for_type(Shout, shout_html)
+```
+
+Notice the difference between these two approaches:
+
+1. Class methods: implementing many actions for one class
+2. Single dispatch: implementing one action across many classes
+
+In this section we looked at how IPython uses single dispatch.
+In the following section, I'll quickly review python's built-in tools for single dispatch, before considering how it could be used to replicate the success of the R package broom.
+
+## Python's builtin implementation: singledispatch
+
+While the above example focused on IPython, it's worth noting that python's builtin `functools` library has a handy implementation of single dispatch.
+
+```{python}
+from functools import singledispatch
+
+@singledispatch
+def repr_html(obj):
+    # default implementation
+    return repr(obj)
+
+@repr_html.register(Shout)
+def _repr_html_shout(obj):
+    # implementation for Shout
+    return '<h1>{}</h1>'.format(obj.text)
+```
+
+In this case, `repr_html` produces different behaviors, depending on the type of object it receives.
+
+```{python}
+repr_html("yo!")          # string class uses default
+
+repr_html(Shout("yo!"))   # Shout classes gets custom
+```
+
+With this tool in hand let's focus on where it really shines: **implementing actions across classes from many packages**.
+In the next section, I'll discuss how it could immensely benefit data science--which is flush with packages implementing different data sources (e.g. pandas) and modelling methods (e.g. scikit learn).
+
+## Why does single dispatch matter for data science?
+
+Consider that in data analysis you often have two kinds of things:
+
+1. Data classes
+    - e.g. a pandas DataFrame or SQLAlchemy Table
+    - e.g. model fits from scikit-learn or statsmodels
+2. Actions
+    - e.g. calculating a mean 
+    - e.g. summarizing a model
+
+Oftentimes, developers lump these two things together.
+For example, pandas DataFrames have a `.mean()` method, and statsmodels has a method to summarize model parameters.
+
+This is fine within a package--but what happens when we want to implement a new action **across packages**?
+We probably don't want everyone to sit down and duke it out over what methods can be added, and what they should return.
+
+**Single dispatch lets people separate development of data classes from the actions taken over them!**
+One example of where this was done at a large scale is the R package `broom`.
+
+## Broom and the life-changing magic of tidying up (model output)
+
+As a person who needs to fit statistical models implemented in different packages, I can relate to the endless frustration of trying to find where in a model fit something is stored. Did my model object--let's call it `fit`--put the coefficients in `fit.coef`, `fit.coef_`, or `fit.get_coefficients(robust = True)`?
+
+The problems don't stop once you can find a summary of your model, because identical statistical models, when fit by different packages, may use slightly (or radically) different summaries.
+
+The R package **broom recognized the need for consistent reporting**, and created...
+
+1. `tidy()` - a single dispatch function in R
+2. a written definition for what `tidy()` should produce
+
+And that was it.
+While they encourage modelling packages to hold and maintain their class specific implementation of `tidy()`, it isn't necessary, and broom's github repo contains implementations for many packages.
+
+## A python version of `tidy()` for the same model from scikit-learn, pymc3, and statsmodels
+
+In this section, I give a rough demo of what `tidy()` might look like in python using the following:
+
+* python's built in singledispatch function
+* custom handling of linear models from scikit-learn, pymc3, and statsmodels
+
+In the code below I set up the demo.
+
+```{python}
+import numpy as np
+import pandas as pd
+from functools import singledispatch
+
+from siuba.data import mtcars
+
+pd.set_option('precision', 2)
+pd.set_option('display.width', 100)
+pd.set_option('display.max_columns', 10)
+
+@singledispatch
+def tidy(fit):
+    raise NotImplementedError("No tidy method for class %s" %fit.__class__.__name__)
+```
+
+Click on any of the 3 tabs below to see library specific tidy implementations.
+
+<style>
+.tabs__link--active {
+  background-color: #eee;
+}
+
+.tabs ul {
+  align-items: baseline;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+</style>
+
+
+
+<!--html_preserve-->
+<div class="puretabs">
+  <div class="tabs">
+    <ul class="tabs__navigation">
+      <li><a class="tabs__link tabs__link--active" href="#first-a">statsmodels</a></li>
+      <li><a class="tabs__link" href="#second-a">scikit-learn</a></li>
+      <li><a class="tabs__link" href="#third-a">pymc3</a></li>
+    </ul>
+  </div>
+<!--/html_preserve-->
+
+  <div class="tabs__section" id="first-a">
+
+```{python}
+# Fit statsmodels -------------------------------------------------------------
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+results = smf.ols('mpg ~ hp', data=mtcars).fit()
+
+# Tidy implementation ---------------------------------------------------------
+@tidy.register(results.__class__)
+def _tidy_statsmodels(fit):
+    from statsmodels.iolib.summary import summary_params_frame
+    tidied = summary_params_frame(fit).reset_index()
+    rename_cols = {
+        'index': 'term', 'coef': 'estimate', 'std err': 'std_err',
+        't': 'statistic', 'P>|t|': 'p_value',
+        'Conf. Int. Low': 'conf_int_low', 'Conf. Int. Upp.': 'conf_int_high'
+    }
+    
+    return tidied.rename(columns = rename_cols)
+
+tidy(results)
+```
+
+
+  </div>
+  <div class="tabs__section" id="second-a">
+
+```{python}
+# fit sklearn -----------------------------------------------------------------
+from sklearn.linear_model import LinearRegression
+from siuba.data import mtcars
+
+X = mtcars[['hp']]
+y = mtcars['mpg']
+
+# y = 1 * x_0 + 2 * x_1 + 3
+reg = LinearRegression().fit(X, y)
+
+# TIDY IMPLEMENTATION ---
+
+import pandas as pd
+
+@tidy.register(reg.__class__)
+def _tidy_sklearn(fit, col_names = None):
+    estimates = [fit.intercept_, *fit.coef_]
+    
+    if col_names is None:
+        terms = list(range(len(estimates)))
+    else:
+        terms = ['intercept', *col_names]
+
+    # pd.DataFrame()
+    return pd.DataFrame({
+        'term': terms, 'estimate': estimates,
+        'std_error': np.nan
+    })
+
+tidy(reg, col_names = X.columns)
+```
+
+  </div>
+  <div class="tabs__section" id="third-a">
+
+
+```{python, include = FALSE}
+import pymc3
+import logging
+logger = logging.getLogger('pymc3')
+logger.setLevel(logging.ERROR)
+```
+
+
+```{python}
+# fit pymc3 -----------------------------------------------------------------
+from pymc3 import  *
+
+x = mtcars['hp'].values
+y = mtcars['mpg'].values
+
+data = dict(x=x, y=y)
+
+np.random.seed(999999)
+with Model() as model: # model specifications in PyMC3 are wrapped in a with-statement
+    # Define priors
+    sigma = HalfCauchy('sigma', beta=10, testval=1.)
+    intercept = Normal('intercept', 0, sigma=20)
+    x_coeff = Normal('hp', 0, sigma=20)
+
+    # Define likelihood
+    likelihood = Normal('mpg', mu=intercept + x_coeff * x,
+                        sigma=sigma, observed= y)
+
+    # Inference!
+    trace = sample(500, cores=2, progressbar = False) # draw 3000 posterior samples using NUTS sampling
+
+# Tidy implementation ---------------------------------------------------------
+@tidy.register(trace.__class__)
+def _tidy_trace(fit, robust = False):
+    trace_df = trace_to_dataframe(fit)
+    
+    agg_funcs = ['median', 'mad'] if robust else ['mean', 'std']
+    
+    # data frame with columns like: median, mad.
+    tidied = trace_df.agg(agg_funcs).T.reset_index()
+    tidied.columns = ['term', 'estimate', 'std_err']    
+    
+    return tidied
+
+tidy(trace)
+```
+
+
+  </div>
+</div>
+
+
+Notice how differently each package store and report their results!
+Much of what the tidy function does is simple calculations, re-arranging outputs, and renaming columns.
+
+## Who should start this python broom package?
+
+It doesn't matter! Five different people could start their own versions of the broom package, and we wouldn't have to wait
+for the maintainers of scikit-learn or statsmodels or pymc3 or <package name> to bless one!
+
+## Summary
+
+Single dispatch takes a practice embodied by python actions like `repr`, while allowing class-specific implementation to be specified outside a class itself.
+
+This has 3 major benefits:
+
+1. It keeps class internals focused on their core responsibilities
+2. Allows implementing a (potentially experimental) action across many packages without many PRs
+3. Allows unlimited users to cleanly experiment with new actions.
+
+While I focused on its beneficial use in [IPython][ipython] and [broom][broom], it's worth noting that many packages successfully implement this approach. For example, [dbplyr][dbplyr] an R library for executing the same analysis code on many different data sources (such as a local dataframe, or SQL table).
+
+In my next post, I will focus on how [siuba](https://github.com/machow/siuba) uses singledispatch to try and enable the same distributed collaboration as broom and dplyr.
+
+If you have questions or thoughts, please reach out on twitter [@chowthedog](https://twitter.com/chowthedog)!
+
+[dbplyr]: https://github.com/tidyverse/dplyr#backends
+
+<!-- SCRIPT --><!-- -->
+
+<script src="/js/puretabs.min.js"></script>
+<script>
+  window.onload = function() {
+    //pureTabs.init();
+    //pureTabs.init('tabs', 'tabs--active');
+    pureTabs.init('tabs__link', 'tabs__link--active');
+  }
+</script>
+
+

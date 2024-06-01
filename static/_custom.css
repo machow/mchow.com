@@ -197,3 +197,14 @@
   white-space: pre-wrap;
   padding: 0px;
 }
+
+
+/* Header anchor */
+
+a.header--anchor {
+  display:none;
+}
+
+.header:hover a.header--anchor {
+  display:inline;
+}

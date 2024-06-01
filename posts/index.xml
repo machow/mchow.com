@@ -17,6 +17,13 @@
       <description>Over the past 5 years—while helping create projects at Code for Philly and sitting on organizing committees for events—I’ve often reached for the Code for Philly Project Questionnaire.&#xA;In this post, I want to discuss what makes the questionnaire so useful, and the different situations I’ve ended up using it in.&#xA;Here are some quick numbers on project questionnaires filled out over the years:&#xA;Code for Philly projects: 25 questionnaires for projects related to bail funds, covid dashboards, etc&amp;hellip; (See this article discussing the projects we focused on in 2020).</description>
     </item>
     <item>
+      <title>One year on the open source team at RStudio (now Posit)</title>
+      <link>/posts/one-year-at-rstudio/</link>
+      <pubDate>Wed, 01 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/posts/one-year-at-rstudio/</guid>
+      <description>In early 2022 I joined RStudio&amp;rsquo;s open source group as its second full-time python developer. With one year under my belt, I wanted to look back on the things I&amp;rsquo;ve worked on, and what I&amp;rsquo;ve learned in the process.&#xA;I started at RStudio with a concrete task&amp;mdash;port the R library pins to python&amp;mdash;along with the expectation that I&amp;rsquo;d work on my tool for data analysis, siuba. Along the way, I collaborated with the shiny team, and ended up developed a real enthusiasm for the value of good documentation.</description>
+    </item>
+    <item>
       <title>Pandas has a hard job (and does it well)</title>
       <link>/posts/pandas-has-a-hard-job/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>

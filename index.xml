@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Sat, 16 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why did I join RStudio (now Posit)?</title>
+      <link>/thoughts/why-rstudio/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>/thoughts/why-rstudio/</guid>
+      <description>Travel back to 2021, and I find myself doing two things:&#xA;Living in a van in my brother’s driveway. Talking about my work on siuba at rstudio::conf. I didn’t plan to do either of those things: the van a result of getting cagey in a Philly apartment, rstudio::conf() a funky place to talk about python packages at the time.&#xA;After the conference, I ended up working as a consultant building out a data warehousing team for the California Department of Transportation1.</description>
+    </item>
     <item>
       <title>The project questionnaire: from ideas to action</title>
       <link>/posts/cfp-project-questionnaire/</link>
@@ -57,6 +64,13 @@
       <pubDate>Sat, 13 May 2023 00:00:00 +0000</pubDate>
       <guid>/tiny/sweet-tart/</guid>
       <description>If a doctor prescribed 200mg of nerds it would be a sweet tart. </description>
+    </item>
+    <item>
+      <title>One year on the open source team at RStudio (now Posit)</title>
+      <link>/posts/one-year-at-rstudio/</link>
+      <pubDate>Wed, 01 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/posts/one-year-at-rstudio/</guid>
+      <description>In early 2022 I joined RStudio&amp;rsquo;s open source group as its second full-time python developer. With one year under my belt, I wanted to look back on the things I&amp;rsquo;ve worked on, and what I&amp;rsquo;ve learned in the process.&#xA;I started at RStudio with a concrete task&amp;mdash;port the R library pins to python&amp;mdash;along with the expectation that I&amp;rsquo;d work on my tool for data analysis, siuba. Along the way, I collaborated with the shiny team, and ended up developed a real enthusiasm for the value of good documentation.</description>
     </item>
     <item>
       <title>FELT GOOD AT THE TIME MIGHT DELETE LATER</title>

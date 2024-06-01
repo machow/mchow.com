@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Tue, 05 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/thoughts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why did I join RStudio (now Posit)?</title>
+      <link>/thoughts/why-rstudio/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>/thoughts/why-rstudio/</guid>
+      <description>Travel back to 2021, and I find myself doing two things:&#xA;Living in a van in my brother’s driveway. Talking about my work on siuba at rstudio::conf. I didn’t plan to do either of those things: the van a result of getting cagey in a Philly apartment, rstudio::conf() a funky place to talk about python packages at the time.&#xA;After the conference, I ended up working as a consultant building out a data warehousing team for the California Department of Transportation1.</description>
+    </item>
     <item>
       <title>Poet Mouthwash</title>
       <link>/thoughts/poet-mouthwash/</link>

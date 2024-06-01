@@ -1,6 +1,9 @@
 # Mac ----
 .DS_Store
 
+# Quarto ----
+*_files
+
 # Vim swapfiles ----
 .*.swp
 

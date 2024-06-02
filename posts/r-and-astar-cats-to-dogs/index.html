@@ -118,7 +118,10 @@ Splitting cantonese sentences into words (e.g. 我好肚餓 -&gt; 我 - 好 - �
 <p>Since I started on these problems using python, the <a href="https://github.com/jrialland/python-astar"><code>python-astar</code></a> package got me up and running quickly.
 However, when switching to R I wasn&rsquo;t able to find it in any libraries, like igraph.</p>
 <p>I&rsquo;m sure it exists somewhere, but after a couple hours of searching I opted for the next best thing: writing a quick R package (<a href="https://github.com/machow/astar-r">machow/astar-r</a>).</p>
-<h2 id="using-a-in-r">Using A* in R</h2>
+<h2 class="header" id="using-a-in-r">
+  Using A* in R
+  <a class="header--anchor" href="#using-a-in-r">#</a>
+</h2>
 <p>The A* algorithm (pronounced &ldquo;a star&rdquo;) is a search algorithm for finding the &ldquo;shortest&rdquo; path between two nodes in a graph.</p>
 <p>One common use is navigating between two points in space.</p>
 <img src="/003-r-and-astar-2.png" style = "max-width: 300px; display: block; margin-left: auto; margin-right: auto;">
@@ -133,7 +136,10 @@ Solid colors are nodes on the grid that have been checked, and an optimal path (
 </ol>
 <p>While navigating in space is a common use case, a lot of other problems can be solved by A* as well!
 In order to demonstrate the A* package, I&rsquo;ll use another interesting case: word ladders.</p>
-<h2 id="word-ladders">Word Ladders</h2>
+<h2 class="header" id="word-ladders">
+  Word Ladders
+  <a class="header--anchor" href="#word-ladders">#</a>
+</h2>
 <p>Word ladders is a game where you are given a list of words.
 Each word can be considered a node.
 How you play is defined by two pieces: a rule for what makes nodes neighbors and a goal.
@@ -192,7 +198,10 @@ In this post, we&rsquo;ll define those as..</p>
 [[4]]
 [1] &#34;dog&#34;
 </code></pre><p>The output matches the red (shortest) path in the word ladder graph!</p>
-<h2 id="the-world-is-full-of-problems-a-can-solve">The World is Full of Problems A* can Solve</h2>
+<h2 class="header" id="the-world-is-full-of-problems-a-can-solve">
+  The World is Full of Problems A* can Solve
+  <a class="header--anchor" href="#the-world-is-full-of-problems-a-can-solve">#</a>
+</h2>
 <p>While A* is often taught as a spatial pathfinding algorithm, it can solve a surprisingly diverse set of problems. More detailed explanations of the algorithm can be found on <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">wikipedia</a>, or this <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">interactive article</a>.</p>
 <p>If you use the <a href="https://github.com/machow/astar-r">R astar package</a> to solve any nifty problems, or encounter any bugs, let me know on Twitter (<a href="https://twitter.com/chowthedog">@chowthedog</a>) or on <a href="https://github.com/machow/astar-r/issues">github</a>!</p>
 

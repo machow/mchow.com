@@ -130,10 +130,16 @@ For the ubiquitous Object dtype, it often figures out which of the many possible
 1      a
 dtype: object
 </code></pre><p>Knows this, has your back, and does not stringify it!</p>
-<h2 id="pandas-has-your-back">pandas has your back</h2>
+<h2 class="header" id="pandas-has-your-back">
+  pandas has your back
+  <a class="header--anchor" href="#pandas-has-your-back">#</a>
+</h2>
 <p>pandas also has a pathological fixation on when it tries to convert dtypes, since avoiding all the bad conversion outcomes is a relatively time intensive process (compared to e.g. creating a numpy array).</p>
 <p>I realize things could be much easier in pandas user facing interface, but really appreciate the sheer amount of effort that has gone into its dtype wrangling.</p>
-<h2 id="it-is-a-building-block-for-incredible-tools">It is a building block for incredible tools</h2>
+<h2 class="header" id="it-is-a-building-block-for-incredible-tools">
+  It is a building block for incredible tools
+  <a class="header--anchor" href="#it-is-a-building-block-for-incredible-tools">#</a>
+</h2>
 <p>Here are three libraries built in large part on pandas.</p>
 <ul>
 <li><a href="https://github.com/ibis-project/ibis">ibis</a> - similar to R library <a href="https://github.com/tidyverse/dplyr">dplyr</a>. Performs analyses on top of pandas DataFrames or SQL databases. Some of the maintainers are also pandas devs.</li>
@@ -141,7 +147,10 @@ dtype: object
 <li><a href="https://github.com/dask/dask">dask</a> - parallel computing and task scheduling over DataFrames</li>
 </ul>
 <p>It&rsquo;s worth noting that if you are a user coming from dplyr, the ibis library is probably a closer fit to what you&rsquo;re looking for.</p>
-<h2 id="it-has-made-porting-dplyr-to-python-easy">It has made porting dplyr to python easy</h2>
+<h2 class="header" id="it-has-made-porting-dplyr-to-python-easy">
+  It has made porting dplyr to python easy
+  <a class="header--anchor" href="#it-has-made-porting-dplyr-to-python-easy">#</a>
+</h2>
 <p>As I&rsquo;ve worked on <a href="https://github.com/machow/siuba">siuba</a>&mdash;a port of dplyr to python&mdash;I&rsquo;ve had to read code from dplyr&rsquo;s ecosystem of packages, the Tidyverse. Looking through Tidyverse source code, it is clear to me that Tidyverse developers often have to do two things&hellip;</p>
 <ul>
 <li>implement a good chunk of core logic / calculations</li>
@@ -150,7 +159,10 @@ dtype: object
 <p>While porting dplyr&rsquo;s user interface over, I&rsquo;ve been increasingly surprised that pandas has already done the heavy lifting on the underlying calculations.
 Often, I am just wrapping a couple pandas methods, handling some edge cases, and resetting indexes.</p>
 <p>A good example of this was implementing the <code>spread()</code> function.</p>
-<h3 id="porting-spread-to-siuba">Porting spread to siuba</h3>
+<h3 class="header" id="porting-spread-to-siuba">
+  Porting spread to siuba
+  <a class="header--anchor" href="#porting-spread-to-siuba">#</a>
+</h3>
 <p>The <code>spread</code> function in dplyr focuses on shaping data from a longer to a wider format, based on a pair columns:</p>
 <ul>
 <li>measure - each entry is the name of a different measurement</li>
@@ -200,10 +212,16 @@ One of siuba&rsquo;s main job is to reset them, so that as much data as possible
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># spreading from longer to wider format</span>
 </span></span><span style="display:flex;"><span>spread(long, _<span style="color:#f92672">.</span>key, _<span style="color:#f92672">.</span>value)
 </span></span></code></pre></div><p>(Note: siuba uses the unstack method in its spread implementation, rather than pivot_table, but the idea is the same.)</p>
-<h3 id="pandas-flexibility-makes-more-powerful-functions-possible">pandas&rsquo; flexibility makes more powerful functions possible</h3>
+<h3 class="header" id="pandas-flexibility-makes-more-powerful-functions-possible">
+  pandas&rsquo; flexibility makes more powerful functions possible
+  <a class="header--anchor" href="#pandas-flexibility-makes-more-powerful-functions-possible">#</a>
+</h3>
 <p>Recently, dplyr released more general versions of spread, and gather&mdash;called <code>pivot_wider</code> and <code>pivot_longer</code>.
 As a testament to pandas flexibility, it looks like all the functionality to port these functions is already there.</p>
-<h2 id="summary">Summary</h2>
+<h2 class="header" id="summary">
+  Summary
+  <a class="header--anchor" href="#summary">#</a>
+</h2>
 <p>pandas is a useful tool for data analysis in its own right. When you&rsquo;re using it, you might miss some of the difficult jobs it is doing for you, like ensuring reasonable behavior around data types.</p>
 <p>But that&rsquo;s only half the picture.
 It also serves as a foundation for a lot of interesting tools, like&hellip;</p>

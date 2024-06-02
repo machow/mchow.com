@@ -152,7 +152,10 @@ As part of this work, I&rsquo;ve found myself often discussing siuba&rsquo;s har
 </ul>
 <p>However, similar expressions in grouped pandas either run very slowly (e.g. 30 seconds for only 50k groups), or require cumbersome syntax. In the following sections, I&rsquo;ll break down how the index and type conversion taxes make custom functions slow, examine complex expressions in pandas, and finally highlight experimental work with siuba to bridge the gap.</p>
 <p><strong>Before starting it&rsquo;s worth noting that I feel tremendous appreciation for the pandas library, the many challenging problems it tackles, and the time people contribute to it.</strong></p>
-<h2 id="setting-up-example-data">Setting up example data</h2>
+<h2 class="header" id="setting-up-example-data">
+  Setting up example data
+  <a class="header--anchor" href="#setting-up-example-data">#</a>
+</h2>
 <p>For this article, I&rsquo;ll use example data for students receiving scores on a number of courses.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
 </span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> random
@@ -168,7 +171,10 @@ As part of this work, I&rsquo;ve found myself often discussing siuba&rsquo;s har
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>g_students <span style="color:#f92672">=</span> user_courses<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;student_id&#34;</span>)
 </span></span></code></pre></div><p>This data contains 50,000 students who took 10 courses each. Each student received a score between 0 and 100 for each course.</p>
-<h2 id="barriers-to-customization-the-index-and-type-conversion-taxes">Barriers to customization: the index and type conversion taxes</h2>
+<h2 class="header" id="barriers-to-customization-the-index-and-type-conversion-taxes">
+  Barriers to customization: the index and type conversion taxes
+  <a class="header--anchor" href="#barriers-to-customization-the-index-and-type-conversion-taxes">#</a>
+</h2>
 <p>Consider a trivial operation: a function that adds 1 to each students score. This doesn&rsquo;t even require split-apply-combine, but if we did use this approach, we could use a pandas groupby along with two choices&hellip;</p>
 <ul>
 <li>whether to use the <code>.apply</code> or <code>.transform</code> method.</li>
@@ -225,7 +231,10 @@ Name: score, Length: 500000, dtype: int64
 <li>(combine): the fastest method is actually not performing the combine stage!</li>
 </ul>
 <p>It&rsquo;s worth visiting the last point, before diving more into the first two.</p>
-<h3 id="is-the-fastest-method-cheating-by-not-combining-no">Is the fastest method cheating by not combining? (No)</h3>
+<h3 class="header" id="is-the-fastest-method-cheating-by-not-combining-no">
+  Is the fastest method cheating by not combining? (No)
+  <a class="header--anchor" href="#is-the-fastest-method-cheating-by-not-combining-no">#</a>
+</h3>
 <p>I don&rsquo;t think so, because in practice performing the combine step on it is very fast.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># notice that it isn&#39;t returning 500k rows, but 50k rows. One per student.</span>
 </span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> g_students<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> d: d<span style="color:#f92672">.</span>score<span style="color:#f92672">.</span>values <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
@@ -253,7 +262,10 @@ dtype: object
 499999    65
 Length: 500000, dtype: int64
 </code></pre><p>On my computer, this takes only about 25 milliseconds&ndash;an order of magnitude (or two!) beneath the timings above. As will be discussed more below, combining when done once is not the issue.</p>
-<h3 id="breaking-down-the-index-and-type-taxes-for-split-and-apply-steps">Breaking down the index and type taxes for split and apply steps</h3>
+<h3 class="header" id="breaking-down-the-index-and-type-taxes-for-split-and-apply-steps">
+  Breaking down the index and type taxes for split and apply steps
+  <a class="header--anchor" href="#breaking-down-the-index-and-type-taxes-for-split-and-apply-steps">#</a>
+</h3>
 <p>While a deep dive into the internals of these methods is a post for another time, I do want to provide a high-level view of what&rsquo;s going on. A helpful tool in this case is snakeviz, which gives a visual report from profiling code.</p>
 <p>In the graph below, I use the library snakeviz to time <code>g_student.xp.transform(lambda xp: xp + 1)</code>.</p>
 <img src="/005-transform-profile2.png" width="500px">
@@ -278,7 +290,10 @@ The first is the operation (<code>xp + 1</code>), and the second is pandas remak
 </span></span><span style="display:flex;"><span>ser <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>])
 </span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> ser <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><p>Here, it makes sense that pandas might want to do some cumbersome checks&ndash;but it makes the custom groupby nearly unusable. This leads us to a critical question: how does pandas implement fast groupby operations?</p>
-<h2 id="grouped-operations-are-not-composable">Grouped operations are not composable</h2>
+<h2 class="header" id="grouped-operations-are-not-composable">
+  Grouped operations are not composable
+  <a class="header--anchor" href="#grouped-operations-are-not-composable">#</a>
+</h2>
 <p>The key to understanding fast pandas groupby methods, is to realize that <strong>they win by not playing the game</strong>.</p>
 <p>This happens in two ways:</p>
 <ul>
@@ -310,7 +325,10 @@ They cannot be easily combined.</p>
 <li><strong>result length dependent operations:</strong> to calculate a mean in this case we have to pass the string &ldquo;mean&rdquo; to transform. This tells pandas that the result should be the same length as the original data.</li>
 </ul>
 <p>In dplyr users don&rsquo;t need to worry about either of things. <strong>dplyr allows users to decouple the specification of operations, result length, and grouping.</strong></p>
-<h2 id="bridging-the-gap-to-dplyr-with-siuba">Bridging the gap to dplyr with siuba</h2>
+<h2 class="header" id="bridging-the-gap-to-dplyr-with-siuba">
+  Bridging the gap to dplyr with siuba
+  <a class="header--anchor" href="#bridging-the-gap-to-dplyr-with-siuba">#</a>
+</h2>
 <p>In order to decouple operations, result length, and grouping, siuba does two things:</p>
 <ul>
 <li>wraps Series(GroupBy) methods in a way that makes them composable</li>
@@ -331,7 +349,10 @@ They cannot be easily combined.</p>
 [500000 rows x 5 columns]
 </code></pre><p>Because it&rsquo;s a light wrapper around the SeriesGroupBy methods, it runs at roughly the same speed.
 I&rsquo;ll write in detail about how it allows users to define their own functions in a future post, but if you&rsquo;re interested you can read more <a href="https://siuba.readthedocs.io/en/latest/developer/pandas-group-ops.html">here in siuba&rsquo;s docs</a>, or in siuba&rsquo;s <a href="https://github.com/machow/siuba/blob/master/examples/architecture/003-fast-mutate.ipynb">groupby architecture decision doc</a>.</p>
-<h2 id="summary">Summary</h2>
+<h2 class="header" id="summary">
+  Summary
+  <a class="header--anchor" href="#summary">#</a>
+</h2>
 <p>The biggest obstacle to implementing a dplyr-like experience in python is figuring how to add flexibility to grouped pandas operations. This is because custom grouped operations exert a high index tax, and type checking tax. Moreover, grouped operations in pandas are not straightforward to combine.</p>
 <p>This article has taken a critical look at pandas, but I can&rsquo;t emphasize enough how useful the library is overall, and appreciate how much time its contributors have spent working out hard problems.</p>
 <p>I showed in the article how <a href="https://github.com/machow/siuba">siuba</a> resolves some of these issues with group by.

@@ -121,7 +121,10 @@ With one year under my belt, I wanted to look back on the things I&rsquo;ve work
 <li>Migrating the siuba API docs to Quarto (with quartodoc)</li>
 </ul>
 </blockquote>
-<h2 id="year-one-in-commits">Year One in Commits</h2>
+<h2 class="header" id="year-one-in-commits">
+  Year One in Commits
+  <a class="header--anchor" href="#year-one-in-commits">#</a>
+</h2>
 <p>I wrapped up a year at RStudio in February 2023.</p>
 <p>One neat thing about working in open source, is you can see what I&rsquo;ve worked on using my commit history:</p>
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
@@ -132,7 +135,10 @@ followed by the <strong>shiny site docs</strong> (pyshiny-site; green bars).</p>
 I started writing an <strong>extensive siuba guide</strong> on siuba.org.</p>
 <p>As I started to reach the end of writing the getting started guide, I noticed a dilemma brewing. Switching to Quarto made my doc writing way more productive, but there was no way to move the API docs from sphinx to quarto.</p>
 <p>At this point I wanted the docs out in the world, so I deployed the main site and API docs separately. But this split-brained doc deployment basically undid all the usefulness of quarto. Frustrated, I frantically cobbled together <strong>quartodoc</strong> (purple bars), a tool that allowed me to move siuba&rsquo;s API docs to quarto in March 2023&mdash;right around my one-year mark at RStudio!</p>
-<h2 id="one-big-thing-per-quarter-obtpq">One big thing per quarter (OBTPQ)</h2>
+<h2 class="header" id="one-big-thing-per-quarter-obtpq">
+  One big thing per quarter (OBTPQ)
+  <a class="header--anchor" href="#one-big-thing-per-quarter-obtpq">#</a>
+</h2>
 <p>You may have noticed at this point that I did four things over the year.
 This is not an accident, but part of a life strategy I like to call
 One Big Thing Per Quarter (OBTPQ).</p>
@@ -144,7 +150,10 @@ One Big Thing Per Quarter (OBTPQ).</p>
 </ul>
 <p>Not all work is the Big Thing. I also weaved in a good amount pair programming with my coworker Isabel Zimmerman on <a href="https://github.com/rstudio/vetiver-python">vetiver</a>, and gave a talk at dbt&rsquo;s Coalesce conference called <a href="https://www.youtube.com/live/EYdb1x1cO9U">The Accidental Analytics Engineer</a> (where I learned a ton from dbt folks!).</p>
 <p>In general, though, it helps me a lot to approach a quarter with a Big Thing in mind.</p>
-<h2 id="q2-pins-for-python">Q2: Pins for Python</h2>
+<h2 class="header" id="q2-pins-for-python">
+  Q2: Pins for Python
+  <a class="header--anchor" href="#q2-pins-for-python">#</a>
+</h2>
 <p>Porting the R version of <a href="https://github.com/rstudio/pins-r">pins</a> to Python (<a href="https://github.com/rstudio/pins-python">pins-python</a>) was my first project at RStudio.
 In brief, pins allows people to easily read and write data across a range of backends&mdash;such as S3, or google cloud storage.</p>
 <p>I think there are two big challenges for porting software like pins:</p>
@@ -160,7 +169,10 @@ happening: high-level pins stuff, and a more low-level &ldquo;virtual file syste
 <br>
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/a53ea231c7064e9aba64b0fe41f13ec7?sid=3d73b253-6374-44d4-81c6-19d9652175cf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 <br>
-<h2 id="q3-shiny-for-python-docs">Q3: Shiny for Python Docs</h2>
+<h2 class="header" id="q3-shiny-for-python-docs">
+  Q3: Shiny for Python Docs
+  <a class="header--anchor" href="#q3-shiny-for-python-docs">#</a>
+</h2>
 <p>As things stablized with pins, I switched to helping the Shiny team get their port to python ready for rstudio::conf(). Since they were starting to do a lot of python development within RStudio, this was a nice way to link up with python folks across the open source group.</p>
 <p>I worked closely with Winston Chang, who was frantically cobbling together machinery to run py-shiny in the browser.
 After frantically looking at every documentation guide on the internet, I ended up modeling it after the <a href="https://vuejs.org/guide/introduction.html">vuejs guide</a>.</p>
@@ -209,7 +221,10 @@ Note &lt;important things above&gt;. Alternatively we could &lt;some variation&g
 <li>Splitting big examples into two.</li>
 </ul>
 <p>I&rsquo;d like to write more about this at some point, but for now recommend checking out the <a href="https://r4ds.hadley.nz/data-transform">R4DS - Data Transformation chapter</a>, and <a href="https://mastering-shiny.org/action-layout.html">Mastering Shiny - Layout, themes, HTML</a>.</p>
-<h2 id="q4-siubaorg">Q4: Siuba.org</h2>
+<h2 class="header" id="q4-siubaorg">
+  Q4: Siuba.org
+  <a class="header--anchor" href="#q4-siubaorg">#</a>
+</h2>
 <p>By the time shiny for python was announced, my interest in the art of writing documentation hit its peak.
 Since we had used quarto for the shiny docs, it was a good chance for me to move siuba to quarto, and write a <a href="https://siuba.org/guide/overview.html">siuba guide</a> (shown below).</p>
 <p><img src="./siuba-guide.png" alt=""></p>
@@ -228,7 +243,10 @@ Since we had used quarto for the shiny docs, it was a good chance for me to move
 </ul>
 <p>it was fairly straightforward to justify spending time on the problem.
 Initially, I had planned to just keep the API docs in sphinx, but maintaining two systems ended up feeling very split-brained. Moreover, it seemed like quarto&rsquo;s development would benefit from working through this use-case.</p>
-<h2 id="q1-quartodoc-api-doc-generation">Q1 Quartodoc: API Doc Generation</h2>
+<h2 class="header" id="q1-quartodoc-api-doc-generation">
+  Q1 Quartodoc: API Doc Generation
+  <a class="header--anchor" href="#q1-quartodoc-api-doc-generation">#</a>
+</h2>
 <p>Without going into gory detail, generating API docs in python is a surprisingly complex task, involving:</p>
 <ul>
 <li>Finding object information (e.g. function parameter types, docstring).</li>
@@ -246,10 +264,16 @@ Initially, I had planned to just keep the API docs in sphinx, but maintaining tw
 <p><img src="pyshiny-reference.png" alt=""></p>
 <p>Notice that in the shiny reference page above, functions living in the <code>ui</code> submodule are flattened onto the one big index page. This doesn&rsquo;t always work. For example, packages like pandas are probably too big to put on a single page. In a future post, I&rsquo;d love to explore strategies for laying out API references, based on package size and complexity.</p>
 <p>By March 2023 we had an MVP of quartodoc, and completed the initial migration of the shiny and siuba API References to quarto.</p>
-<h2 id="coming-up-more-quartodoc">Coming up: More Quartodoc</h2>
+<h2 class="header" id="coming-up-more-quartodoc">
+  Coming up: More Quartodoc
+  <a class="header--anchor" href="#coming-up-more-quartodoc">#</a>
+</h2>
 <p>While quartodoc was motivated by my need to move siuba&rsquo;s API reference to quarto, it became clear that a number of packages&mdash;both internal and external&mdash;would benefit from it. My managers asked me to dial my siuba time down to 0% and focus on quartodoc. Given Posit&rsquo;s recent layoffs, it makes sense folks were concerned about aligning with the company&rsquo;s goals. quartodoc is a nice compromise, since both Posit and I need it for our python packages.</p>
 <p>Over the next 6 months, I plan to migrate a bunch of Posit libraries like pins and <a href="https://github.com/rstudio/vetiver-python">vetiver</a> to quartodoc. I&rsquo;ll also go on the lookout for other packages that could benefit from quarto + quartodoc!</p>
-<h2 id="closing-thoughts">Closing thoughts</h2>
+<h2 class="header" id="closing-thoughts">
+  Closing thoughts
+  <a class="header--anchor" href="#closing-thoughts">#</a>
+</h2>
 <p>My first year at Posit quickly took me from porting a package to python, to going deep on the process of writing delightful documentation. Writing the initial draft of the py-shiny guide started me down the path of researching what makes documentation great. Keeping the guide writing magic going, I cobbled together a siuba guide. Finally, realizing that there was no way to port siuba&rsquo;s API guide, I worked on an MVP of quartodoc&mdash;which enabled shiny and siuba to go fully to quarto.</p>
 <p>I think documenting open source software is traditionally not seen as the sexiest aspect of software development. And maybe this is the cognitive psychologist in me speaking. But I think it&rsquo;s a surprisingly deep, strategic topic. I think that small improvements to how open source tools are documented can have a huge impact on the data world.</p>
 <p>Hope some random docstring makes your day!</p>

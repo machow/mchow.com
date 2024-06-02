@@ -23,7 +23,7 @@ description = "Michael Chow's prod ready data thoughts (and other things)."
 keywords = []
 author = "Michael Chow"
 sharingicons = false
-mainSections = ["posts", "drafts"]
+mainSections = ["posts"]
 
 
 

@@ -236,7 +236,7 @@ all_colors = gradient_n_pal(colors)(np.linspace(0, 1, 30))
 
 ## Learning more
 
--   [Making art in Python with plotnine by Nicole Rennie](https://nrennie.rbind.io/blog/making-art-python-plotnine/)
+-   [Making art in Python with plotnine by Nicola Rennie](https://nrennie.rbind.io/blog/making-art-python-plotnine/)
 -   [plotnine.org docs](https://plotnine.org/)
 -   [Getting started with generative art in R](https://towardsdatascience.com/getting-started-with-generative-art-in-r-3bc50067d34b)
 -   [Generative work by Thomas Lin Pedersen, ggplot2 maintainer](https://thomaslinpedersen.art/work/)

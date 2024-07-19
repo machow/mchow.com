@@ -1,3 +1,8 @@
+/* OVERRIDES (should be moved into theme) */
+summary {
+  display: list-item !important;
+}
+
 /* TOPNAV */
 
 .container.topnav {

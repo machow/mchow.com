@@ -140,6 +140,7 @@ Notice that this produced roughly the original art plot, but with two difference
 In order to customize the fill colors, we can use some helper functions from the `mizani` library. `mizani` is used behind the scenes by `plotnine`. In the code below, we'll create a 12-color brewer palette, and then interpolate between those colors to be able to fill in all 30 groups.
 
 ``` python
+import numpy as np
 from mizani.palettes import brewer_pal, gradient_n_pal
 
 pal = brewer_pal("qual", "Paired")
@@ -203,6 +204,8 @@ Here's all the code in one place, so it's easier to copy and paste.
 
 ``` python
 import polars as pl
+import numpy as np
+
 from mizani.palettes import brewer_pal, gradient_n_pal
 
 df = pl.read_csv("https://mchow.com/posts/plotnine-art/plot-data.csv")

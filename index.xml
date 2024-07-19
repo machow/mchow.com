@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Sat, 01 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Plotting art with plotnine</title>
+      <link>/posts/plotnine-art/</link>
+      <pubDate>Sun, 14 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>/posts/plotnine-art/</guid>
+      <description>Recently, I&amp;rsquo;ve been helping the plotting library plotnine&amp;mdash;a port of ggplot2 to Python. plotnine normally is used to make plots for data analysis. But what if I told you there is another option: cobbling up generative art.&#xA;In this post I&amp;rsquo;ll walk through the basics of using plotnine to create generative art. I&amp;rsquo;ll look at three pieces:&#xA;plotting art data removing unecessary theme() elements (like axis ticks) examples of folks making generative art If you&amp;rsquo;re curious about plotnine and generative art, this is a great opportunity to submit something artsy to the 2024 Plotnine Contest (deadline is 26 July 2024).</description>
+    </item>
     <item>
       <title>Why did I join RStudio (now Posit)?</title>
       <link>/thoughts/why-rstudio/</link>

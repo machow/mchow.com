@@ -3,16 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2024-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/plotnine-art/</loc>
+    <lastmod>2024-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2024-07-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/thoughts/</loc>
     <lastmod>2024-06-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/thoughts/why-rstudio/</loc>
     <lastmod>2024-06-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2024-03-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/cfp-project-questionnaire/</loc>
     <lastmod>2024-03-16T00:00:00+00:00</lastmod>

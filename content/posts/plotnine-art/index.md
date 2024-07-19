@@ -200,7 +200,7 @@ Notice everything outside the `geom_area()` fills is now hidden. We also set `pl
 
 ## Putting it all together
 
-Here's all the code in one place, so it's easier to copy and paste.
+Here's all the code in one place, so it's easier to copy and paste (or see [this notebook](https://github.com/machow/mchow.com/blob/main/content/posts/plotnine-art/full-code.ipynb), which also generates the data.).
 
 ``` python
 import polars as pl

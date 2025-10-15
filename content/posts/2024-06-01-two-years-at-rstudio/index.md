@@ -1,5 +1,5 @@
 ---
-title: Two years at RStudio
+title: Two years at RStudio (now Posit)
 author: Michael Chow
 date: "2024-06-01"
 slug: two-years-at-rstudio
@@ -38,6 +38,8 @@ There were other bits tucked in-between Big Things, like giving a talk at posit:
 
 I was fortunate to pair program a bunch with two people: [Hamel Husain](https://hamel.dev/) (quartodoc) and [Rich Iannone](https://github.com/rich-iannone) (co-developer on Great Tables). It’s also worth mentioning Curtis Kephart, who helped us take communication on Great Tables to the next level.
 
+For last year's review, see [One Year at RStudio](../one-year-at-rstudio/). Or jump directly to the [Great Tables section](#great-tables).
+
 ## quartodoc
 
 quartodoc is a tool that enables python libraries to generate an API Reference page. Basically, developers using [quarto](https://quarto.org/) to document their python library can use quartodoc to create the API Reference page.
@@ -48,9 +50,9 @@ For example, here’s the Reference page of the library Great Tables:
 
 Notice that the API Reference page is documenting key classes (like `GT()`) and methods (like `GT.tab_header()`).
 
-The value of quartodoc is that it builds on top of quarto—a tool that makes it easy for data workers to create reports, slides, and websites. I needed quartodoc because documentation for my tools are 90% general website, and 10% API Reference. This means that quarto makes the main part easy, and quartodoc makes the last bit possible.
+The value of quartodoc is that it builds on top of quarto—a tool that makes it easy to create reports, slides, and websites. I needed quartodoc because documentation for my tools are 90% general website, and 10% API Reference. This means that quarto makes the main part easy, and quartodoc makes the last bit possible.
 
-For quartodoc, I wanted to focus first on a **minimum viable audience.** My reasoning was that generating this kind of API Reference has a surprising number of tricky steps. Moreover, everyone I talked to wanted different behaviors and documentation site structures.
+For quartodoc, I wanted to focus first on a **minimum viable audience.** My reasoning was that generating an API Reference has a surprising number of tricky steps. Also, everyone I talked to wanted different behaviors and documentation site structures.
 
 Rather than seeking a general audience, I first needed [early adopters](https://seths.blog/2020/09/crossing-from-the-early-adopters-to-a-larger-group/)—people who were willing to kick the tires, surface issues, and find better ways of doing things.
 
@@ -66,20 +68,20 @@ The x-axis is the date, and the y-axis is number of comments. Each facet and col
 - **wch** (Winston Chang; shiny team) left a ton of comments early on, after they had adopted quartodoc. This was critical for getting quartodoc ready for the big time!
 - **has2k1** (Hassan Kibirige; plotnine) started leaving comments later, once we started working on supporting bigger packages like plotnine and ibis.
 
-Together these people reflect help from upstream packages, feedback from early adopters (shiny), and then feedback from big packages after a broader rollout (plotnine).
+Together these people reflect help from upstream packages, feedback from early adopters (shiny), and then feedback from big packages after a broad rollout (plotnine).
 
 ### (Q2): the first 6 doc sites
 
-For Q2 we focused on setting up getting 6 packages using quartodoc. This involved parts:
+For Q2 we focused on getting 6 packages using quartodoc. This involved two parts:
 
-- **Round out support** for packages like siuba, pins, and shiny that had deployed with quartodoc.
-- **Get off the ground** packages like vetiver, shinyswatch, and varioius folks that showed up.
+- **Round out support** for packages already using it, like siuba, pins, and shiny.
+- **Get off the ground** packages like vetiver, shinyswatch, and new adopters.
 
 ![](./04-quartodoc-first-6.png)
 
 **Rounding out support**. While we had deployed the shiny API docs in the previous quarter, there were a ton of extra cases to consider. It’s worth noting two members of the shiny team opened 42 issues on quartodoc as we worked on shiny’s API Reference. This was the best early adopter outcome I could hope for 😅.
 
-The two biggest pieces were reducing the build time and supporting interlinks—automatic linking between API entries.
+The two biggest pieces were reducing the build time and supporting interlinks (automatic linking between API entries).
 
 **Supporting new packages**. I also worked on migrating a few more documentation sites to quartodoc—including pins (which I maintained), and shinyswatch (which the shiny team maintained).
 
@@ -100,13 +102,11 @@ After the conference, I put up two quick resources:
 
 In the end, the ibis team worked incredibly fast. I mean scary fast. I mean that what I thought might get chipped away at over a month or more was done in a week. Dang y’all!
 
-TODO: turn below into a single sentence.
-
-**plotnine docs**. Similar to working with ibis, I also put up a demo site for plotnine (https://github.com/machow/plotnine-docs-demo). Plotnine’s author, Hassan, was very interested in getting the look and feel of the plotnine docs exactly right. As a result, he ended up opening a ton of issues on quartodoc, upstream on griffe, and even contributed useful changes to quartodoc.
+**plotnine docs**. Similar to working with ibis, I also put up a demo site and [screencast for plotnine](https://www.loom.com/share/2616d088be0e4571a0a43a475c75f273). Plotnine’s author, Hassan, ended up opening a ton of issues on quartodoc, upstream on griffe, and even contributed useful changes to quartodoc.
 
 ## Great Tables
 
-For the next two quarters I shifted focus to Great Tables, a python library for the display of tables. The easiest way to get a feel for what Great Tables does it to check out the [Examples page](https://posit-dev.github.io/great-tables/examples/). Here are two entries:
+For the next two quarters I shifted focus to Great Tables, a python library for the display of tables. The easiest way to get a feel for what Great Tables does is to check out the [Examples page](https://posit-dev.github.io/great-tables/examples/). Here are two entries:
 
 ![](./05-gt-examples.png)
 
@@ -114,10 +114,10 @@ Notice that the tables look very different from normal DataFrame outputs. They�
 
 The magic behind Great Tables is a developer named Rich Iannone. He’s gone surprisingly deep on two facets of tables:
 
-- **Domains** where tables get shared a lot (e.g. pharma, sports, analytics, academia)
-- **Frameworks** for describing tables (e.g. the 1949 Census Manual of Table Display)
+- **Domains** where tables get shared (e.g. pharma, sports, analytics, research)
+- **Frameworks** describing tables (e.g. the 1949 Census Manual of Table Display)
 
-What stuck out to me most though was that his R library for table styling (gt) had a surprisingly dedicated following. For example, Tom Mock uses gt in his example laden post [“10+ Guidelines for Better Tables in R”](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/). gt established a powerful grammar for communicating table display.
+What stuck out to me most though was that his R library for table styling ([gt](https://github.com/rstudio/gt)) had a surprisingly dedicated following. For example, Tom Mock uses gt in his example laden post [“10+ Guidelines for Better Tables in R”](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/). gt established a powerful grammar for communicating table display.
 
 When planning my next six months, I wrote this pitch for putting time on Great Tables:
 
@@ -127,14 +127,19 @@ In the following sections I’ll discuss how we approached each quarter, which l
 
 ## Great Tables (Q4): initial release, pycon talk accepted
 
-**Architecture review and quick refactor.** Before kicking off general Great Tables plans, I spent 2 weeks reviewing an existing python prototype Rich had been chipping away at.
+In my first few months developing Great Tables with Rich, I focused on a quick architecture review of the existing code, while we worked towards submitting a talk to PyCon US 2024.
+The key challenge with refactoring was avoiding too much, but also ensuring we would not paint ourselves into a corner before submitting.
+
+In the following sections I'll discuss how a 10 minute architecture review screencast, and design exercises helped us refactor and submit to PyCon.
+
+**Architecture review and quick refactor.** Before kicking off general Great Tables plans, I spent 2 weeks reviewing an existing python prototype for Great Tables Rich had been chipping away at.
 
 Two things stood out in the prototype:
 
 - **data**: 15 hefty data classes, holding information about table titles, row organization, and more.
 - **actions**: 200+ functions for activities like adding structure, formatting values, and styling parts.
 
-Moreover, the data and actions were combined in a big class called `GT`, which ended up inheriting from 15 parent classes (1 per data class, with actions on the data class). In general, inheriting from 15 classes is often a sign you should use the bridge pattern.
+Moreover, the data and actions were combined in a big class called `GT`, which ended up inheriting from 15 parent classes (1 per data class, with actions on the data class). In general, inheriting from 15 classes is often a sign you should use the bridge pattern---which is mostly what we ended up doing.
 
 Overall, the refactor gave us two things:
 
@@ -143,10 +148,10 @@ Overall, the refactor gave us two things:
 
 <div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/32431dd0e62d4d69b0778abfb8b71962?sid=6d5a791d-3f48-40ef-8370-5e36372d76b0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-**Submitting to pycon.** With the refactor out of the way, we set a goal of submitting a talk to PyCon US 2024. Our reasoning was…
+**Submitting to pycon.** With the refactor out of the way, we set a goal of submitting a talk to PyCon US 2024. Our reasoning was as follows:
 
 - The deadline was 13 December, which gave us 6 weeks of sprint time.
-- It forced us to release, document, and communicate Great Tables early
+- It forced us to release, document, and communicate Great Tables early.
 - Submitting a talk proposal made us articulate “what about this is so surprising and special?”
 
 In order to make the most of our time, we made a User Story Map that segmented our work into 3 slices (which we hoped we could nail in 2-week sprints). We identified folks within Posit who could be early users.
@@ -163,12 +168,12 @@ After that, it was time to submit to PyCon. We each wrote up separate drafts, an
 
 ## Great Tables (Q1): philosophy of Great Tables blog post
 
-We found out we had been accepted to PyCon in early February, which kicked off a flurry of activity. It wasn’t until May, which gave us two 6-week planning cycles.
+We found out we had been accepted to PyCon in early February, which kicked off a flurry of activity. The conference wasn’t until May, which gave us two 6-week planning cycles.
 
 The first cycle finished at the end of Q1, so I’ll focus only on it. We focused on two areas:
 
 - **Feature prioritization**: using an impact / effort matrix to plan features
-- **Communication:** making a content schedule with Curtis Kephart, which accidentally spun out into a 2-week push on writing “The Philosophy of Great Tables”.
+- **Communication:** making a content schedule with Curtis Kephart, which accidentally spun out into 2 weeks of writing “The Philosophy of Great Tables”.
 
 **Feature prioritization.** Using an impact / effort matrix exposed a lot of low hanging fruit for Great Tables. In order to create the matrix, we wrote out big issues on github with the label `epic`. These are issues that essentially unlock something fairly big and useful (e.g. there might be 100 issues on a repo, and only 10 to 20 epics).
 
@@ -178,9 +183,7 @@ Then, I created sticky notes for each one in Miro, so Rich could move them onto 
 
 Note that more impactful epics are higher, and more effortful are to the right. There are two aspects of this graph I find useful. First, low effort tasks can often be used as **filler** between bigger work. Second, things above the line reflect epics where there’s **outsized impact**, relative to effort involved.
 
-For example, Rich reckoned implementing `ggsave()` as low effort and high impact (i.e. low hanging fruit). We ended up coloring especially hard things in red, for things whose implementation might be tricky.
-
-Another surprising piece was that Rich suspected rendering latex required a lot of effort, but didn’t impact a lot of people. He knew we needed to get to it eventually, because the people who use it benefit deeply, but we suspected it should come after PyCon.
+For example, Rich reckoned implementing `ggsave()` as low effort and high impact (i.e. low hanging fruit). We ended up coloring especially hard implementations in red. A surprising piece was that Rich placed rendering to latex as a relatively high effort, low impact activity (bottom right). He knew a small group of people benefited deeply from it, but we suspected it should come after PyCon.
 
 **Communication.** We wanted equal focus between development and communication around Great Tables this quarter. To this end, we linked up with one of our favorite Posit folks, Curtis Kephart, and planned out a content schedule. This contained posts we committed to writing, people he planned to reach out to, and desired outcomes like expanding the Examples gallery.
 
@@ -192,22 +195,19 @@ Note that there were largely three kinds of posts:
 
 - **Interesting use cases**: exploring the betting game [Super Bowl squares](https://posit-dev.github.io/great-tables/blog/superbowl-squares/).
 - **Explanations**: why [using Polars with Great Tables](https://posit-dev.github.io/great-tables/blog/polars-styling/) blew our minds.
-- **Release updates**: showing the best parts of each release. E.g. [v0.3.0 styles](https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/) and [v0.4.0 nanoplots](https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/).
+- **Release updates**: showing off features. E.g. [v0.3.0 styles](https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/) and [v0.4.0 nanoplots](https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/).
 
-However, the most surprising result came when Rich took up the call from Curtis to lay out the “Philosophy of Great Tables”. A task Curtis guessed would be quick, but that Rich turned into a 2 week long writing adventure, that shot to the top of Hacker News on April 4th:
+However, the most surprising result came when Rich took up the call from Curtis to lay out the [Design Philosophy of Great Tables](https://posit-dev.github.io/great-tables/blog/design-philosophy/). A task Curtis guessed would be quick, but that Rich turned into a 2 week long writing adventure, that shot to the top of Hacker News on April 4th:
 
 ![](./09-gt-hn-analytics.png)
 
-The Philosophy of Great Tables ended up a 3,000+ word epic on the 10,000+ year history of tables—from tablets used at the Temple of Enlil at Nippur, to the midcentury tables featured in the US Census Manual of Table Display, and on the spreadsheet-esque tables of VisiCalc. Rich pulled the content from some freaky-table-scholar part of his brain, and gave me permission to aggressively edit. It took roughly 2 weeks of regular pairing on writing and edits.
-
-See this short post on how I approached editing with Rich.
-
-The bones of the article were good, so much of my focus editing was on three pieces:
-
-- **Narrative structure**: we reviewed the traditional [three act structure](https://en.wikipedia.org/wiki/Three-act_structure) and [hero’s journey](https://en.wikipedia.org/wiki/Hero%27s_journey). In this post the hero is the reader (or tables themselves). The status quo is upset when they realize how badass tables could be. Throughout time tables continue to rise to the occasion, but VisiCalc upends this by derailing 10,000 years of progress. This is resolved by Great Tables restoring tables to their original glory.
-- **Continuity**: Making clear why each paragraph/section followed the previous one
-- **Brevity**: I shortened a lot of sentences.
-
-Surprisingly, we got a lot of mileage out of copying whole drafts into Miro for editing. This allowed me to zoom super far out, and flag extra big paragraphs, and to discuss breaking up text with lists or images.
+[The Design Philosophy of Great Tables](https://posit-dev.github.io/great-tables/blog/design-philosophy/) ended up a 3,000+ word epic on the 10,000+ year history of tables—from tablets used at the Temple of Enlil at Nippur, to the midcentury tables featured in the US Census Manual of Table Display, and on the spreadsheet-esque tables of VisiCalc. Rich pulled the content from some freaky-table-scholar part of his brain, and gave me permission to aggressively edit. It took roughly 2 weeks of regular pairing on writing and edits.
 
 ## Summary
+
+Over the past year (around Apr 2023 - Apr 2024), I focused on two open source tools: quartodoc and Great Tables. With quartodoc we worked on getting the first dozen libraries to adopt it, while with Great Tables we went for broader adoption.
+
+For the next year---in addition to maintaining Great Tables---I'm looking to focus more on strategies behind writing good documentation. This is inspired by my experience working on guides [the year before](../one-year-at-rstudio/), and on the Great Tables guide this year.
+I also want to do some more dabbling on tools to make data analysis nice in Polars (e.g. by converting Polars code to SQL, with tools like narwhals, etc..).
+
+We'll see!

@@ -17,6 +17,13 @@
       <description>Recently, I&amp;rsquo;ve been helping the plotting library plotnine&amp;mdash;a port of ggplot2 to Python. plotnine normally is used to make plots for data analysis. But what if I told you there is another option: cobbling up generative art.&#xA;In this post I&amp;rsquo;ll walk through the basics of using plotnine to create generative art. I&amp;rsquo;ll look at three pieces:&#xA;plotting art data removing unecessary theme() elements (like axis ticks) examples of folks making generative art If you&amp;rsquo;re curious about plotnine and generative art, this is a great opportunity to submit something artsy to the 2024 Plotnine Contest (deadline is 26 July 2024).</description>
     </item>
     <item>
+      <title>Two years at RStudio (now Posit)</title>
+      <link>/posts/two-years-at-rstudio/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>/posts/two-years-at-rstudio/</guid>
+      <description>Recently, I wrapped up two years working on the Open Source team at Posit. This last year was largely spent getting two open source tools—quartodoc and Great Tables—off the ground.&#xA;The two packages have very different audiences.&#xA;quartodoc feels developer focused. It creates API documentation for other packages, so its users are package developers. This audience is smaller, but willing to put in a lot of work to get what they need.</description>
+    </item>
+    <item>
       <title>Why did I join RStudio (now Posit)?</title>
       <link>/thoughts/why-rstudio/</link>
       <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>

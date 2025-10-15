@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Two years at RStudio (now Posit)" />
+<meta property="og:description" content="Recently, I wrapped up two years working on the Open Source team at Posit. This last year was largely spent getting two open source tools—quartodoc and Great Tables—off the ground.
+The two packages have very different audiences.
+quartodoc feels developer focused. It creates API documentation for other packages, so its users are package developers. This audience is smaller, but willing to put in a lot of work to get what they need." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/two-years-at-rstudio/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-06-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-06-01T00:00:00+00:00" />
+
+<title>Two years at RStudio (now Posit) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">Two years at RStudio (now Posit)</h1>
+    <h2 class="subtitle is-5">June 1, 2024 by Michael Chow</h2>
+    
+    <div class="content content-article">
+      <p>Recently, I wrapped up two years working on the Open Source team at Posit. This last year was largely spent getting two open source tools—<a href="https://github.com/machow/quartodoc">quartodoc</a> and <a href="https://github.com/posit-dev/great-tables">Great Tables</a>—off the ground.</p>
+<p>The two packages have very different audiences.</p>
+<ul>
+<li>quartodoc feels <strong>developer focused</strong>. It creates API documentation for other packages, so its users are package developers. This audience is smaller, but willing to put in a lot of work to get what they need.</li>
+<li>Great Tables feels <strong>analyst focused</strong>. It creates beautiful tables for publication, which matters across a wide range of industries (e.g. Pharma, business, analytics generally).</li>
+</ul>
+<p>In this blog post, I’ll review the big things I focused on each quarter, how they went, and what I learned in the process. The big focuses are shown in the graph below, which plots github stars over time, with big milestones marked at the end of each quarter.</p>
+<p><img src="./01-stars-over-time.png" alt=""></p>
+<h3 class="header" id="one-big-thing-per-quarter-obtpq">
+  One big thing per quarter (OBTPQ)
+  <a class="header--anchor" href="#one-big-thing-per-quarter-obtpq">#</a>
+</h3>
+<p>In general, I tried to focus on nailing one big thing per quarter:</p>
+<ul>
+<li><strong>Q2 quartodoc:</strong> used for 6 documentation sites (and many issues resolved).</li>
+<li><strong>Q3 quartodoc:</strong> used for 12 documentation sites, including big ones like <a href="https://ibis-project.org/">ibis</a> and <a href="https://plotnine.org/">plotnine</a>.</li>
+<li><strong>Q4 Great Tables:</strong> Released, talk submitted &amp; accepted at PyCon US.</li>
+<li><strong>Q1: Great Tables:</strong> Philosophy of Great Tables post on the <a href="https://news.ycombinator.com/item?id=39933833">top of hacker news</a>.</li>
+</ul>
+<p>Note that we didn’t explicitly plan to be on top of hackernews, something that probably involved a lot of luck. Rather, we focused a lot on goals around adoption and communication, hoping that some Big Thing would surface.</p>
+<p>There were other bits tucked in-between Big Things, like giving a talk at posit::conf called <a href="https://youtu.be/j4B7ui5f5Xo?si=T9zQpTMKCcCmhgAC">Siuba and duckdb: Analyzing Everything Everywhere All at Once</a>. I’m also partial to this <a href="https://posit-dev.github.io/great-tables/blog/bring-your-own-df/">BYODF (Bring Your Own DataFrame) blog post</a>.</p>
+<p>I was fortunate to pair program a bunch with two people: <a href="https://hamel.dev/">Hamel Husain</a> (quartodoc) and <a href="https://github.com/rich-iannone">Rich Iannone</a> (co-developer on Great Tables). It’s also worth mentioning Curtis Kephart, who helped us take communication on Great Tables to the next level.</p>
+<p>For last year&rsquo;s review, see <a href="../one-year-at-rstudio/">One Year at RStudio</a>. Or jump directly to the <a href="#great-tables">Great Tables section</a>.</p>
+<h2 class="header" id="quartodoc">
+  quartodoc
+  <a class="header--anchor" href="#quartodoc">#</a>
+</h2>
+<p>quartodoc is a tool that enables python libraries to generate an API Reference page. Basically, developers using <a href="https://quarto.org/">quarto</a> to document their python library can use quartodoc to create the API Reference page.</p>
+<p>For example, here’s the Reference page of the library Great Tables:</p>
+<p><img src="./02-gt-api-index.png" alt=""></p>
+<p>Notice that the API Reference page is documenting key classes (like <code>GT()</code>) and methods (like <code>GT.tab_header()</code>).</p>
+<p>The value of quartodoc is that it builds on top of quarto—a tool that makes it easy to create reports, slides, and websites. I needed quartodoc because documentation for my tools are 90% general website, and 10% API Reference. This means that quarto makes the main part easy, and quartodoc makes the last bit possible.</p>
+<p>For quartodoc, I wanted to focus first on a <strong>minimum viable audience.</strong> My reasoning was that generating an API Reference has a surprising number of tricky steps. Also, everyone I talked to wanted different behaviors and documentation site structures.</p>
+<p>Rather than seeking a general audience, I first needed <a href="https://seths.blog/2020/09/crossing-from-the-early-adopters-to-a-larger-group/">early adopters</a>—people who were willing to kick the tires, surface issues, and find better ways of doing things.</p>
+<h3 class="header" id="quartodoc-issue-comments-over-time">
+  quartodoc issue comments over time
+  <a class="header--anchor" href="#quartodoc-issue-comments-over-time">#</a>
+</h3>
+<p>The rollout of quartodoc is nicely illustrated in issue comments over time, shown below.</p>
+<p><img src="./03-quartodoc-commits.png" alt=""></p>
+<p>The x-axis is the date, and the y-axis is number of comments. Each facet and color is a specific github user (with magenta in the lower right being all other commenters grouped together). Note three interesting dynamics:</p>
+<ul>
+<li><strong>pawamoy</strong> (top-left) commented regularly throughout development. He’s maintains griffe, which quartodoc uses to fetch function information and docstrings. He often came to the rescue on bits needed upstream, or to help with puzzling situations.</li>
+<li><strong>wch</strong> (Winston Chang; shiny team) left a ton of comments early on, after they had adopted quartodoc. This was critical for getting quartodoc ready for the big time!</li>
+<li><strong>has2k1</strong> (Hassan Kibirige; plotnine) started leaving comments later, once we started working on supporting bigger packages like plotnine and ibis.</li>
+</ul>
+<p>Together these people reflect help from upstream packages, feedback from early adopters (shiny), and then feedback from big packages after a broad rollout (plotnine).</p>
+<h3 class="header" id="q2-the-first-6-doc-sites">
+  (Q2): the first 6 doc sites
+  <a class="header--anchor" href="#q2-the-first-6-doc-sites">#</a>
+</h3>
+<p>For Q2 we focused on getting 6 packages using quartodoc. This involved two parts:</p>
+<ul>
+<li><strong>Round out support</strong> for packages already using it, like siuba, pins, and shiny.</li>
+<li><strong>Get off the ground</strong> packages like vetiver, shinyswatch, and new adopters.</li>
+</ul>
+<p><img src="./04-quartodoc-first-6.png" alt=""></p>
+<p><strong>Rounding out support</strong>. While we had deployed the shiny API docs in the previous quarter, there were a ton of extra cases to consider. It’s worth noting two members of the shiny team opened 42 issues on quartodoc as we worked on shiny’s API Reference. This was the best early adopter outcome I could hope for 😅.</p>
+<p>The two biggest pieces were reducing the build time and supporting interlinks (automatic linking between API entries).</p>
+<p><strong>Supporting new packages</strong>. I also worked on migrating a few more documentation sites to quartodoc—including pins (which I maintained), and shinyswatch (which the shiny team maintained).</p>
+<p>At the end of this quarter I filmed a 10 minute screencast on getting started with quartodoc, and then headed to SciPy’s annual conference. There, I ran into the ibis team, who ended up switching to quartodoc over the next quarter.</p>
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/fb4eb736848e470b8409ba46b514e2ed?sid=aab77d60-3183-4989-907b-0cc2ff63e677" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<h3 class="header" id="q3-wiring-up-the-ibis-and-plotnine-docs">
+  (Q3): wiring up the ibis and plotnine docs
+  <a class="header--anchor" href="#q3-wiring-up-the-ibis-and-plotnine-docs">#</a>
+</h3>
+<p><strong>ibis docs</strong>. While at SciPy, I ended up spending a good chuck of time with the ibis team. Since their tool is similar to siuba, in that it translates to SQL, we have a ton of shared interests. They mentioned not liking how hard it is to execute python code on their doc site, which used mkdocs. While sitting with them at Allen Downey’s talk, I attempted a port-ibis-docs-to-quartodoc speedrun, which went surprisingly okay.</p>
+<p>After the conference, I put up two quick resources:</p>
+<ul>
+<li>a <a href="https://github.com/machow/ibis-docs-demo">prototype of their docs in quartodoc</a></li>
+<li>a screencast covering todo items and differences between sites (shown below).</li>
+</ul>
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/39e0be6bf6db4db58db02bc0e9cb5dbc?sid=8e904427-f01e-4e05-9c9b-fce118f1fbd2" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<p>In the end, the ibis team worked incredibly fast. I mean scary fast. I mean that what I thought might get chipped away at over a month or more was done in a week. Dang y’all!</p>
+<p><strong>plotnine docs</strong>. Similar to working with ibis, I also put up a demo site and <a href="https://www.loom.com/share/2616d088be0e4571a0a43a475c75f273">screencast for plotnine</a>. Plotnine’s author, Hassan, ended up opening a ton of issues on quartodoc, upstream on griffe, and even contributed useful changes to quartodoc.</p>
+<h2 class="header" id="great-tables">
+  Great Tables
+  <a class="header--anchor" href="#great-tables">#</a>
+</h2>
+<p>For the next two quarters I shifted focus to Great Tables, a python library for the display of tables. The easiest way to get a feel for what Great Tables does is to check out the <a href="https://posit-dev.github.io/great-tables/examples/">Examples page</a>. Here are two entries:</p>
+<p><img src="./05-gt-examples.png" alt=""></p>
+<p>Notice that the tables look very different from normal DataFrame outputs. They’re structured, formatted, and styled for presentation. Here, the most important piece is conveying information to an audience (e.g. your boss; people in your field).</p>
+<p>The magic behind Great Tables is a developer named Rich Iannone. He’s gone surprisingly deep on two facets of tables:</p>
+<ul>
+<li><strong>Domains</strong> where tables get shared (e.g. pharma, sports, analytics, research)</li>
+<li><strong>Frameworks</strong> describing tables (e.g. the 1949 Census Manual of Table Display)</li>
+</ul>
+<p>What stuck out to me most though was that his R library for table styling (<a href="https://github.com/rstudio/gt">gt</a>) had a surprisingly dedicated following. For example, Tom Mock uses gt in his example laden post <a href="https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/">“10+ Guidelines for Better Tables in R”</a>. gt established a powerful grammar for communicating table display.</p>
+<p>When planning my next six months, I wrote this pitch for putting time on Great Tables:</p>
+<blockquote>
+<p>Normally, when porting a tool from R to python there are a dozen alternatives to compete with. As a result, it can be hard turning need into demand. I think getting gt-python out is a no-brainer: gt fans were crawling all over themselves at posit::conf() to meet Rich, and <strong>there’s no python alternative</strong>.</p>
+</blockquote>
+<p>In the following sections I’ll discuss how we approached each quarter, which loosely corresponded to <strong>submitting to PyCon</strong>, and accidentally shooting a <strong>3,000 word blog post to the top of hacker news</strong>.</p>
+<h2 class="header" id="great-tables-q4-initial-release-pycon-talk-accepted">
+  Great Tables (Q4): initial release, pycon talk accepted
+  <a class="header--anchor" href="#great-tables-q4-initial-release-pycon-talk-accepted">#</a>
+</h2>
+<p>In my first few months developing Great Tables with Rich, I focused on a quick architecture review of the existing code, while we worked towards submitting a talk to PyCon US 2024.
+The key challenge with refactoring was avoiding too much, but also ensuring we would not paint ourselves into a corner before submitting.</p>
+<p>In the following sections I&rsquo;ll discuss how a 10 minute architecture review screencast, and design exercises helped us refactor and submit to PyCon.</p>
+<p><strong>Architecture review and quick refactor.</strong> Before kicking off general Great Tables plans, I spent 2 weeks reviewing an existing python prototype for Great Tables Rich had been chipping away at.</p>
+<p>Two things stood out in the prototype:</p>
+<ul>
+<li><strong>data</strong>: 15 hefty data classes, holding information about table titles, row organization, and more.</li>
+<li><strong>actions</strong>: 200+ functions for activities like adding structure, formatting values, and styling parts.</li>
+</ul>
+<p>Moreover, the data and actions were combined in a big class called <code>GT</code>, which ended up inheriting from 15 parent classes (1 per data class, with actions on the data class). In general, inheriting from 15 classes is often a sign you should use the bridge pattern&mdash;which is mostly what we ended up doing.</p>
+<p>Overall, the refactor gave us two things:</p>
+<ul>
+<li><strong>encapsulation</strong>: functions and methods had much less access to things they didn’t need.</li>
+<li><strong>DataFrame agnostic</strong>: while refactoring, I split out all DataFrame logic to its own module. This let us quickly add Polars support!</li>
+</ul>
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/32431dd0e62d4d69b0778abfb8b71962?sid=6d5a791d-3f48-40ef-8370-5e36372d76b0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<p><strong>Submitting to pycon.</strong> With the refactor out of the way, we set a goal of submitting a talk to PyCon US 2024. Our reasoning was as follows:</p>
+<ul>
+<li>The deadline was 13 December, which gave us 6 weeks of sprint time.</li>
+<li>It forced us to release, document, and communicate Great Tables early.</li>
+<li>Submitting a talk proposal made us articulate “what about this is so surprising and special?”</li>
+</ul>
+<p>In order to make the most of our time, we made a User Story Map that segmented our work into 3 slices (which we hoped we could nail in 2-week sprints). We identified folks within Posit who could be early users.</p>
+<div style="position: relative; padding-bottom: 64.5933014354067%; height: 0;"><iframe src="https://www.loom.com/embed/96cffbc05ee24b59a63d72b91a2c50da?sid=d59a46d8-ce60-4f50-93b1-529056d6ee5e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<p>By December 4th we were ready to roll out Great Tables to the world, with a v0.1.0 release and LinkedIn post!</p>
+<p><img src="./06-gt-post.png" alt=""></p>
+<p>The post received 526 reactions on LinkedIn, which seemed like a strong signal people wanted Rich’s freaky table brain styling tables for display in python.</p>
+<p>After that, it was time to submit to PyCon. We each wrote up separate drafts, and then reviewed them together. Rich came up with the title “Making Beautiful, Publication Quality Tables in Python is Possible in 2024”, and we used his draft as the starting point!</p>
+<h2 class="header" id="great-tables-q1-philosophy-of-great-tables-blog-post">
+  Great Tables (Q1): philosophy of Great Tables blog post
+  <a class="header--anchor" href="#great-tables-q1-philosophy-of-great-tables-blog-post">#</a>
+</h2>
+<p>We found out we had been accepted to PyCon in early February, which kicked off a flurry of activity. The conference wasn’t until May, which gave us two 6-week planning cycles.</p>
+<p>The first cycle finished at the end of Q1, so I’ll focus only on it. We focused on two areas:</p>
+<ul>
+<li><strong>Feature prioritization</strong>: using an impact / effort matrix to plan features</li>
+<li><strong>Communication:</strong> making a content schedule with Curtis Kephart, which accidentally spun out into 2 weeks of writing “The Philosophy of Great Tables”.</li>
+</ul>
+<p><strong>Feature prioritization.</strong> Using an impact / effort matrix exposed a lot of low hanging fruit for Great Tables. In order to create the matrix, we wrote out big issues on github with the label <code>epic</code>. These are issues that essentially unlock something fairly big and useful (e.g. there might be 100 issues on a repo, and only 10 to 20 epics).</p>
+<p>Then, I created sticky notes for each one in Miro, so Rich could move them onto the Impact vs Effort graph (shown below).</p>
+<p><img src="./07-gt-impact-effort.png" alt=""></p>
+<p>Note that more impactful epics are higher, and more effortful are to the right. There are two aspects of this graph I find useful. First, low effort tasks can often be used as <strong>filler</strong> between bigger work. Second, things above the line reflect epics where there’s <strong>outsized impact</strong>, relative to effort involved.</p>
+<p>For example, Rich reckoned implementing <code>ggsave()</code> as low effort and high impact (i.e. low hanging fruit). We ended up coloring especially hard implementations in red. A surprising piece was that Rich placed rendering to latex as a relatively high effort, low impact activity (bottom right). He knew a small group of people benefited deeply from it, but we suspected it should come after PyCon.</p>
+<p><strong>Communication.</strong> We wanted equal focus between development and communication around Great Tables this quarter. To this end, we linked up with one of our favorite Posit folks, Curtis Kephart, and planned out a content schedule. This contained posts we committed to writing, people he planned to reach out to, and desired outcomes like expanding the Examples gallery.</p>
+<p>Overall, I found it super helpful! We ended up writing 6 posts on the Great Tables blog over the quarter, and chatting with a bunch of folks curious about our tool. Below are views over time for the 4 most successful posts of the quarter.</p>
+<p><img src="./08-gt-page-analytics.png" alt=""></p>
+<p>Note that there were largely three kinds of posts:</p>
+<ul>
+<li><strong>Interesting use cases</strong>: exploring the betting game <a href="https://posit-dev.github.io/great-tables/blog/superbowl-squares/">Super Bowl squares</a>.</li>
+<li><strong>Explanations</strong>: why <a href="https://posit-dev.github.io/great-tables/blog/polars-styling/">using Polars with Great Tables</a> blew our minds.</li>
+<li><strong>Release updates</strong>: showing off features. E.g. <a href="https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/">v0.3.0 styles</a> and <a href="https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/">v0.4.0 nanoplots</a>.</li>
+</ul>
+<p>However, the most surprising result came when Rich took up the call from Curtis to lay out the <a href="https://posit-dev.github.io/great-tables/blog/design-philosophy/">Design Philosophy of Great Tables</a>. A task Curtis guessed would be quick, but that Rich turned into a 2 week long writing adventure, that shot to the top of Hacker News on April 4th:</p>
+<p><img src="./09-gt-hn-analytics.png" alt=""></p>
+<p><a href="https://posit-dev.github.io/great-tables/blog/design-philosophy/">The Design Philosophy of Great Tables</a> ended up a 3,000+ word epic on the 10,000+ year history of tables—from tablets used at the Temple of Enlil at Nippur, to the midcentury tables featured in the US Census Manual of Table Display, and on the spreadsheet-esque tables of VisiCalc. Rich pulled the content from some freaky-table-scholar part of his brain, and gave me permission to aggressively edit. It took roughly 2 weeks of regular pairing on writing and edits.</p>
+<h2 class="header" id="summary">
+  Summary
+  <a class="header--anchor" href="#summary">#</a>
+</h2>
+<p>Over the past year (around Apr 2023 - Apr 2024), I focused on two open source tools: quartodoc and Great Tables. With quartodoc we worked on getting the first dozen libraries to adopt it, while with Great Tables we went for broader adoption.</p>
+<p>For the next year&mdash;in addition to maintaining Great Tables&mdash;I&rsquo;m looking to focus more on strategies behind writing good documentation. This is inspired by my experience working on guides <a href="../one-year-at-rstudio/">the year before</a>, and on the Great Tables guide this year.
+I also want to do some more dabbling on tools to make data analysis nice in Polars (e.g. by converting Polars code to SQL, with tools like narwhals, etc..).</p>
+<p>We&rsquo;ll see!</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

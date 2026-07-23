@@ -7,8 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Follow on &lt;a href=&#34;https://twitter.com/chowthedog&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; | &lt;a href=&#34;https://github.com/mgjohansen/hucore.git&#34; target=&#34;_blank&#34;&gt;Hucore theme&lt;/a&gt; &amp; &lt;a href=&#34;http://gohugo.io&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; ♥</copyright>
-    <lastBuildDate>Sun, 14 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PyPharma: Modernising Clinical Data Transformation (PHUSE NJ 2026)</title>
+      <link>/posts/pypharma-phuse-nj/</link>
+      <pubDate>Wed, 22 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>/posts/pypharma-phuse-nj/</guid>
+      <description>This is an annotated version of my talk &amp;ldquo;PyPharma: Modernising Clinical Data Transformation&amp;rdquo;, given at the PHUSE Single Day Event in West Windsor, NJ in July 2026. Last year at the same event I talked about building the pharmaverse in Python with polars. This year&amp;rsquo;s talk picks up from a very different 2026: the year AI shook up how tools get built—including for the people who built the Python data stack.</description>
+    </item>
+    <item>
+      <title>The Curse of Documentation (posit::conf 2025)</title>
+      <link>/posts/curse-of-documentation/</link>
+      <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/curse-of-documentation/</guid>
+      <description>This is an annotated version of my talk &amp;ldquo;The Curse of Documentation&amp;rdquo;, given at posit::conf(2025) in Atlanta in September 2025. You can watch the video or flip through the original slides. The talk is about why documentation sites so often have tons of information but not the information you need—and how a good user guide breaks that curse.&#xA;The takeaway: docs become cursed when there&amp;rsquo;s nothing between one polished example and an API reference of 105 tiny functions—and a user guide is the thing that fills that middle layer.</description>
+    </item>
+    <item>
+      <title>User Guides: engaging new users, delighting old ones (SciPy 2025)</title>
+      <link>/posts/user-guides-scipy-2025/</link>
+      <pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/user-guides-scipy-2025/</guid>
+      <description>This is an annotated version of a talk I gave at SciPy 2025 in Tacoma, WA, in July 2025. You can watch the video or view the original slides. The talk is about user guides—what they do that API references can&amp;rsquo;t, and the two key pieces to focus on for getting one right: onboarding and grazing.&#xA;The takeaway: an API reference alone strands newcomers in a sea of 40+ functions, and a user guide fixes that by being concrete and right-sized.</description>
+    </item>
     <item>
       <title>Plotting art with plotnine</title>
       <link>/posts/plotnine-art/</link>
@@ -24,6 +45,13 @@
       <description>Recently, I wrapped up two years working on the Open Source team at Posit. This last year was largely spent getting two open source tools—quartodoc and Great Tables—off the ground.&#xA;The two packages have very different audiences.&#xA;quartodoc feels developer focused. It creates API documentation for other packages, so its users are package developers. This audience is smaller, but willing to put in a lot of work to get what they need.</description>
     </item>
     <item>
+      <title>Making Beautiful, Publication Quality Tables in Python is Possible in 2024 (PyCon US)</title>
+      <link>/posts/beautiful-tables-python-pycon-2024/</link>
+      <pubDate>Fri, 17 May 2024 00:00:00 +0000</pubDate>
+      <guid>/posts/beautiful-tables-python-pycon-2024/</guid>
+      <description>This is an annotated version of a talk I gave with Rich Iannone at PyCon US 2024 in Pittsburgh, about making beautiful, publication quality tables in Python with Great Tables. You can grab the original slides from Rich&amp;rsquo;s presentations repo. There are two recordings of the talk: a cleaner re-recording on the Posit YouTube channel (embedded below) and the live PyCon recording.&#xA;The takeaway: a display table is a data visualization—it deserves the same design care as a chart, and it belongs in your reproducible code workflow rather than pasted together in Excel.</description>
+    </item>
+    <item>
       <title>The project questionnaire: from ideas to action</title>
       <link>/posts/cfp-project-questionnaire/</link>
       <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate>
@@ -36,6 +64,13 @@
       <pubDate>Wed, 01 Feb 2023 00:00:00 +0000</pubDate>
       <guid>/posts/one-year-at-rstudio/</guid>
       <description>In early 2022 I joined RStudio&amp;rsquo;s open source group as its second full-time python developer. With one year under my belt, I wanted to look back on the things I&amp;rsquo;ve worked on, and what I&amp;rsquo;ve learned in the process.&#xA;I started at RStudio with a concrete task&amp;mdash;port the R library pins to python&amp;mdash;along with the expectation that I&amp;rsquo;d work on my tool for data analysis, siuba. Along the way, I collaborated with the shiny team, and ended up developed a real enthusiasm for the value of good documentation.</description>
+    </item>
+    <item>
+      <title>The Accidental Analytics Engineer (Coalesce 2022)</title>
+      <link>/posts/accidental-analytics-engineer/</link>
+      <pubDate>Tue, 18 Oct 2022 00:00:00 +0000</pubDate>
+      <guid>/posts/accidental-analytics-engineer/</guid>
+      <description>This is an annotated version of a talk I gave at dbt Coalesce 2022 in New Orleans on October 18, 2022 — you can watch the video or flip through the original slides. It&amp;rsquo;s about how data scientists accidentally fall into analytics engineering, and a few things that make the landing softer.&#xA;The takeaway: there are two cultures of data science — the tidyverse worldview, focused on turning raw data into insight, and the modern data stack worldview, focused on serving clean data to end users — and data scientists fall into analytics engineering when their one-off analysis work quietly becomes a data-serving job.</description>
     </item>
     <item>
       <title>Pandas has a hard job (and does it well)</title>

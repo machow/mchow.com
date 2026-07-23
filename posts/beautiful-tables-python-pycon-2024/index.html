@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Making Beautiful, Publication Quality Tables in Python is Possible in 2024 (PyCon US)" />
+<meta property="og:description" content="This is an annotated version of a talk I gave with Rich Iannone at PyCon US 2024 in Pittsburgh, about making beautiful, publication quality tables in Python with Great Tables. You can grab the original slides from Rich&rsquo;s presentations repo. There are two recordings of the talk: a cleaner re-recording on the Posit YouTube channel (embedded below) and the live PyCon recording.
+The takeaway: a display table is a data visualization—it deserves the same design care as a chart, and it belongs in your reproducible code workflow rather than pasted together in Excel." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/beautiful-tables-python-pycon-2024/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-05-17T00:00:00+00:00" />
+
+<title>Making Beautiful, Publication Quality Tables in Python is Possible in 2024 (PyCon US) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">Making Beautiful, Publication Quality Tables in Python is Possible in 2024 (PyCon US)</h1>
+    <h2 class="subtitle is-5">May 17, 2024 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of a talk I gave with <a href="https://github.com/rich-iannone">Rich Iannone</a> at PyCon US 2024 in Pittsburgh, about making beautiful, publication quality tables in Python with <a href="https://posit-dev.github.io/great-tables/">Great Tables</a>. You can grab the <a href="https://github.com/rich-iannone/presentations/blob/main/2024-05-17-Pycon-talk-GT/GT_talk_Pycon.pdf">original slides</a> from Rich&rsquo;s presentations repo. There are two recordings of the talk: a cleaner <a href="https://youtu.be/M5zwlb8OzS0">re-recording on the Posit YouTube channel</a> (embedded below) and the <a href="https://youtu.be/08yLWPpFdo4">live PyCon recording</a>.</p>
+<p>The takeaway: a display table is a <strong>data visualization</strong>—it deserves the same design care as a chart, and it belongs in your reproducible code workflow rather than pasted together in Excel. The talk makes that case in three parts: first, what beautiful tables from the wild do well (highlighting, in-table bars, heat maps); then the <strong>key ingredients</strong> for building one—<strong>structure</strong>, <strong>format</strong>, and <strong>style</strong>—walked through step by step with Great Tables; and finally, advanced design considerations—nanoplots (tiny plots inside table cells), coloring, and formatting.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/M5zwlb8OzS0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>Hey everybody. I&rsquo;m Michael Chow, and this is Rich Iannone. We wanted to talk about how making beautiful, publication quality tables in Python is possible in 2024—and we&rsquo;re really hoping that by the end you don&rsquo;t just think they&rsquo;re possible, but a total delight.</p>
+<p>For a little background: we&rsquo;re software engineers at Posit, PBC, and between the two of us we have two PhDs, two dogs, and five cats. We are fanatics of table display. (We each have two and a half cats. That&rsquo;s the joke.)</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>What do we mean by display tables? Less the table on the left—a raw <a href="https://github.com/pola-rs/polars">Polars</a> DataFrame. If you&rsquo;re a data frame plumber, a data scientist working on the data, that view makes sense: the column names have underscores, you can see the column types, you can see the nitty-gritty raw values. That table kind of has its guts hanging out for analysis.</p>
+<p>We mean more the table on the right—a table you might send to someone to convey something about the data. This is a coffee equipment sales table, and we&rsquo;ll be walking through it throughout the talk.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>Here&rsquo;s where we&rsquo;re going: first, <strong>tables as data visualization</strong>; then the <strong>key ingredients</strong> for creating a beautiful display table; and last, some more <strong>advanced considerations</strong> when designing tables for display.</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>Rich kicked things off with the first part of the talk: our table goals.</p>
+<hr class="slide-sep">
+<p><img src="./s-05.png" alt=""></p>
+<p>Let&rsquo;s start with a few beautiful tables from the internet. This one is visually stunning, and it has all the parts I like in a table. Look at the header—it&rsquo;s just a title and subtitle, but it explains the purpose of the table before you see anything else. There&rsquo;s a <strong>spanner</strong>: a label above a group of columns that gives the table structure. The team logos quickly convey the identity of each row. The percentage values are nicely formatted for readability.</p>
+<p>And the really cool thing: the second row is highlighted, drawing attention to the main subject of the table. That&rsquo;s a key part of a data visualization—it gives you focus and drives you to the insight fast.</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>Here&rsquo;s another table from the same author. What grabbed me is that there are bar charts inside the table, front and center, and they enable really fast comparisons between values. The percentages alone wouldn&rsquo;t be so readable—but here we have both: bars plus the precise values.</p>
+<p>There are lots of rows, but the author subdivided them into little groups for better organization. If you want to focus on the box scores, or the shooting stats, or the advanced stats, you can take them one bit at a time without the entire table overwhelming you. And there&rsquo;s a footer with footnotes providing additional detail—it didn&rsquo;t have to go in the surrounding text, it could go right in the table.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>A third beautiful table from the internet. This is a big one—a lot of numbers—but there&rsquo;s essentially a heat map in the table. The color tells you what the values are without you having to parse each and every one; you get an idea just from the colors presented.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>Besides the heat map, there are more good things here: nicely formatted percentage values, and if you look closely, the percentages have decimal alignment, which makes for easy reading. And the heat map, like I said, helps you scan the values and aids comparisons without reading every single number.</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>The really cool thing about these tables: they&rsquo;re not made in Illustrator or some graphics program. They&rsquo;re made from code. The benefit is a <strong>reproducible workflow</strong>—you go from input data to analysis to visualization and straight on to reporting. You don&rsquo;t have to dump your data out into another tool; you have one continuous, reproducible workflow.</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>So how did we get to the point of making tables from code? We had to design an API—but before that, we needed to gather the best ideas on table generation. Surprisingly (and this was a little upsetting), there weren&rsquo;t many authoritative texts on table design at all. These books are great for everything else, but we had to look really, really hard.</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>Luckily we found one book that was great. It&rsquo;s a pretty old one: the <strong><a href="https://www2.census.gov/library/publications/1949/general/tabular-presentation.pdf">Census Manual of Tabular Presentation</a></strong>. It dials the concepts on table display to 11, and it provides many solid and useful recommendations—nearly 300 pages of just table stuff.</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>Most importantly, it formalizes the structure of a table right away. You don&rsquo;t have to go far—it&rsquo;s Figure 2 of the whole book. It gets right down to showing you what the different parts of a table are called, how they&rsquo;re structured, and what they do.</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>These were really great ideas, so we adapted them into a more modern take on a table. We have the table header, the stub, the table footer, and all the other parts—and we gave them names, which was super important.</p>
+<hr class="slide-sep">
+<p><img src="./s-14.png" alt=""></p>
+<p>So how do you make tables today? You could take a raw data frame and present it to other people as-is: here you go, this is my result. Not really recommended—it doesn&rsquo;t look great, it doesn&rsquo;t even show all the data. It&rsquo;s a bit raw.</p>
+<hr class="slide-sep">
+<p><img src="./s-15.png" alt=""></p>
+<p>Another approach—what a lot of people do, and I&rsquo;m guilty of this—is to bring your data to Excel and make the table there. The problem is that now your workflow isn&rsquo;t reproducible; it&rsquo;s broken. You got the table done, but at the expense of the reproducible workflow.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>Our idea: use an API like <strong>Great Tables</strong> and work entirely in Python. It&rsquo;s reproducible, probably less effort overall, and the tables look really good. You&rsquo;re not losing anything by keeping it in Python—you&rsquo;re gaining a lot.</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>Great Tables is our package, and it&rsquo;s focused purely on the display of tables—that&rsquo;s its only concern. It&rsquo;s definitely not the only approach in Python, but we promise it&rsquo;s comprehensive, actively developed, and tries to go deep on all table-related problems. Throughout the rest of the talk we used Great Tables to illustrate the process and design behind making presentation quality tables.</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>From here, I took over to walk through the key ingredients of making a great table.</p>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>I&rsquo;ll walk through how to go from a plain data frame to a beautiful display table. The three key ingredients are <strong>structure</strong>, <strong>format</strong>, and <strong>style</strong>.</p>
+<p><strong>Structure</strong> is adding parts to the table that sit outside the data itself: here we&rsquo;ve added a title, and column spanners that go over the column labels and give grouping information. We&rsquo;ve also cleaned up the column labels—no underscores, title case, easier to read. <strong>Format</strong> is changing the actual data values: notice the compact dollar values, using K for thousands and M for millions (common in some domains, like government tables), and the percentages cleaned up to whole numbers with a percent sign. <strong>Style</strong> covers things like filling the background of the revenue columns blue and the profit columns papaya whip, and bolding the bottom row to emphasize that it&rsquo;s a total.</p>
+<p>I do want to emphasize that one of the percentage columns sums to 102%, which is not a Great Tables problem—it&rsquo;s a Michael Chow problem. I screwed up the data before the talk. Hopefully it&rsquo;s not too distracting; I just want to own that before you drag me through the internet for my terrible addition skills.</p>
+<hr class="slide-sep">
+<p><img src="./s-21.png" alt=""></p>
+<p>We&rsquo;ll go through the ingredients step by step in code, but first some imports and a little Polars explanation. From Great Tables we import the <code>GT</code> object—that&rsquo;s what we use throughout to build tables. We&rsquo;ll use Polars DataFrames, and one thing worth flagging up front: <strong>Polars selectors</strong> (<code>import polars.selectors as cs</code>). Selectors let us pick groups of columns really easily—we can say things like <code>cs.starts_with(&quot;revenue&quot;)</code> to choose all the columns that begin with revenue. It&rsquo;s a really convenient tool we&rsquo;ll use throughout the examples.</p>
+<hr class="slide-sep">
+<p><img src="./s-22.png" alt=""></p>
+<p>Starting with structure: this is the plain table output from <code>GT(coffee_table)</code>, and we&rsquo;re going to add some parts to it.</p>
+<hr class="slide-sep">
+<p><img src="./s-23.png" alt=""></p>
+<p>The first part is <code>tab_header</code>, which adds a simple title. It&rsquo;s a really small piece, but probably the most important part of the table: in the information hierarchy, the title says what people are even looking at. If someone has three seconds to figure out what&rsquo;s going on, it&rsquo;s the most important piece of information.</p>
+<hr class="slide-sep">
+<p><img src="./s-24.png" alt=""></p>
+<p>Next is <code>tab_spanner</code>—a label over a group of columns. Here we put a &ldquo;Revenue&rdquo; spanner over the revenue columns so people can see they&rsquo;re grouped.</p>
+<hr class="slide-sep">
+<p><img src="./s-25.png" alt=""></p>
+<p>And we do the same for the profit columns, giving them a similar spanner.</p>
+<hr class="slide-sep">
+<p><img src="./s-26.png" alt=""></p>
+<p>To finish off the structure, we rename the columns. Before, the column names repeated words like &ldquo;revenue&rdquo; that we now have in the spanners, so we clean them up. People see &ldquo;Revenue&rdquo; in the spanner and &ldquo;Amount&rdquo; in the column label—now things are quick to read.</p>
+<hr class="slide-sep">
+<p><img src="./s-27.png" alt=""></p>
+<p>The next ingredient is format, using the methods that start with <code>fmt</code>. First, <code>fmt_percent</code>: we use a Polars selector to get all the columns ending in <code>pct</code>, and we cut out their decimals—the columns flagged in purple are now formatted as whole-number percentages. Second, <code>fmt_number</code>: this is what makes the numbers compact, so instead of being written out with all their zeros, they&rsquo;re shortened with K for thousands and M for millions.</p>
+<hr class="slide-sep">
+<p><img src="./s-28.png" alt=""></p>
+<p>The last ingredient is styling, using the <code>tab_style</code> method. The key is that <code>tab_style</code> takes two arguments: <strong>location</strong>—where in the table you want to apply the style—and <strong>style</strong>—the actual styling you want to do. It&rsquo;s the <em>where</em> versus the <em>what</em>.</p>
+<p>In this example we style the body: <code>loc.body</code> means the actual data in the table, and we select the revenue columns. <code>style.fill</code> fills the background—in this case Alice Blue—to make the revenue columns group together visually.</p>
+<hr class="slide-sep">
+<p><img src="./s-29.png" alt=""></p>
+<p>In green, we apply it again to profit, giving those columns a papaya whip background. The last piece is a little different: instead of targeting columns, we target a row. The <code>rows=</code> argument uses a Polars expression—a little piece of data analysis—to filter out the bottom row of the table for styling, and <code>style.text</code> makes it bold. The key here is that there&rsquo;s a whole range of styles you can apply to a variety of places.</p>
+<hr class="slide-sep">
+<p><img src="./s-30.png" alt=""></p>
+<p>And that&rsquo;s the basics of structure, formatting, and style: a plain unstyled data frame, through Great Tables, to a table that&rsquo;s ready for display.</p>
+<hr class="slide-sep">
+<p><img src="./s-31.png" alt=""></p>
+<p>One other exciting piece: we can add images and plots. On the left we&rsquo;ve added images with <code>fmt_icon</code>—really nice because people can pick out a specific product, like filters, really fast visually. On the right are <strong>nanoplots</strong>—those tiny bar charts—which display little trends in the table. They&rsquo;re powerful because they combine the quick insight and trend-spotting of a traditional plot with the compactness of a table.</p>
+<hr class="slide-sep">
+<p><img src="./s-33.png" alt=""></p>
+<p>Next, Rich covered the advanced designs: nanoplots, coloring, and formatting.</p>
+<hr class="slide-sep">
+<p><img src="./s-34.png" alt=""></p>
+<p>I want to talk about one method we have in the package that&rsquo;s really quite nice: <code>fmt_nanoplot</code>. I like to call nanoplots small plots within table cells—really compact visualizations that reveal trends in the data. They&rsquo;re quite fun to use, too.</p>
+<p>For instance, you might notice right away that the cold brew row is a little strange—you can just see the pattern: it increases in summer to a maximum, and other parts of the year aren&rsquo;t so great. And espresso machines seem to have intermittent sales: some months are fantastic, other months have zero. You get that right away with this bar plot version of nanoplots—better than just numbers by themselves, for sure.</p>
+<hr class="slide-sep">
+<p><img src="./s-35.png" alt=""></p>
+<p>Why did we make this method? Nanoplots were inspired by <strong>sparklines</strong>, popularized by Tufte. If you didn&rsquo;t hear of them that way, you probably know them from Microsoft Excel—there&rsquo;s an implementation there, and people really like that feature. Sparklines are really cool, and Excel shows they work well in tables.</p>
+<hr class="slide-sep">
+<p><img src="./s-36.png" alt=""></p>
+<p>Here&rsquo;s a different, line-based version of a nanoplot. In a table like this you want your time to insight to be minimized. This is a table of daily tests performed on a patient—measurements from day three to day eight—and you can see the progression of the different lab tests day after day. Some trends go up, some go down. Look at WBC, the white blood cell count: it&rsquo;s increasing beyond the normal range. A little scary—but the point is you can see that right away with the nanoplot.</p>
+<p>Nanoplots are also interactive: you can hover over different points and get a readout. You can either just look, or explore a little. Inviting that interactivity was something we wanted from day one.</p>
+<hr class="slide-sep">
+<p><img src="./s-37.png" alt=""></p>
+<p>They&rsquo;re really flexible too—they can be styled in many different ways, so they work in many contexts. Stock prices: nanoplots are pretty good for that sort of thing. Weather data: you can compare temperatures across lots of places. And you can make scatter-style plots—sales throughout a day, say—and hover the values to see how sales played out.</p>
+<hr class="slide-sep">
+<p><img src="./s-38.png" alt=""></p>
+<p>Another big thing in Great Tables is <code>data_color</code>, which lets you create heat maps in tables. Here&rsquo;s the table we showed earlier—it&rsquo;s generated with Great Tables. <code>data_color</code> generates a heat map with a palette of your choosing, and it makes the large amount of data much easier to digest at a glance. You don&rsquo;t just look at a wall of numbers: large values pop out right away, and negligible values lack color because the low end is faded out. Really easy to parse.</p>
+<hr class="slide-sep">
+<p><img src="./s-39.png" alt=""></p>
+<p>The two big advantages we get from plots in tables: <strong>emphasizing differences in values</strong> and <strong>revealing trends in the data</strong>. Within a row, you can compare across measures—just scanning the France row shows you its energy mix right away. Looking up and down a column, you can compare values across observations: CO2 intensity increases as you go down the table, so you can see the relative ranking.</p>
+<hr class="slide-sep">
+<p><img src="./s-40.png" alt=""></p>
+<p>And globally, we can see a pattern across the whole table—a trend moving from the top left to the bottom right. It boils down to: energy from fossil fuels leads to higher CO2 intensity values. That&rsquo;s how the table is organized, but the coloring lets you see the extent of how it plays out.</p>
+<hr class="slide-sep">
+<p><img src="./s-41.png" alt=""></p>
+<p>Another big part of Great Tables is the formatting methods—we saw some in Michael&rsquo;s demonstration. They&rsquo;re really powerful, and there are quite a few. Take an unformatted column of values: with <code>fmt_number</code> you get a fixed number of decimal places and grouping separators in the large part of the number, making it easier to read. If you don&rsquo;t care about the decimal part, <code>fmt_integer</code> rounds for you and keeps the separators—great for counts. If your values are extremely large or very small, <code>fmt_scientific</code> gives you scientific notation. <code>fmt_percent</code> handles percentage values. With <code>fmt_currency</code> you can provide any currency code, and Great Tables understands how to format it—the number of decimal places and the currency sign to use. We run pretty deep on formatting: there&rsquo;s even <code>fmt_bytes</code>, which turns a number into a byte size. And the formatting methods share common arguments, like <code>pattern</code>, which lets you decorate a formatted value with any string literals around it.</p>
+<hr class="slide-sep">
+<p><img src="./s-42.png" alt=""></p>
+<p>There are many more available—you can format dates and times, add images, format text as Markdown—and there are more in development, because it&rsquo;s a pretty fundamental part of the package.</p>
+<hr class="slide-sep">
+<p><img src="./s-43.png" alt=""></p>
+<p>To sum up: we hope we made the case that making beautiful, publication quality tables in Python is not only possible in 2024—it&rsquo;s really great. We think tables are really cool, and we&rsquo;re pretty sure people love good-looking tables. Sending a polished table is a chance to make a great first impression; it tells people the work is worth paying attention to. And there&rsquo;s so much at your disposal in Great Tables to help group information, highlight things, and bring out the best in your data.</p>
+<p>We also talked about the reproducibility chain: you&rsquo;ve already worked hard to make sure your data, analysis, and visualizations are in Python. The nice thing about Great Tables is you don&rsquo;t have to pluck your data out into Excel—you can keep going with your Python scripts and have one single tool chain from input data to reporting.</p>
+<hr class="slide-sep">
+<p><img src="./s-44.png" alt=""></p>
+<p>The best way to get started is <code>pip install great_tables</code>. We have a website—<a href="https://posit-dev.github.io/great-tables/">posit-dev.github.io/great-tables</a>—that we&rsquo;ve tried to fill with a lot of examples. Along the way we&rsquo;ve also blogged about the core problems we&rsquo;ve been chipping away at, so hopefully there are a lot of nice nuggets there about table display and the things we&rsquo;ve learned.</p>
+<p>Thanks so much—we hope you have a lot of beautiful table use cases to throw Great Tables at. Keep making those tables.</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

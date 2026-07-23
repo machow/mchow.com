@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="The Accidental Analytics Engineer (Coalesce 2022)" />
+<meta property="og:description" content="This is an annotated version of a talk I gave at dbt Coalesce 2022 in New Orleans on October 18, 2022 — you can watch the video or flip through the original slides. It&rsquo;s about how data scientists accidentally fall into analytics engineering, and a few things that make the landing softer.
+The takeaway: there are two cultures of data science — the tidyverse worldview, focused on turning raw data into insight, and the modern data stack worldview, focused on serving clean data to end users — and data scientists fall into analytics engineering when their one-off analysis work quietly becomes a data-serving job." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/accidental-analytics-engineer/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-10-18T00:00:00+00:00" />
+
+<title>The Accidental Analytics Engineer (Coalesce 2022) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">The Accidental Analytics Engineer (Coalesce 2022)</h1>
+    <h2 class="subtitle is-5">October 18, 2022 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of a talk I gave at <a href="https://coalesce.getdbt.com/">dbt Coalesce 2022</a> in New Orleans on October 18, 2022 — you can watch the <a href="https://www.youtube.com/live/EYdb1x1cO9U">video</a> or flip through the <a href="https://docs.google.com/presentation/d/1H2fVa-I4D8ibanlqLutIrwPOVypIlXVzEITDUNzzPpU/">original slides</a>. It&rsquo;s about how data scientists accidentally fall into analytics engineering, and a few things that make the landing softer.</p>
+<p>The takeaway: there are <strong>two cultures of data science</strong> — the tidyverse worldview, focused on turning raw data into insight, and the modern data stack worldview, focused on serving clean data to end users — and data scientists fall into analytics engineering when their one-off analysis work quietly becomes a data-serving job. Borrowing the structure of &ldquo;accidental X&rdquo; books, the talk first helps you <strong>spot that gap</strong>, then offers three survival tips for <strong>filling it</strong>: a run-it-locally path to learning dbt (jaffle_shop_duckdb), snapshots as a concrete entry point into what &ldquo;data modeling&rdquo; even means, and freshness + exposures for tracking data in and data out.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/EYdb1x1cO9U" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>Thanks for having me — I&rsquo;m so excited to be at Coalesce. It feels a little freaky to be immersed in a culture where analytics engineering is first nature to people. But because analytics engineering has emerged over the last several years, I&rsquo;d imagine a lot of people in this room just sort of realized one day that they had fallen into it — or crossed into it from data engineering, data science, or software engineering.</p>
+<p>I&rsquo;m really interested in this idea of how people end up picking up skills, and what happens at that crossover when you pick up a new one.</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>Part of my inspiration for this talk was a series of books about what to do when you realize you need to do something else. One that I really like is <strong><a href="https://rosenfeldmedia.com/books/the-user-experience-team-of-one/">The UX Team of One</a></strong>, which threads the needle between being short enough to read in a frenzy overnight and having enough content to fill in the basic jobs of UX. Another is <strong>Project Management for the Unofficial Project Manager</strong> — you join a team or project and realize that for it to succeed, you might have to step up and be the project manager.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>These books follow a really interesting format. They often spend the first third just describing the <strong>gap</strong> you might see — how do you even spot the UX gap in a project? Then the rest of the book covers how to <strong>fill it</strong>: what do you do once you recognize it, and what are the basic things you need to patch it?</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>So in this talk I want to discuss helping data scientists spot the analytics engineering gap, and then give three quick survival tips for the accidental analytics engineer — the person who found themselves near the edge of that hole, or who tumbled into it a little bit.</p>
+<hr class="slide-sep">
+<p><img src="./s-05.png" alt=""></p>
+<p>For some background: my name is Michael Chow. I did a PhD in cognitive psychology studying human memory. I work full-time on open source data tools at RStudio, which has about 40 engineers dedicated to open source — the weird thing is I work on all Python tools, so I spend a lot of time bouncing between the Python and R worlds.</p>
+<p>As a bonus, I have two beautiful cats, Bandit and Moondog. One of them is especially sassy — I&rsquo;ll let you decide which. As a cognitive psychologist working on tools, I&rsquo;m really interested in how <strong>skills, strategy, and tools</strong> interact to solve data problems.</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>So one big question: how did I realize that analytics engineering is a big deal? The short answer is that I didn&rsquo;t. The longer answer is that I sort of ramped up to diving into this hole.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>In 2018 I was working as a data scientist at an education company on adaptive tests of data science skill — tests where, after each question, they estimate your skill level and use that to pick a good next question. This work was maybe 30% modeling, 70% user and product analytics.</p>
+<p>The weird thing was that it was also <em>about</em> data science, so I interacted with a lot of data scientists in R and Python and got to watch them work and tease out problems. The one weird thing I spotted was that our R users were <em>weirdly fast</em> at data analysis.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>In 2020 I worked on <strong><a href="https://github.com/machow/siuba">siuba</a></strong>, a port of the R library <a href="https://dplyr.tidyverse.org">dplyr</a> to Python, partially because I noticed this weird sentiment — one person said &ldquo;dplyr has forever ruined pandas for me.&rdquo; That really caught my attention. I think <a href="https://pandas.pydata.org">pandas</a> is a great library that does really important jobs, but I was interested in what this tool was doing for that person, and why they loved it so much.</p>
+<p>I built siuba with two goals: fast, interactive analysis, and being able to generate SQL — so users can use the same code to query a database. It&rsquo;s super weird.</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>Flash forward to 2021, which is where I hit the hole. I switched to working on warehousing and analyzing transit data in California. I was feeling good — I&rsquo;d hit analytics, I&rsquo;d done some modeling — so I made a natural choice: I did a lot of SQL transformations, and the tool I reached for was <strong><a href="https://airflow.apache.org">Airflow</a></strong>, with a little help from a tool called <a href="https://github.com/pipeline-tools/gusty">gusty</a>.</p>
+<p>This is a lot of SQL and a big Airflow DAG, and it worked pretty well. It was pretty sane. But as we scaled up the team, I started to notice this workflow was pretty crazy for bringing in an analytics engineer. <a href="https://www.getdbt.com">dbt</a> has a community of 40 or 50 thousand people — they&rsquo;re not exactly gunning to take over this Airflow DAG. I realized I had basically fallen into the pit of analytics engineering.</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>I wasn&rsquo;t totally unaware. I had a good friend, Marieke Jackson, who had warned me about this with little gentle nudges — &ldquo;have you tried ELT? dbt? BI tools?&rdquo; — and she really helped me see the bigger picture.</p>
+<p>As I looked around the hole, I noticed a lot of other people in it. Not here — looking out at this crowd, I feel like you&rsquo;re all analytics engineers — but as I went to conferences like PyCon and rstudio::conf, I started asking people if they&rsquo;d heard of dbt or ELT. It sounds absolutely crazy here, because we&rsquo;re immersed in it, but while a lot of people had heard of dbt, there was a real lack of familiarity. So I felt at least among friends in this pit. And honestly, dbt has blown my mind — now I can&rsquo;t stop thinking about why I fell in that pit, and why people fall into it in general.</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>I think the answer goes back to a paper called <strong><a href="https://doi.org/10.1214/ss/1009213726">Statistical Modeling: The Two Cultures</a></strong> by Leo Breiman. It&rsquo;s a great paper about how classical statistics and machine learning are two separate strands of statistics — two cultures. What I love about it is that it&rsquo;s an attempt to identify the hole — the machine learning hole — that you&rsquo;ll miss and fall into if you cling to the classical world.</p>
+<p>I realize it sounds crazy here, but having gone to PyCon and rstudio::conf, I can&rsquo;t help feeling like there are two cultures of data science out there too.</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>A year from now you can probably delete this talk — there will be one culture, analytics engineering, or maybe it&rsquo;s already eaten the world. But going to conferences produced this impression in me, so I want to dig into these two cultures to really define the gap: I&rsquo;ll talk about the <strong>tidyverse worldview</strong> and the <strong>modern data stack worldview</strong>. Both have really strong virtues and values, but they hit different dimensions of data work.</p>
+<p>I&rsquo;ll then loop around to filling the gap, focusing on three areas that would have been really helpful for me: thoughts on learning dbt as a first encounter, what data modeling even is (I found the term very confusing, though that was mostly on me), and a concept that struck me as really important for data science people to know — how people track data in and data out using dbt.</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>Let&rsquo;s talk about the data science worldview according to the tidyverse.</p>
+<hr class="slide-sep">
+<p><img src="./s-14.png" alt=""></p>
+<p>This worldview is laid out in the book <strong><a href="https://r4ds.hadley.nz">R for Data Science</a></strong> by Hadley Wickham and Garrett Grolemund. The tidyverse is an ecosystem of tools for doing data science in R, and the book has a really important definition that zooms in on what they focus on: &ldquo;data science is an exciting discipline that allows you to turn <strong>raw data into understanding</strong>, insight, and knowledge.&rdquo; The key is this idea of taking raw data and producing some kind of insight people can latch onto.</p>
+<p>The book also has a nice workflow diagram. You start by importing the data — something on a bucket, a CSV, data you&rsquo;re querying from a warehouse — then you tidy it into a consistent format for analysis. Then you engage this arc of understanding: you transform the data, visualize it, and model it, going around the cycle until you hit a useful insight. In other words, you produce a hundred bad plots until you find your one good one. (Visualizing is 80 bar charts; the bar chart of modeling is logistic regression.) Then you work on communicating that insight out. It&rsquo;s a really powerful workflow, and the book shows you how to do it end to end.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>A lot of really cool things surface in the tidyverse around this workflow. One is <strong><a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a></strong>: every week a person named Tom Mock uploads a dataset to a GitHub repo and tweets it out, and then a bunch of people analyze the data and share their analyses and results. It&rsquo;s a pretty cool way to see this kind of data science in action and compare your approach with other people&rsquo;s.</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>There&rsquo;s a person named <a href="https://www.youtube.com/@safe4democracy">Dave Robinson</a> who took it to another extreme and live-streamed himself analyzing the data once a week for an hour. You can go on YouTube and see what it looks like to go from never having heard of a dataset to reports and dashboards. It&rsquo;s a deep culture of analyzing and sharing.</p>
+<hr class="slide-sep">
+<p><img src="./s-18.png" alt=""></p>
+<p>The other secret weapon they have is <strong>dplyr</strong> — a tool to analyze data frames or hit SQL databases. It&rsquo;s the backbone of what a lot of people in the tidyverse use to analyze data.</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>The last piece, for communicating out, is <strong><a href="https://quarto.org">quarto</a></strong>. R users love writing their analyses in text files where you have config up top, then markdown for narrative mixed with code cells for producing outputs — a text notebook — and the result looks like a polished report.</p>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>The freaky thing is that quarto can also build websites. The quarto website is built in quarto, and lots of people have their personal websites or blogs in quarto. It&rsquo;s a very end-to-end toolchain.</p>
+<hr class="slide-sep">
+<p><img src="./s-21.png" alt=""></p>
+<p>Just to circle back: tidyverse users love to turn raw data into understanding, there&rsquo;s this culture of sharing work (I&rsquo;ve got to stop calling things weird), there&rsquo;s dplyr for analyzing the data, and quarto for communicating it out as a report, website, or slides. That&rsquo;s the tidyverse worldview: raw data to insights.</p>
+<hr class="slide-sep">
+<p><img src="./s-22.png" alt=""></p>
+<p>On the other hand, you have the modern data stack. I feel like I&rsquo;m in a shark tank here, defining the modern data stack as the person in the room who&rsquo;s less familiar with it.</p>
+<hr class="slide-sep">
+<p><img src="./s-23.png" alt=""></p>
+<p>There&rsquo;s a <a href="https://www.getdbt.com/what-is-analytics-engineering">nice definition in the dbt docs</a>, by Claire Carroll: analytics engineers <strong>provide clean data sets to end users</strong>, modeling data in a way that empowers end users to answer their own questions. I think that&rsquo;s huge. If the tidyverse is about raw data to insights, this idea of cleaning data and <em>giving it to someone</em> is the crux of where these frameworks start to differ.</p>
+<hr class="slide-sep">
+<p><img src="./s-24.png" alt=""></p>
+<p>But there&rsquo;s a lot of overlap. If you squint your eyes, you can see the modern data stack in the tidyverse workflow: the data engineer ensures that import — ingest, extract and load — happens cleanly, an analytics engineer focuses on tidying and transforming, and analysts at the end do the visualizing, modeling, and communicating. You sometimes see this tension, too — or opportunity — of analysts wanting to reach back and transform.</p>
+<hr class="slide-sep">
+<p><img src="./s-27.png" alt=""></p>
+<p>To take it one step further, you can superimpose the modern data stack diagram right on top: data loaders on the left, dbt transforming data in the warehouse in the middle, and at the end BI tools and other data consumers. (I think I&rsquo;m an &ldquo;other data consumer,&rdquo; but I&rsquo;m not sure.)</p>
+<hr class="slide-sep">
+<p><img src="./s-28.png" alt=""></p>
+<p>These aren&rsquo;t equivalent, though. The big value of this perspective, and the specialization of these jobs, is that people analyzing data tend to see this workflow as a one-off — I need to take this data and produce this insight. Analytics engineers know it isn&rsquo;t a one-off: there&rsquo;s a whole bunch of this happening in an org, and if you don&rsquo;t have someone maintaining sanity in the tidy-and-transform layer, things are going to spiral out of control real fast. And there might be an army of analysts at the end, in which case it would be really bad if the tools weren&rsquo;t friendly.</p>
+<p>One thing that really opened my eyes was seeing the sheer amount of thought that&rsquo;s gone into BI tools, and that analytics engineers put into both transforming the data and making sure it plays well with those tools. So to lay out the two cultures: tidyverse people are interested in pulling raw data and producing understanding — they carry their homes on their backs, with a single toolchain they can run on a laptop and a website up on GitHub super fast. Modern data stack people are <em>so good</em> at scaling up this function, and they know how to split responsibilities. At the expense of sounding obvious, the tell is whether you&rsquo;re focused on serving data to end users.</p>
+<hr class="slide-sep">
+<p><img src="./s-29.png" alt=""></p>
+<p>That&rsquo;s the gap, and what I realized is that problems turn into needing to serve data <em>so fast</em> — if you don&rsquo;t have an analytics engineer in your organization, you&rsquo;re probably in big trouble. For filling the gap, there are a few things that would have made it easier for me to get started — things I found really helpful to run past people at conferences who hadn&rsquo;t heard of dbt.</p>
+<hr class="slide-sep">
+<p><img src="./s-30.png" alt=""></p>
+<p>First, for learning dbt: to me a big difference between these two groups is whether you&rsquo;re a <strong>run-locally person or a cloud person</strong>. If you&rsquo;re a cloud person, you&rsquo;re set — the dbt docs have you. You can set up a BigQuery account and fly through them.</p>
+<p>If you&rsquo;re a run-local person, the <strong><a href="https://github.com/dbt-labs/jaffle_shop_duckdb">jaffle_shop_duckdb</a></strong> repo is super helpful. Mach speed: no explanation needed. It&rsquo;s all about using duckdb to run the dbt demos locally. For the people at PyCon and rstudio::conf, this is mana from heaven for hitting the docs.</p>
+<hr class="slide-sep">
+<p><img src="./s-31.png" alt=""></p>
+<p>For the second part — what is data modeling? As a cognitive psychologist who has done psychological models, and a person who does statistical models, I was so confused about what exactly <em>data</em> modeling is. But you hear it all the time. (Now that dbt has Python models it&rsquo;s a little more confusing, because now you just don&rsquo;t know.)</p>
+<hr class="slide-sep">
+<p><img src="./s-32.png" alt=""></p>
+<p>A really nice introduction to data modeling, for me, was <strong><a href="https://docs.getdbt.com/docs/build/snapshots">snapshots</a></strong>. I know data modeling covers a broad set of things, but snapshots are a nice, slightly scary introduction that tells people they need to take it seriously — and it highlights the freaky amount of thought analytics engineers have put into these problems.</p>
+<p>The gist: on day one, a record in an app database has status &ldquo;pending.&rdquo; On day two it gets updated to &ldquo;shipped.&rdquo; In analytics land, wouldn&rsquo;t it be so nice if our warehouse just had <em>both</em> records? The concept is really simple, the docs break it down nicely, and it&rsquo;s a good introduction to the language around <strong>slowly changing dimensions</strong> — which, I was surprised to find, not a lot of people at other conferences had heard of. It&rsquo;s probably close to the hip of everyone here, but it&rsquo;s a great thing to introduce to classical data scientists or ML people.</p>
+<hr class="slide-sep">
+<p><img src="./s-33.png" alt=""></p>
+<p>I love snapshots because it&rsquo;s &ldquo;but wait, there&rsquo;s more&rdquo; — it gets crazier. Have you tried to <em>join</em> a snapshot, though? dbt has a great blog post on this. There&rsquo;s all this weird stuff: should we future-proof the dates somehow — would there be value in adding a date from the year 9999? Look at this crazy join statement you&rsquo;re going to have to use. And then, finally, a macro that just restores sanity.</p>
+<p>For a person who wasn&rsquo;t too familiar with analytics engineering, this is nice because you can grasp it, but it also goes freaky deep and has weird problems in it.</p>
+<hr class="slide-sep">
+<p><img src="./s-34.png" alt=""></p>
+<p>The last thing I&rsquo;ll hit on quickly is a couple of simple concepts that end up being really powerful, both about how data comes into and goes out of a DAG. The first is <strong>freshness</strong>: when did data last come in? The second is <strong>exposures</strong>: where is data going to go?</p>
+<p>If you&rsquo;re like me, you&rsquo;ve been in a lot of orgs where people didn&rsquo;t know the answers to these questions. And at conferences where these concepts are foreign, I don&rsquo;t think that&rsquo;s a bad thing — people focused on analytic work are sometimes more focused on communicating out than on the big-time data tracking that analytics engineers do. I probably don&rsquo;t need to sell you on it, but it&rsquo;s so simple to do and so convenient to have when you have dozens of analysts emailing their notebooks around and you want to know what will break if you change things.</p>
+<hr class="slide-sep">
+<p><img src="./s-35.png" alt=""></p>
+<p>So, to recap: we talked about spotting the gap — this idea of two cultures of data science — and then filling in the analytics engineering gap with some small things that helped me get started.</p>
+<hr class="slide-sep">
+<p><img src="./s-36.png" alt=""></p>
+<p>The last thing I want to say: if you know someone who&rsquo;s <strong>freaky fast</strong> at analytics or analytics engineering, I would love to get in touch with them. As a person really interested in how R and Python users analyze data they&rsquo;ve never seen before, I&rsquo;d love to see — TidyTuesday style — how fast analysts can go, and how different BI strategies let people move quickly. Feel free to reach out on Twitter at <a href="https://twitter.com/chowthedog">@chowthedog</a>; I can send my calendar. I think there&rsquo;s a lot to surface there about what analysts do and which strategies really work for them.</p>
+<p>Thanks for listening — and thanks to a bunch of people who contributed to this talk, especially the MLOps team at RStudio, Krista Adams who did a ton of design for it, and Chris Cardillo of Astronomer, who provided a ton of feedback.</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

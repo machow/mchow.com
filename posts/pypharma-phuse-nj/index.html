@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="PyPharma: Modernising Clinical Data Transformation (PHUSE NJ 2026)" />
+<meta property="og:description" content="This is an annotated version of my talk &ldquo;PyPharma: Modernising Clinical Data Transformation&rdquo;, given at the PHUSE Single Day Event in West Windsor, NJ in July 2026. Last year at the same event I talked about building the pharmaverse in Python with polars. This year&rsquo;s talk picks up from a very different 2026: the year AI shook up how tools get built—including for the people who built the Python data stack." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/pypharma-phuse-nj/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-07-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2026-07-22T00:00:00+00:00" />
+
+<title>PyPharma: Modernising Clinical Data Transformation (PHUSE NJ 2026) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">PyPharma: Modernising Clinical Data Transformation (PHUSE NJ 2026)</h1>
+    <h2 class="subtitle is-5">July 22, 2026 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of my talk &ldquo;PyPharma: Modernising Clinical Data Transformation&rdquo;, given at the PHUSE Single Day Event in West Windsor, NJ in July 2026. Last year at the same event I talked about building the pharmaverse in Python with polars. This year&rsquo;s talk picks up from a very different 2026: the year AI shook up how tools get built—including for the people who built the Python data stack. It&rsquo;s about what &ldquo;agentic engineering&rdquo; means for a room full of clinical statistical programmers, and why I think their QC culture is the scarce skill, not any particular language.</p>
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>The subtitle gives away the thesis up front: <em>or, You Already Know How to Do This</em>.</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>I&rsquo;m a software engineer at Posit, where I work on tools like <a href="https://posit-dev.github.io/great-tables/">Great Tables</a>. I also host <a href="https://thetestset.co">The Test Set</a>, a podcast with Hadley Wickham and Wes McKinney—which turned out to be a front-row seat for everything in this talk. Last year I stood in this same room giving a &ldquo;here is a Python tool&rdquo; talk about polars. This year I want to talk about what&rsquo;s happening to the <em>tool builders</em>, because I think it changes what talks like last year&rsquo;s mean today.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>If you&rsquo;re in clinical programming, you&rsquo;ve probably faced the challenge of picking a language—or of switching from a language like SAS that you&rsquo;ve used for a very long time. For about fifteen years, the data world organized itself around person-language pairs: Hadley <em>is</em> R, Wes <em>is</em> Python. Our industry has its own version, where careers are built as SAS programmers or R programmers. The language is the identity.</p>
+<p>But it&rsquo;s 2026, and that might not be true anymore. Which brings me to what Wes has been up to.</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>This is Wes&rsquo;s GitHub commit calendar, July to July. Around October he started using AI coding agents, and his open source commits exploded. This is the creator of some of the most popular Python libraries—now programming almost entirely in Go, a language he&rsquo;d never used before. It&rsquo;s not that he&rsquo;s left Python. It&rsquo;s that language has become an implementation detail to him.</p>
+<hr class="slide-sep">
+<p><img src="./s-05.png" alt=""></p>
+<p>Why does switching languages normally cost so much? Every tidyverse tool needed a pandas twin, and vice versa—ggplot2 begat <a href="https://plotnine.org">plotnine</a>, <a href="https://gt.rstudio.com">gt</a> begat Great Tables, and a pharmaverse-py would mean redoing the pharmaverse. Our industry knows this pain intimately: think how much effort went into making <a href="https://pharmaverse.github.io/admiral/">admiral</a> exist because SAS macros couldn&rsquo;t cross over. Even the best people in the field spent years paying this tax—two prolific tool builders independently writing CSV readers. (The work is a lot less time-consuming now, which is where this is heading.)</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>Wes calls this the era of &ldquo;why not?&rdquo; He switched to Go, a language he&rsquo;d never written. Why not?! It&rsquo;s a thrilling idea—and it poses exactly the question the second half of this talk worries about.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>Why Go, specifically? Wes&rsquo;s claim is that when agents do the writing, &ldquo;human ergonomics in programming languages matters much less.&rdquo; What matters is how fast the edit–compile–test loop runs—agents run it ten to a hundred times more than a human ever did, and Wes reports burning around ten billion tokens a month. The language gets chosen less for familiarity and more for fit to the problem at hand.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>The flip side is that skill gaps stop being career boundaries. Wes shipped five tools in months—the Kenn Software GitHub org is Go, Go, Go, and one Svelte. For this room: why not the R programmer producing a polars pipeline, or the SAS programmer shipping a Shiny app? You could switch from SAS to R, or R to Python.</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>But here&rsquo;s the tension. Wes is all-in on agentic engineering, and he&rsquo;s also the loudest about the risks: &ldquo;vibe coding is very dangerous and irresponsible,&rdquo; and raw agent output is &ldquo;the Potemkin facade of the software.&rdquo; If you don&rsquo;t pay attention to the process or the resulting code, you can end up with something that looks great and is total garbage—like this Brooklyn townhouse, which is a subway vent wearing a facade. Cheap code is not trustworthy code.</p>
+<p>And paying attention doesn&rsquo;t necessarily mean <em>reading</em> all the code. Which brings us to the question at the center of the talk.</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>Wes can&rsquo;t review Go the way he reviews Python—he says so himself: &ldquo;I&rsquo;m definitely less effective manually reviewing languages I never used pre-AI.&rdquo; So what does he do instead?</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>His answer wasn&rsquo;t to study Go. It was <strong>process</strong>. His tool <a href="https://github.com/kenn-io/roborev">roborev</a> hooks every commit and has a <em>different</em> model—deliberately not the one that wrote the code—try to tear it apart, over 150 automated reviews a day. That&rsquo;s agents running independent QC. That&rsquo;s double programming. He hit the same trust problem this industry codified decades ago.</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>The rest of his stack fills in the picture. kata means no agent work happens outside a tracked task: the agent claims an issue, works it, closes it, all on record. agentsview is what you&rsquo;re looking at here—every session searchable after the fact, every token accounted for. (And if you&rsquo;re running lots of kata tasks and roborev reviews, you generate a <em>lot</em> of sessions.)</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>Line them up. Double programming next to adversarial review by a different model. SOPs and issue tracking next to kata. Traceability and audit trails next to agentsview. Controlled environments next to lockfiles and containers. The practices the fastest AI adopters are converging on are the practices this room has refined for decades—because you never trusted single-author code either.</p>
+<p><strong>Agentic engineering rediscovered your QC culture.</strong> You&rsquo;re not behind on AI; the industry&rsquo;s newest discipline is in your wheelhouse. (I&rsquo;m not a validation expert, and I won&rsquo;t pretend this table is a GxP framework—this is my naive software engineer take.)</p>
+<hr class="slide-sep">
+<p><img src="./s-14.png" alt=""></p>
+<p>And there&rsquo;s a lot of QC work ahead. You&rsquo;ve been doing QC with SAS for a very long time. R&rsquo;s QC story is more recent. Python&rsquo;s is just starting.</p>
+<hr class="slide-sep">
+<p><img src="./s-15.png" alt=""></p>
+<p>Where does that work happen? Wes built roborev and agentsview because he had no SCE—he had to construct governance from scratch. You have one, and the environment where your QC culture already lives is growing the AI-era controls in place: package repos that are frozen and validated (for Python too, not just R), AI assistant guardrails that are admin-enforced settings (which providers, which models, private endpoints like Bedrock, off entirely in prod), and a review-and-publish chain that stays human-approved and reproducible. The big question for your IT team becomes &ldquo;which models, from which endpoint, logged how.&rdquo;</p>
+<p>Full disclosure: I work at Posit, so ask your platform team what your equivalent is. Credit to Phil Bowsher for this connection—and fittingly, the slides for this talk were served off Posit Connect.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>There&rsquo;s been real movement on the Python side of clinical. CDISC CORE—the conformance rules engine—is pure Python. rtflite builds TLF RTFs on polars, py-pkglite handles eCTD packaging, and pycsr.org is a full submission playbook. FDA reviewers have used Python by name: in the <a href="https://www.fda.gov/media/168215/download">2023 briefing document for Intercept&rsquo;s NDA 212833</a> (p. 69, Figure 10), FDA review staff made a Kaplan-Meier plot themselves, sourced as &ldquo;FDA Review staff analysis using Applicant-submitted data adsl.xpt … in Python (Ver. 3)&rdquo;. But honest accounting matters too: there&rsquo;s no admiral-py, no Python validation hub, and no Python FDA submission pilot (R is on Pilots 6 and 7).</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>Phil Bowsher keeps making this point: Python doesn&rsquo;t enter submissions through biostatistics departments—it enters through medical devices and real-world evidence, where Python is already the native language. One of the pycsr authors is a good reflection of this, moving from Merck biostatistics to Meta&rsquo;s health org.</p>
+<p>There&rsquo;s a regulatory tailwind here too. In December 2025, FDA finalized its <a href="https://www.fda.gov/media/190201/download">device RWE guidance</a>, which drops the requirement to always submit identifiable participant-level data—aggregate and privacy-preserving access models are now acceptable. That favors studies built on EHR and claims data, and the guidance explicitly anticipates algorithms over unstructured clinical notes. The &ldquo;Python heavy work&rdquo; label on the slide is my read of where that kind of data work happens, not FDA&rsquo;s.</p>
+<hr class="slide-sep">
+<p><img src="./s-18.png" alt=""></p>
+<p>Put the code half and the trust half together. An admiral-py might be very quick to build today. But there&rsquo;s a mountain of trust and compliance work that goes with it—and with any other library that gets ported. The choke point isn&rsquo;t the code anymore; it&rsquo;s trust and governance.</p>
+<p>&hellip;which I think you might be super good at?</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>Things you can try next week:</p>
+<ul>
+<li><strong>polars + Great Tables</strong> — big data and display tables in Python (last year&rsquo;s talk)</li>
+<li><strong>CDISC CORE</strong> — run the open-source conformance engine: <a href="https://www.cdisc.org/core">cdisc.org/core</a></li>
+<li><strong>pycsr.org</strong> — the Python submission playbook, end to end</li>
+<li>Experimenting with agents? <strong>agentsview + kata</strong> — <a href="https://github.com/kenn-io">github.com/kenn-io</a></li>
+<li>Read Wes: <a href="https://wesmckinney.com/blog/agent-ergonomics/"><em>From Human Ergonomics to Agent Ergonomics</em></a> and <a href="https://wesmckinney.com/blog/mythical-agent-month/"><em>The Mythical Agent-Month</em></a></li>
+</ul>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>Last year I pitched how to build the pharmaverse in Python. Then 2026 turned out to be a real shake-up—including for the person who built so much of the Python data stack. So this year the question changed: how do we trust code we didn&rsquo;t write? My case in this talk is that you answer it the way you already do—review, tracked work, audit trails. There&rsquo;s a big opportunity to take the lessons coming out of agentic engineering, and this room is unusually well-prepared for them.</p>
+<h2 class="header" id="sources">
+  Sources
+  <a class="header--anchor" href="#sources">#</a>
+</h2>
+<ul>
+<li>Wes McKinney — <a href="https://wesmckinney.com/blog/agent-ergonomics/"><em>From Human Ergonomics to Agent Ergonomics</em></a>, <a href="https://wesmckinney.com/blog/why-not/"><em>Why Not?</em></a>, <a href="https://wesmckinney.com/blog/mythical-agent-month/"><em>The Mythical Agent-Month</em></a></li>
+<li><a href="https://wesmckinney.com/transcripts/2026-02-10-rill-data-podcast">Rill Data podcast</a> (Feb 2026) and <a href="https://wesmckinney.com/transcripts/2026-04-08-joe-reis-ai-agents-mythical-agent-month">Joe Reis Show</a> (Apr 2026) transcripts</li>
+<li>Kenn Software — <a href="https://kenn.io">kenn.io</a> · <a href="https://github.com/kenn-io">github.com/kenn-io</a></li>
+<li>Posit blog — <a href="https://posit.co/blog/the-prolific-output-of-wes-mckinney-in-the-age-of-agentic-engineering"><em>The Prolific Output of Wes McKinney in the Age of Agentic Engineering</em></a></li>
+<li>pharmaverse Python — <a href="https://pharmaverse.org/e2eclinical/python/">pharmaverse.org/e2eclinical/python</a> (rtflite, py-pkglite)</li>
+<li>CDISC CORE — <a href="https://github.com/cdisc-org/cdisc-rules-engine">github.com/cdisc-org/cdisc-rules-engine</a> · <a href="https://www.cdisc.org/core">cdisc.org/core</a></li>
+<li>pycsr — <a href="https://pycsr.org">pycsr.org</a> (Zhang &amp; Xiao) · <a href="https://github.com/philbowsher/Use-of-Python-in-regulatory-submission-related-work">FDA Python mentions</a></li>
+<li><a href="https://www.fda.gov/media/168215/download">FDA briefing document, Intercept NDA 212833</a> (2023) — Figure 10 by FDA review staff in Python</li>
+<li><a href="https://r-consortium.org">R Submissions Pilots 6–7</a> (Feb 2026) · <a href="https://pharmar.org">R Validation Hub</a></li>
+<li>FDA — <a href="https://www.fda.gov/media/190201/download"><em>Use of Real-World Evidence to Support Regulatory Decision-Making for Medical Devices</em></a>, final guidance (Dec 18, 2025; supersedes 2017)</li>
+</ul>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

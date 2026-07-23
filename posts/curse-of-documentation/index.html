@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="The Curse of Documentation (posit::conf 2025)" />
+<meta property="og:description" content="This is an annotated version of my talk &ldquo;The Curse of Documentation&rdquo;, given at posit::conf(2025) in Atlanta in September 2025. You can watch the video or flip through the original slides. The talk is about why documentation sites so often have tons of information but not the information you need—and how a good user guide breaks that curse.
+The takeaway: docs become cursed when there&rsquo;s nothing between one polished example and an API reference of 105 tiny functions—and a user guide is the thing that fills that middle layer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/curse-of-documentation/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-09-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-09-17T00:00:00+00:00" />
+
+<title>The Curse of Documentation (posit::conf 2025) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">The Curse of Documentation (posit::conf 2025)</h1>
+    <h2 class="subtitle is-5">September 17, 2025 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of my talk &ldquo;The Curse of Documentation&rdquo;, given at posit::conf(2025) in Atlanta in September 2025. You can watch the <a href="https://youtu.be/ML8z8xkqIA0">video</a> or flip through the <a href="https://docs.google.com/presentation/d/1Qyh5cl339Sjgyn0mPo3rWh3EvTB7a0A3oK7JTVgnfkg/">original slides</a>. The talk is about why documentation sites so often have tons of information but not the information you need—and how a good user guide breaks that curse.</p>
+<p>The takeaway: docs become cursed when there&rsquo;s nothing between one polished example and an API reference of 105 tiny functions—and a user guide is the thing that fills that middle layer. The talk builds this up through three activities a user guide performs—<strong>strategy</strong> (naming mid-sized concepts, like structure, format, and style in Great Tables), <strong>induction</strong> (using concrete examples to teach general ideas), and <strong>task sequencing</strong> (choosing what a newcomer should meet first)—and then walks through five steps for creating one.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/ML8z8xkqIA0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>I&rsquo;m Michael Chow, a software engineer at Posit PBC, and I&rsquo;m excited to talk about how documentation is <strong>cursed</strong>. I&rsquo;m really interested in documentation for open source tools—and as we go, I&rsquo;d like you to think about documentation you&rsquo;ve looked at for tools you were interested in. Have you ever looked at a documentation site and felt like it&rsquo;s loaded up with information, but it&rsquo;s not really the information you need? I&rsquo;d say that documentation site is cursed.</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>To dive into what that means, we have to go back 2,500 years to the Greek myth of Tantalus, who was cursed to stand under a tree where branches of fruit hung right above his head, with water at his feet. When he reached up to grab the fruit, it blew beyond his grasp; when he went to drink the water, it receded so he couldn&rsquo;t reach it. What he needed was forever at arm&rsquo;s length.</p>
+<p>Cursed documentation is worse than merely bad documentation, because it <strong>tantalizes</strong> you with the promise of the answers you need. You can see the docs, but it&rsquo;s really hard to figure out how everything fits together.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>I think in 99% of cases, the solution is a really good <strong>user guide</strong>. So I want to cover what a user guide is and does, and then five steps for creating one.</p>
+<p>I&rsquo;ll use <a href="https://posit-dev.github.io/great-tables/">Great Tables</a> as the example—it&rsquo;s really hard, I think, to do a good user guide here. The Great Tables docs have two really recognizable pieces: an <a href="https://posit-dev.github.io/great-tables/examples/">examples gallery</a>, which is the most popular page on the site, and an API reference, which is all the little pieces laid out. But the piece we probably spent the most time teasing out is the user guide.</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>To show what a user guide is and does, let&rsquo;s go through the examples and reference as if they were the only documentation we had. Say you&rsquo;re looking at Great Tables for the first time and you pop open the examples page. It&rsquo;s the most popular page because it shows real-life use cases at a glance—it really highlights why you&rsquo;d use Great Tables and realistic things you could do with it. Maybe you pick out this coffee table, which represents the sales of a fictitious coffee equipment supplier. It shows off a lot of nice things: elements like a title, filled backgrounds, and styling like bolded text.</p>
+<hr class="slide-sep">
+<p><img src="./s-05.png" alt=""></p>
+<p>Say you want to take that table and adapt it, so you dig deeper and open the API reference. What the API reference is, basically, is a big list of functions, categorized a little bit, with a lot of pages that just go into detail on all these tiny pieces.</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>But what I&rsquo;m showing here is not the full story. As it turns out, API references are pretty big—even this isn&rsquo;t quite it.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>It&rsquo;s something more like this. So you&rsquo;ve got one neat example in your hand, and you&rsquo;ve got <strong>105 functions</strong>. At this point, I think you&rsquo;re a little bit cursed.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>What you&rsquo;re missing is the middle-sized chunks: the <strong>strategies</strong> to break examples down into the tiny pieces, and to know how to remix things for your own problems. And that&rsquo;s exactly what a user guide does.</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>So how can we break the curse? If I have one really neat example in my hand and the absolute deluge of 105 little tiny functions, how can I find what I need?</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>The key is that a user guide can really help you understand the big structure of examples and the big pieces for your problems. If we&rsquo;re onboarding you to this example, we might flag a key piece called <strong>structure</strong>: things like the title, the column spanners, or the fact that you can clean up column names. We might also point out <strong>formatting</strong>—taking values and turning them into currencies or percentages—and <strong>styling</strong>, like coloring the background of a column or bolding a row of text.</p>
+<p>The point is that we&rsquo;ve flagged three big activities that sit in between the tiny chunks and the examples. I&rsquo;ll call these <strong>strategic components</strong>. This is also a really good use of <strong>induction</strong>: using a case study, a concrete example, to teach general ideas. The other challenge for user guides is <strong>task sequencing</strong>: it&rsquo;s super hard to figure out which example to even start with, and how to weave through an example to break it down for people.</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>This is the crux of what a user guide is and does: getting a really good onboarding, so someone has an end-to-end example—and then, instead of flagging 105 functions, flagging something like 10 to 15 big concepts you want people to know. That gives them a digestible way to break stuff down.</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>I want to spend the rest of my time on five steps I think are important to breaking the curse—how I would approach designing a user guide. I find user guides really tricky.</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>Working with <a href="https://github.com/rich-iannone">Rich Iannone</a> on Great Tables and <a href="https://posit-dev.github.io/pointblank/">Pointblank</a>, one interesting thing was that Rich had worked a lot with these libraries, and I came in with no idea what they did. So Rich just had to hit me with example after example—beat me over the head with examples—until some idea of the pieces came out. This five-step process emerged from me trying to figure out how to pull a user guide out of libraries I had never used before:</p>
+<ol>
+<li><strong>Collect examples</strong></li>
+<li><strong>Scope concepts</strong> — break the examples apart</li>
+<li><strong>Sequence onboarding</strong> — figure out how you&rsquo;d get a new person to understand the crux of what your library does</li>
+<li><strong>Detail remaining concepts</strong> — the big pieces left over</li>
+<li><strong>Draft a workshop</strong> — which I think of as the documentation form of touching grass: being sure your documentation is meant for humans, and seeing when they have a bad time or a good time with it. (I hope they have a good time, but usually they have a bad time when I run workshops.)</li>
+</ol>
+<hr class="slide-sep">
+<p><img src="./s-14.png" alt=""></p>
+<p>The first step is collecting examples, and the key is to get the <em>worst</em> examples—<strong>WRST</strong>: <strong>W</strong>hole, <strong>R</strong>eal-world, <strong>S</strong>imple, <strong>T</strong>ypical. You want a real, complete example you might see in the wild, that&rsquo;s not too bananas to hit people with, and that someone doing this type of thing would do. One challenge you&rsquo;ve probably seen in docs is lots of examples that are little tiny pieces, where the pieces don&rsquo;t add up. Ensuring examples are whole and real-world makes sure you&rsquo;re tackling real problems, and simplicity is all about making sure a newcomer can digest it.</p>
+<p>We settled on these three tables as reference points. Rich created the one on chemical compounds—he has a PhD in chemistry, so it&rsquo;s a table that&rsquo;s real to him, and it was useful for seeing some of the additional things you can do with Great Tables. The carbon emissions table we pulled off social media from Grant Chalmers. One neat thing about it is that it&rsquo;s a blend between a table and a heat map, so it introduces really interesting concepts: how do you create a heat map table, make sure the columns are the same width, and so on.</p>
+<hr class="slide-sep">
+<p><img src="./s-15.png" alt=""></p>
+<p>And we had really great inspiration: the <a href="https://posit.co/blog/announcing-the-2024-table-contest/">2024 Posit table contest</a>. Rich and Curtis Kephart have run the contest for the last few years to collect people&rsquo;s neatest, worst-iest examples. It was a great way to see the range of things people might do, and the variation across real use cases.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>That&rsquo;s collecting examples and doing your worst. Next is scoping concepts: breaking the examples apart.</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>The key thing I want to emphasize here is that <strong>mapping concepts</strong> is so important. As Rich produced example after example, we had them in whiteboarding software and were just marking them up like crazy. This idea of structure, format, and style has caught on a bit—we&rsquo;ve seen people use it when teaching workshops, and it&rsquo;s been really helpful for structuring our docs—but I can&rsquo;t emphasize enough that when we started this task, we didn&rsquo;t know these were the concepts we&rsquo;d use. We had to do tons of diagramming over examples to figure out we might use them.</p>
+<hr class="slide-sep">
+<p><img src="./s-18.png" alt=""></p>
+<p>Rich also produced this really great <strong>domain model</strong>. He dove into the idea of table structure and made a diagram of all the different parts you might customize in a table. It&rsquo;s a really neat way to emphasize core pieces of strategy, and it bubbles up into a kind of cheat sheet that people can reference and use to understand your tools.</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>What all this adds up to, for breaking the curse, is filling in those missing pieces. For us, structure, format, and style are really nice things to hang our hats on—they&rsquo;re just a good size for explaining things. You can pull up any example and ask: what are the structure, format, and style pieces? We even organize our code using these concepts.</p>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>Once you have the examples broken apart into concepts, you&rsquo;re in a good place to sequence an onboarding. I won&rsquo;t go into detail on onboardings—and I&rsquo;ll note that immediately after this, I have a PR to open on the Great Tables docs, because I&rsquo;ve cheated. It turns out library maintainers are not great with their docs all the time, and that includes this guy. I need to really flesh out the Great Tables onboarding; I feel like this talk was the inspiration I needed.</p>
+<hr class="slide-sep">
+<p><img src="./s-21.png" alt=""></p>
+<p>Onboarding has been discussed a lot, and there are a lot of really nice examples out there: <a href="https://r4ds.hadley.nz">R for Data Science</a>, the book <a href="https://r-pkgs.org">R Packages</a>, and <a href="https://plotnine.org">plotnine</a>—another guide I&rsquo;ve worked on—all have really thorough onboardings you can use and reference. I&rsquo;m not going into detail because this topic is basically its own whole talk, but in general, a lot of these great user guides emphasize the concept of the <strong>whole game</strong>: teach the whole end-to-end picture, so people have the big pieces and a sense of the big game before you go into the individual bits. Take your favorite worst-iest example and basically turn it into an onboarding.</p>
+<hr class="slide-sep">
+<p><img src="./s-22.png" alt=""></p>
+<p>The last steps are detailing the remaining concepts and drafting a workshop. Detailing remaining concepts is one of my favorite topics, because I think most people can get to an onboarding pretty quickly—but there&rsquo;s this kind of &ldquo;now what?&rdquo; sense sometimes after you give people their first onboarding piece.</p>
+<hr class="slide-sep">
+<p><img src="./s-23.png" alt=""></p>
+<p>One neat technique I&rsquo;ve used is the idea of a <strong>concept matrix</strong>—there are hidden concepts in your documentation. What I do sometimes is put the function names on rows, and the different parameters things can take on columns, just to emphasize shared structure across the package. An API reference usually goes <em>horizontal</em>: it takes one function and describes it in detail. What I like about the concept matrix is that it flags where there should be guide pages. Guide pages should be <em>vertical</em>: slices that emphasize structure shared across functions—pieces you might not otherwise see in the docs.</p>
+<hr class="slide-sep">
+<p><img src="./s-24.png" alt=""></p>
+<p>For example, we have a page on column selection. We noticed that functions across the categories—structure, format, style—can all select columns of a table to work on, and there are quite a few options for selecting columns. So it was nice to put it in its own page, where we could flag to users that this is an activity, and even point out some of the functions to show the different places you might end up doing it.</p>
+<p>Another interesting one is a formatting pattern: the parameters <code>use_seps</code> and <code>locale</code> (a word I&rsquo;d never said out loud before this talk, but have thought a lot) are shared by most of the format functions, and locale sometimes interacts with other parameters. Take the number 1,234: in English you might separate the one and the two with a comma. In German you might use a period—and then a comma where the English period was. And with no seps, you might not have a comma at all. Essentially, locale determines how numbers get formatted, and it interacts with other things. A user clicking through your reference is just going to hit the definition of locale over and over and over. Instead, one guide page can surface this dynamic across a bunch of different functions and show you where it comes up.</p>
+<hr class="slide-sep">
+<p><img src="./s-25.png" alt=""></p>
+<p>I&rsquo;ll go quickly on the very last piece: the workshop.</p>
+<hr class="slide-sep">
+<p><img src="./s-26.png" alt=""></p>
+<p>For the user guide, we usually break things down by topic. For the workshop, we go by case study—and the case studies are usually able to link back into the guide. This has been really helpful for us, because people can graze the user guide, and then we use the case studies to say: here&rsquo;s the slice across topics you need to do the next most interesting thing.</p>
+<p>So that&rsquo;s the whole idea of the five steps. If you find any cursed docs, please send them to me—I&rsquo;m an avid collector.</p>
+<p>(In the Q&amp;A afterwards, someone asked: how much documentation is too much documentation? I don&rsquo;t think you can have too much—but I do think the odds of it becoming cursed grow the more documentation you have.)</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

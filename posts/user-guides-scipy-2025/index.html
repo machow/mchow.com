@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="User Guides: engaging new users, delighting old ones (SciPy 2025)" />
+<meta property="og:description" content="This is an annotated version of a talk I gave at SciPy 2025 in Tacoma, WA, in July 2025. You can watch the video or view the original slides. The talk is about user guides—what they do that API references can&rsquo;t, and the two key pieces to focus on for getting one right: onboarding and grazing.
+The takeaway: an API reference alone strands newcomers in a sea of 40&#43; functions, and a user guide fixes that by being concrete and right-sized." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/user-guides-scipy-2025/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-07-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-07-09T00:00:00+00:00" />
+
+<title>User Guides: engaging new users, delighting old ones (SciPy 2025) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">User Guides: engaging new users, delighting old ones (SciPy 2025)</h1>
+    <h2 class="subtitle is-5">July 9, 2025 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of a talk I gave at SciPy 2025 in Tacoma, WA, in July 2025. You can watch the <a href="https://youtu.be/lHCOVqCZRFw">video</a> or view the <a href="https://docs.google.com/presentation/d/149UwdljTilauGPm0AXkROm9ArTcMfBfOVxgxaEnjSbQ/">original slides</a>. The talk is about user guides—what they do that API references can&rsquo;t, and the two key pieces to focus on for getting one right: <strong>onboarding</strong> and <strong>grazing</strong>.</p>
+<p>The takeaway: an API reference alone strands newcomers in a sea of 40+ functions, and a user guide fixes that by being concrete and right-sized. Getting one right comes down to two jobs: <strong>onboarding</strong>—giving people a <em>simplest whole task</em>, a worked example that shows the big pieces fitting together—and <strong>grazing</strong>—structuring the guide (especially its sidebar) so experienced users can come back and sample just the piece they need. The talk develops both through three case studies: Plotnine (the simplest whole task and the <em>detail spiral</em>), FastAPI (<em>frontloading</em> prerequisites and working backwards from a running app), and R for Data Science (<em>backwards chaining</em>).</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/lHCOVqCZRFw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>I&rsquo;ll be talking about user guides, and this idea of welcoming new users and delighting old ones. I have to admit I didn&rsquo;t love the idea of calling some people &ldquo;old users&rdquo;—so if you know a better word, I&rsquo;m all ears. Experienced users? We got it.</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>A little background on me: I did a PhD in cognitive psychology, and I work on open source data tools at Posit, PBC—mostly Python tools. One tool I maintain is called <a href="https://posit-dev.github.io/great-tables/">Great Tables</a>, which is all about displaying tables for publication. Aside from that, I have two beautiful cats, Bandit and Moondog. One is very sassy, one is a real goober, and I&rsquo;ll let you decide which is which.</p>
+<p>I&rsquo;m really excited about user guides. Part of it is that as a cognitive psychologist, I&rsquo;m really interested in how people pick up new skills. And as a software developer, I&rsquo;m interested in my responsibility in shaping how people should use a tool—being sure they can use it to do the range of things I hope they can do with it.</p>
+<p>A lot of open source developers build tools because we think they give people a new or better way to approach a problem. User guides are the bridge from that hope inside our brain to people putting our tools to use.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>To motivate this talk, I want to bring up a scenario. I work a bit on the documentation for <strong><a href="https://plotnine.org">Plotnine</a></strong>, a Python plotting library. Suppose you saw this graphic (by <a href="https://nrennie.rbind.io">Nicola Rennie</a>) and you wanted to reproduce it. An interesting question is: how would you go about that?</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>On the one hand, you could crack open Plotnine&rsquo;s API reference, and you might see something like this—a list of a bunch of functions you could use. But this isn&rsquo;t even the whole story. If we zoom out a little bit, there are more functions.</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>If we just keep zooming, there are 40+ of these. They&rsquo;re called geoms.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>But wait, there&rsquo;s more. If we keep going, what you&rsquo;re going to see is this. Geoms are this little piece of the API reference, and there are a lot of other kinds of things—facets, scales, positions. Obviously these all went into the plot you&rsquo;re trying to create. But this would be a really tough place to start. You would just be wading around for a long time, super confused.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>But what if you saw a simple example instead? A really simple plot that uses some key pieces of Plotnine. It could use <code>facet_wrap()</code> to create subplots, which helps set up a sense for how Plotnine puts things together. It could mention that <code>geom_smooth()</code> puts that blue line in each subplot, and <code>geom_point()</code> puts the points there. And we could point out that <code>scale_color_continuous()</code> is what makes the color bar go from blue to yellow.</p>
+<p>This is really helpful because it&rsquo;s a minimal example that gives you a sense for how some of the pieces of Plotnine fit together—so you can navigate things like the API reference to do what you want.</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>I also wonder: what if you saw the big pieces? Rather than that API reference—squint your eyes, I mean, it&rsquo;s all there—what if you saw something like this? This is about 16 pages that just summarize the big pieces of Plotnine and help you get a sense for how all of it fits together.</p>
+<p>These are really important jobs, and they&rsquo;re essentially what a user guide does.</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>A user guide is <strong>concrete</strong> and <strong>right-sized</strong> for getting into a tool. And user guides are all over—you might know them by a lot of names. In <a href="https://fastapi.tiangolo.com">FastAPI</a> it&rsquo;s the &ldquo;Learn&rdquo; button. In <a href="https://docs.pola.rs/">Polars</a> it&rsquo;s just called &ldquo;User guide&rdquo; (we love that). In Plotnine it&rsquo;s &ldquo;Guide&rdquo;. All of these go to the same kind of thing.</p>
+<p>Really interestingly, if you click the most prominent button on these sites—&ldquo;Get started&rdquo;—it usually takes you to the user guide. User guides are front and center in documentation. They&rsquo;re probably the most prominent call to action that documentation sites give, so it&rsquo;s really important to get them right. My hope in this talk is to lay out the two key pieces to focus on.</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>The first piece is <strong>onboarding</strong>. For example, with Plotnine we showed what I&rsquo;d call a <em>simplest whole task</em>: what&rsquo;s the simplest whole plot we could show someone that&rsquo;s exciting, but also easy to break apart so they can get started with the pieces? I&rsquo;ll go through some other examples—FastAPI and a resource called <a href="https://r4ds.hadley.nz">R for Data Science</a>—to flesh out the onboarding story.</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>The second piece is <strong>grazing</strong>, and in this talk I&rsquo;ll use the sidebar as the example. Once you get through the simplest whole task, how do you keep going through a library from beginning to end? How do you get through prerequisites, but then come back as you take on different tasks and find the big pieces you need?</p>
+<p>Again, I&rsquo;ll hit on FastAPI and R for Data Science to flesh out different focuses for sidebars and grazing—one I&rsquo;ll call <em>frontloading</em>, the other <em>backwards chaining</em>.</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>So I&rsquo;m going to go down the line—Plotnine, then FastAPI, then R for Data Science—to highlight key focuses for onboarding and grazing. Starting with Plotnine, I want to focus on this idea of the simplest whole task, and having a good hierarchy to your user guide.</p>
+<hr class="slide-sep">
+<p><img src="./s-15.png" alt=""></p>
+<p>This is Plotnine&rsquo;s overview page—the starting page of the user guide—and how it carves up the simplest whole task. To start, it shows you the plot you&rsquo;ll be making, so you know what you&rsquo;re getting into. Hopefully it&rsquo;s something interesting that shows off why you might use Plotnine.</p>
+<p>The floating table of contents helps show the structure: there are seven big categories the overview will emphasize. And interestingly, in Plotnine each category is a grouping of functions prefixed with the category name—geom functions all start with <code>geom_</code>.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>Each of these categories is previewed quickly: just a little bit of text—a couple of sentences—followed by a little code, and then the output of the code. People saw the original plot they&rsquo;ll be making, and then they see it being built step by step.</p>
+<p>This is called a <strong>worked example</strong>. You&rsquo;re working through the process—you&rsquo;re not necessarily asking people to do things, but you&rsquo;re working it out and pointing their attention at the things they should care about in the outputs. These quick explanations let people see how the seven pieces fit together and do different parts of Plotnine.</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>Zooming out, this is the sidebar—the chapters of the Plotnine guide. The pieces that were talked about in the overview are then covered in depth in a subsequent page. You can see <code>aes()</code>—short for aesthetic mapping—is covered in detail in the Basics section.</p>
+<p>I call this a <strong>detail spiral</strong>: the overview page covers each of these things in brief, and then a subsequent section goes into detail on each piece in depth. This lets people get a broad sense for how to use your tool on a real task before diving deeper. It also helps with prerequisites: a lot of these pieces don&rsquo;t work in isolation—they depend on each other a little bit—so covering all of them up front gets some of the prerequisites out of the way.</p>
+<hr class="slide-sep">
+<p><img src="./s-18.png" alt=""></p>
+<p>This is just the detail spiral shown a different way, diagramming where people go through the concepts. In the overview they do a broad pass over everything, and then they loop back and hit each one in depth.</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>For the sidebar, the value goes from things that focus on prerequisites—things you need to know to get started—to things that are more <em>grazable</em>, things you can sample as you go. Once you get to about &ldquo;Geometric objects&rdquo;, you can click around quite a bit. The hope is that the titles and sections make it easy for people to see different categories of things they might do, and quickly key into different activities.</p>
+<p>And just to show the contrast: here it is without the sections. I find it pretty hard to read, and I see this a lot in guides—you just have twenty things in a flat list, and I find it incredibly overwhelming. A little bit of structure helps people navigate a user guide. It also puts names on activities, which makes them easier to talk about.</p>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>To summarize Plotnine: for onboarding, use a simplest whole task to get people familiar with key concepts. For grazing, structure your sidebar or chapters so they&rsquo;re easy to graze and it&rsquo;s easy to see how things are grouped.</p>
+<hr class="slide-sep">
+<p><img src="./s-21.png" alt=""></p>
+<p>Next I&rsquo;m going to look quickly at FastAPI, which is a really interesting tool with a really nice approach to user guides.</p>
+<hr class="slide-sep">
+<p><img src="./s-22.png" alt=""></p>
+<p>FastAPI is a web framework, so you can deploy web applications like the one shown in the browser here. The tricky thing with a web application is that there&rsquo;s often something in the middle. Usually the process is: you write some FastAPI code, then there&rsquo;s this middle piece called a web server—which is not necessarily FastAPI—and then you interact with it in the web browser.</p>
+<p>So there&rsquo;s a lot of context you&rsquo;re working across. You might be in an IDE writing code, using something like—I&rsquo;ve never said this word out loud—Gunicorn? Uvicorn? Well, one of those two is right—to serve it, and then you pop open your web browser to interact with it. FastAPI has a hard problem, because you could be in three different contexts when you&rsquo;re using it.</p>
+<hr class="slide-sep">
+<p><img src="./s-23.png" alt=""></p>
+<p>The way they handle this is that they give you a simplest whole task that is essentially doing all of this as fast as possible. They just hand you the code and say copy this into a file, and then they give you this special command—<code>fastapi dev</code>—which runs the web application. They lift you past the middle pieces so you can get into the web browser as fast as possible.</p>
+<p>This is a real risk I see with these tools: some docs will instead tell you about the middle thing in depth. There are probably five different web servers you could use, and some docs take the chance to tell you about each one. FastAPI does a good job of telling you about <em>none</em> of them and getting you to the end product. You&rsquo;ll have time later to learn about the middle part, but FastAPI wants you to know what it does well for you.</p>
+<hr class="slide-sep">
+<p><img src="./s-24.png" alt=""></p>
+<p>You did it! That&rsquo;s a ton of work FastAPI got you through. If you&rsquo;re new to programming, or new to web applications, they got you through a ton of stuff really fast.</p>
+<hr class="slide-sep">
+<p><img src="./s-26.png" alt=""></p>
+<p>This is showing what FastAPI did there: they gave you task support. They handed you the code, they handed you the special command, and they got you to pop open a web browser.</p>
+<p>The interesting thing is the next piece: they start to work backwards. Rather than diving into the code, they say, well, you&rsquo;ve already got the web browser open, so why don&rsquo;t we just tell you about what we&rsquo;re giving you? And they explain special FastAPI features, like their automatic documentation. I think this is really neat—they&rsquo;ve lifted you to the end product and they&rsquo;re explaining what it does. Then they loop back and explain the code in detail, after they&rsquo;ve gotten you to appreciate what an end goal looks like.</p>
+<hr class="slide-sep">
+<p><img src="./s-27.png" alt=""></p>
+<p>The other interesting thing is their sidebar structure. This is a bit in the weeds, but where Plotnine basically went in order—this is thing A, this is thing B, this is thing C—FastAPI does something interesting: they alternate through topics. They start with path parameters, query parameters, request body—the initial prerequisites—but then they start looping back to the things they think you&rsquo;ll want to use first. They don&rsquo;t do all the path stuff in depth up front.</p>
+<p>The way they maintain a sense of structure is that they <strong>frontload the titles</strong>. Notice that &ldquo;Path&rdquo; starts chapters 2 and 6, and &ldquo;Query&rdquo; starts 3, 5, and 7. They use this to flag to you: hey, we&rsquo;re alternating through these things, but these are the three big things we care about. They also <strong>backload subtopics</strong>—chapters like &ldquo;…and String Validations&rdquo; and &ldquo;…and Numeric Validations&rdquo; weave the details in. I think they&rsquo;re really cleverly using frontloading and backloading to flag the structure to you.</p>
+<p>(Someone asked: did you add the colors? Yeah, I added the colors, so I cheated. My hope is that if you stare at it long enough, it starts to make sense—but this is a talk, and we don&rsquo;t have time to really marinate in it.)</p>
+<hr class="slide-sep">
+<p><img src="./s-28.png" alt=""></p>
+<p>And because of that great question, here&rsquo;s the sidebar without coloring. As a cognitive psychologist, I want to acknowledge that I cheated by showing you colored things first—I&rsquo;ve primed you to see it.</p>
+<p>The thing I want to flag is that without frontloading—if you were to put something before the frontloaded topics—it could really make it hard to see the key topics. This is one of the challenges with giving titles. Frontloading really helps you see the structure of FastAPI; without something to distinguish the topics, everything starts to run together. Plotnine used sections, FastAPI used frontloading—but you want <em>something</em> to make it clear.</p>
+<hr class="slide-sep">
+<p><img src="./s-31.png" alt=""></p>
+<p>So for onboarding, FastAPI provides code and command-line support; for grazing, it uses frontloading to emphasize its structure. Now we&rsquo;re going to look at R for Data Science, which is a bit funny as a user guide—it&rsquo;s a book that&rsquo;s hundreds of thousands of words—but I think it&rsquo;s a good example of what is essentially a really large document.</p>
+<hr class="slide-sep">
+<p><img src="./s-32.png" alt=""></p>
+<p>For a little background, R for Data Science is a book about using R for data science, and it centers on this diagram of the data science workflow. You start by importing some data—reading a CSV in. You tidy it up—maybe fix the column names or reshape it a bit. You then engage this cycle of transforming, visualizing, and modeling your data so you can understand it. And when you come to something really nice that you want to send your boss or a journal, you communicate it. The book is really structured around this life cycle.</p>
+<hr class="slide-sep">
+<p><img src="./s-33.png" alt=""></p>
+<p>Here&rsquo;s the structure of the book. The thing I really want to flag is that it starts with this &ldquo;Whole game&rdquo; section designed to teach you the life cycle—and it starts with <em>visualize</em>. It doesn&rsquo;t start you from the beginning. The book is too big to do a single-chapter overview, so it has to break things up, and I think the real reason it starts with visualization is that visualization is really satisfying and pretty close to seeing an end product.</p>
+<p>Then notice it keeps going backwards: back to transform, back to tidying, back to import. This is its way of handling a really big job—breaking it up, and chaining backwards from the most satisfying piece toward the beginning. The later sections follow this too: the first section after the &ldquo;Whole game&rdquo; onboarding is Visualize, followed by Transform. It&rsquo;s going backwards again to optimize for joy, I think.</p>
+<p>Another interesting thing is that it peppers in prerequisites—the &ldquo;Workflow&rdquo; chapters, which are often coding knowledge you need for the book. It doesn&rsquo;t frontload all the coding pieces, because you would hate your life and you wouldn&rsquo;t be learning R for data science. It works them in right before the point you need them.</p>
+<hr class="slide-sep">
+<p><img src="./s-34.png" alt=""></p>
+<p>This is the spiral shown another way. I think this is a really neat way to tackle a really big problem: carve it up and work backwards. And just to emphasize—visualize is the door, because it&rsquo;s the most satisfying and it&rsquo;s close to an end product.</p>
+<hr class="slide-sep">
+<p><img src="./s-35.png" alt=""></p>
+<p>So, for <strong>onboarding</strong>: Plotnine uses a simple whole task, FastAPI supports people all the way to the end goal, and R for Data Science backwards chains and teaches the most satisfying thing first.</p>
+<hr class="slide-sep">
+<p><img src="./s-36.png" alt=""></p>
+<p>For <strong>grazing</strong>: you can break up your sidebar to create an information hierarchy, so people can see the parts and it doesn&rsquo;t all blend together. You can frontload to emphasize the structure. Or, like R for Data Science, if you have a really big job you can backwards chain—start with the end thing and work backwards.</p>
+<p>I think these are really important, powerful moves, because tools are complicated and it&rsquo;s really hard to learn a new tool. People need all the help they can get, both to get started and to come back as they need things to handle new tasks. The more we can do to bring people in—and provide a structure that makes really clear how our tool fits the way we want them to think—the better people will be at using our docs through the whole life cycle of the task they&rsquo;re trying to do. Thanks a lot for listening!</p>
+<h2 class="header" id="qa">
+  Q&amp;A
+  <a class="header--anchor" href="#qa">#</a>
+</h2>
+<p>There were some great questions afterwards. A few highlights:</p>
+<p><strong>What about tools that auto-generate docstrings and documentation?</strong> What if I told you I myself maintain a tool for generating API references? People always ask me about the API reference, but I&rsquo;ve spent more time on the user guide than the API reference. Engineers always go API-reference first—I&rsquo;ve never seen an engineer not do the API reference first—and my story is: user guide first. You can write docstrings, but you should pretend they don&rsquo;t exist until you have a user guide. That&rsquo;s what I like about FastAPI: they had a user guide before an API reference. It&rsquo;s a really good forcing function for thinking about the story you want to tell, rather than how each individual piece works.</p>
+<p><strong>Will AI chatbots change the role of user guides?</strong> I have no idea. But my guess is there&rsquo;s so much low-hanging fruit in writing user guides that it&rsquo;s probably safe to assume your improvements will also get picked up by AI, either as context or as training. Working out your sections is also a good way to build a controlled vocabulary—consistent words and categories—and I suspect AI will heartily take advantage of that.</p>
+<p><strong>Is the spiral about keeping readers in the zone of proximal development?</strong> Yeah, I think so—you&rsquo;re bringing down the difficulty by building their skill in the things they need.</p>
+<p><strong>Should a user guide live in its own repo?</strong> The Plotnine guide does—I own the repo. It&rsquo;s such a big job that I asked Plotnine&rsquo;s author, <a href="https://github.com/has2k1">Hassan</a>, to delegate running the guide to me. I needed to be fully immersed in it, because it&rsquo;s a job just as important as writing the Plotnine code.</p>
+<p><strong>How do you keep docs up to date with the code in CI?</strong> Quarto is really useful here (I&rsquo;m biased—Quarto is developed by Posit, so take that with a grain of salt). For Great Tables, we do a lot of code in our documentation—simple markdown that gets executed—so our docs get regenerated on CI every time. If the code errors, the docs don&rsquo;t generate and we can&rsquo;t merge. We get really sad, but that&rsquo;s the right level of sadness—we feel it.</p>
+<p><strong>How do you balance the time investment as APIs and user goals evolve?</strong> It&rsquo;s kind of a product question—the fear that your user guide will need to change is sort of the fear that you&rsquo;ve targeted the wrong audience or built the wrong thing. What a user guide gives you is the chance to run people through the core idea of your tool, look them in the eyes, and see if they look dead inside while they do it. That&rsquo;s my litmus test: I watch them skip parts of the guide, or die inside. You should see people die inside as you build your tool. It&rsquo;s a soul-enriching activity.</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

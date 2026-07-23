@@ -213,3 +213,9 @@ a.header--anchor {
 .header:hover a.header--anchor {
   display:inline;
 }
+/* ANNOTATED TALK POSTS: divider before each slide */
+hr.slide-sep {
+  border: none;
+  border-top: 2px dotted #c5c5c5;
+  margin: 3rem 0 1.75rem;
+}

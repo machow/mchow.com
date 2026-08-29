@@ -125,3 +125,7 @@ I think there are three important lessons to take away from all these manifestat
 - Klutz power is used by those seen as warm and incompetent, generally by evoking pity.
 - It can be good for everyone, especially when frankness isn't an option.
 - It can be bad in cases of a lack of training or avoidance. Or worse, when used competitively (harmful intent).
+
+---
+
+<small>Thanks to Anthony Baker for reviewing this post.</small>

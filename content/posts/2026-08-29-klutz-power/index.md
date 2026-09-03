@@ -112,11 +112,10 @@ The trickier case is a person who—instead of ending a relationship—klutzes t
 
 If you are being a klutz on purpose, and with harmful intent, then you have [weaponized your incompetence](https://en.wikipedia.org/wiki/Weaponized_incompetence). This can quickly move things into the low warmth category.
 
-There are some interesting examples of this kind of competitive klutz:
+Here's an interesting examples of competitive klutz:
 
 **Deterrence.** You might induce klutz in yourself in order to stop someone from taking an action. For example, imagine you are playing a game of chicken—where two people in cars drive toward each other, and the first person who swerves out of the way loses. If you disable your steering wheel, and tape your gas pedal down, you are unable to lose the game (and the other person should quit; see [Thomas Schelling's Strategy of Conflict](https://en.wikipedia.org/wiki/Thomas_Schelling#The_Strategy_of_Conflict_(1960))).
 
-**Chaos engineering.** A [chaos monkey](https://en.wikipedia.org/wiki/Chaos_engineering#Chaos_Monkey) in software engineering is an agent that's allowed to wreak havoc on your infrastructure, for the sake of keeping people on their toes, and ensuring they're creating a resilient system. In this case, you've created an agent of klutz in order to inoculate yourself against it.
 
 ## In conclusion
 
@@ -128,4 +127,4 @@ I think there are three important lessons to take away from all these manifestat
 
 ---
 
-<small>Thanks to Anthony Baker for reviewing this post.</small>
+<small>Thanks to Anthony Baker for reviewing this post. This post was originally drafted in 2020, and essentially completed in 2023!</small>

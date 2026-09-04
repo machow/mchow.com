@@ -6,7 +6,14 @@ type: pages
 
 | Year | Description |
 |------|-------------|
-| 2023 | [great_tables](https://github.com/posit-dev/great-tables) - table styling taken to an unhealthy extreme (WIP; w/ Rich Ionnane). |
+| 2026 | Python in late stage clinical trial submission ([2026 PHUSE talk](/posts/pypharma-phuse-nj/); [2025 PHUSE talk](/posts/polars-pharmaverse-phuse-2025/)). |
+|  | Port of recipes from R to Python (TODO: project name). |
+| 2025 | Created and managed the [gt-extras](https://github.com/posit-dev/gt-extras) internship (w/ Jules Walzer-Goldfeld). |
+|  | [Pointblank user guide](https://posit-dev.github.io/pointblank/blog/overhauled-user-guide/) design (w/ Rich Iannone). |
+|  | [The Test Set](https://posit.co/thetestset) podcast host (w/ Hadley Wickham and Wes McKinney; [one year in](https://posit.co/blog/test-set-1-year)). |
+| 2024 | Wrote the [plotnine user guide](https://plotnine.org/guide/). |
+|  | [Two years at Posit](/posts/two-years-at-rstudio/) (and [one year](/posts/one-year-at-rstudio/)). |
+| 2023 | [great_tables](https://github.com/posit-dev/great-tables) - table styling taken to an unhealthy extreme (w/ Rich Iannone). |
 |  | [quartodoc](https://github.com/machow/quartodoc) - generate python API documentation in quarto. |
 | 2022 | Wrote [siuba.org guide](https://siuba.org/guide). |
 | | Wrote [py-shiny guide](https://shiny.posit.co/py/docs/overview.html). |
@@ -20,7 +27,11 @@ type: pages
 
 ## Talks
 
-* PyCon US 2024: Making Beautiful, Publication Quality Tables in Python is Possible in 2024
+* PHUSE NJ 2026: [PyPharma: Modernising Clinical Data Transformation](/posts/pypharma-phuse-nj/)
+* posit::conf() 2025: [The Curse of Documentation](/posts/curse-of-documentation/) ([video](https://youtu.be/ML8z8xkqIA0))
+* PHUSE NJ 2025: [Polars: Laying the Foundation of the pharmaverse-py](/posts/polars-pharmaverse-phuse-2025/)
+* SciPy 2025: [User Guides: Engaging New Users, Delighting Old Ones](/posts/user-guides-scipy-2025/) ([video](https://youtu.be/lHCOVqCZRFw))
+* PyCon US 2024: [Making Beautiful, Publication Quality Tables in Python is Possible in 2024](/posts/beautiful-tables-python-pycon-2024/) ([video](https://youtu.be/M5zwlb8OzS0))
 * posit::conf() 2023: [Siuba and Duckdb: Analyzing Everything Everywhere All at Once](https://youtu.be/j4B7ui5f5Xo?si=nGx5wdC1aGI6of4U)
 * Coalesce 2022: [The Accidental Analytics Engineer](https://www.youtube.com/live/EYdb1x1cO9U?si=iGo3NdVL1HdtQdiM)
 * posit::conf() 2021: [Bringing the Tidyverse to Python with Siuba](https://youtu.be/w4Mi0u4urbQ?si=px11w6C2_VrCXUtb)
@@ -32,7 +43,8 @@ type: pages
 
 | Year | Name        | Description |
 |------|-------------|-------------|
-| 2023 | [great_tables](https://github.com/posit-dev/great-tables) | (WIP) Beautiful table formatting in python (w/ Rich Iannone). |
+| 2025 | [gt-extras](https://github.com/posit-dev/gt-extras) | Plots, icons, and color helpers for great_tables. Created and managed as an internship (w/ Jules Walzer-Goldfeld). |
+| 2023 | [great_tables](https://github.com/posit-dev/great-tables) | Beautiful table formatting in python (w/ Rich Iannone). |
 | 2023 | [quartodoc](https://github.com/machow/quartodoc) | Easy breezy beautiful API documentation in python. |
 | 2022 | [pins-python](https://github.com/rstudio/pins-python) | Save and share data across a range of cloud backends. |
 | 2022 | [databackend](https://github.com/machow/databackend) | Depend on classes from other packages without importing them. |
@@ -50,7 +62,9 @@ type: pages
 
 | Name | Focus |
 | ---- | ---- |
-| [griffe](https://github.com/mkdocstrings/griffe) | Contribute to docstring parsers | 
+| [plotnine](https://github.com/has2k1/plotnine) | Wrote the user guide |
+| [pointblank](https://github.com/posit-dev/pointblank) | User guide design |
+| [griffe](https://github.com/mkdocstrings/griffe) | Contribute to docstring parsers |
 | [gusty](https://github.com/pipeline-tools/gusty) | Misc stuff, lots of feedback chats |
 | [py-shiny](https://github.com/rstudio/py-shiny) | Documentation, lots of feedback chats |
 | [ibis](https://github.com/ibis-project/ibis) | Helped move docs to quartodoc |

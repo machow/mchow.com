@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="" name="keywords">
+<meta content="Michael Chow" name="author">
+<meta property="og:title" content="Polars: Laying the Foundation of the pharmaverse-py (PHUSE NJ 2025)" />
+<meta property="og:description" content="This is an annotated version of my talk &ldquo;Polars: laying the foundation of the pharmaverse-py&rdquo;, given at the PHUSE Single Day Event in New Jersey in July 2025. You can flip through the original slides. The talk is a short pitch to clinical statistical programmers: if the pharmaverse is going to be ported to Python, Polars should be the DataFrame library it&rsquo;s built on. (The following year&rsquo;s talk at the same event picks up from a very different place." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/polars-pharmaverse-phuse-2025/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-07-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-07-21T00:00:00+00:00" />
+
+<title>Polars: Laying the Foundation of the pharmaverse-py (PHUSE NJ 2025) | Michael Chow</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/_custom.css">
+<link rel="shortcut icon" href="/wave.ico">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</head>
+
+<body>
+
+
+
+<section class="section">
+  <div class="container topnav">
+    <nav class="nav topnav__links">
+      <div class="nav-left">
+        <a class="nav-item" href="/">
+          <h1 class="title is-4">Michael Chow</h1>
+          
+        </a>
+      </div>
+      
+        <nav class="nav-item is-mobile topnav__links-pages">
+          
+  
+  
+    
+    
+      
+    
+    <a class="level-item active" href="/posts">longform</a>
+  
+    
+    
+    <a class="level-item" href="/thoughts">short</a>
+  
+    
+    
+    <a class="level-item topnav__tiny-text" href="/tiny">TINY</a>
+  
+    
+    
+    <a class="level-item" href="/projects">projects</a>
+  
+    
+    
+    <a class="level-item" href="/about">about</a>
+  
+
+        </nav>
+        <nav class="nav-item level is-mobile topnav__links-social">
+          
+          <a class="level-item" href="https://github.com/machow" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/chowthedog" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://linkedin.com/in/michael-a-chow/" target="_blank">
+            <span class="icon">
+              <i class="fa fa-linkedin-square"></i>
+            </span>
+          </a>
+          
+        </nav>
+      
+    </nav>
+  </div>
+</section>
+
+<section class="section section-default">
+  <div class="container-article--left"></div>
+  <div class="container container-article--content">
+    <h1 class="title">Polars: Laying the Foundation of the pharmaverse-py (PHUSE NJ 2025)</h1>
+    <h2 class="subtitle is-5">July 21, 2025 by Michael Chow</h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/talks">talks</a>
+    
+</div>
+
+    
+    <div class="content content-article">
+      <p>This is an annotated version of my talk &ldquo;Polars: laying the foundation of the pharmaverse-py&rdquo;, given at the PHUSE Single Day Event in New Jersey in July 2025. You can flip through the <a href="https://docs.google.com/presentation/d/1kgD1fJpHJw7x1NEIwkpm8mTrzYPN0y73Yg8Tt0qj97w/">original slides</a>. The talk is a short pitch to clinical statistical programmers: if the pharmaverse is going to be ported to Python, <a href="https://pola.rs">Polars</a> should be the DataFrame library it&rsquo;s built on. (The <a href="/posts/pypharma-phuse-nj/">following year&rsquo;s talk</a> at the same event picks up from a very different place.)</p>
+<p>The takeaway: Polars is a <strong>delightful</strong> DataFrame library that <strong>runs everywhere</strong>. It takes the role that <a href="https://dplyr.tidyverse.org">dplyr</a> plays for the R pharmaverse, and thanks to <a href="https://narwhals-dev.github.io/narwhals/">narwhals</a>, the same Polars code can run on pandas, DuckDB, Spark, or Snowflake. The talk makes the case in two parts: first, mapping the R pharmaverse&rsquo;s foundations (dplyr, gt, gtsummary) onto their Python counterparts (Polars, Great Tables, narwhals); then a quick walk through some Polars code, showing how swapping in narwhals lets that same analysis run on DuckDB.</p>
+<hr class="slide-sep">
+<p><img src="./s-01.png" alt=""></p>
+<p>The title gives the pitch away: Polars as the foundation of a Python pharmaverse.</p>
+<hr class="slide-sep">
+<p><img src="./s-02.png" alt=""></p>
+<p>I&rsquo;m Michael Chow. I have a PhD in cognitive psychology, and I work on open source at Posit, PBC, focused on Python tools like <a href="https://posit-dev.github.io/great-tables/">Great Tables</a>. Previously, I ported dplyr to Python as <a href="https://siuba.org">siuba</a>. I&rsquo;m interested in open source in pharma, and more broadly in the idea of skill: what it means to have one, and how skills, strategies, and tools interact. I also have two cats, Bandit and Moondog.</p>
+<hr class="slide-sep">
+<p><img src="./s-03.png" alt=""></p>
+<p>In R, most people reach for one tool for working with data frames: dplyr. In Python you have a lot of options. <a href="https://pandas.pydata.org">pandas</a> has been around for a long time. Polars is a similar DataFrame library and a fairly well established successor that offers a lot of benefits. There are also more SQL-like approaches like <a href="https://duckdb.org">DuckDB</a>, and tools like <a href="https://spark.apache.org/docs/latest/api/python/">PySpark</a>. <a href="https://ibis-project.org">Ibis</a> is an interesting one: it&rsquo;s a DataFrame tool meant to fire on many backends (pandas, Polars, DuckDB, Spark).</p>
+<hr class="slide-sep">
+<p><img src="./s-04.png" alt=""></p>
+<p>My take is that Polars is a great tool today for working with data frames. The community has a motto: &ldquo;come for the speed, stay for the API.&rdquo; It improves on a lot of the challenges of writing pandas code.</p>
+<hr class="slide-sep">
+<p><img src="./s-05.png" alt=""></p>
+<p>More importantly, you can use a tool called narwhals to write Polars code and execute it on any of the other frames on this slide: pandas, DuckDB, Spark, Ibis. I&rsquo;ll argue Polars and narwhals are the perfect combo for pharma, and specifically for porting the pharmaverse to Python.</p>
+<hr class="slide-sep">
+<p><img src="./s-06.png" alt=""></p>
+<p>To summarize up front: I think Polars is the right choice of DataFrame library for the pharmaverse-py. It has an easy to use API and is built for speed. And tools like narwhals mean Polars code can run on many backend systems.</p>
+<p>The rest of the talk digs into those two points. First, why Polars is the DataFrame for the pharmaverse-py. Then a brief example of Polars code, walking through some of its key features.</p>
+<hr class="slide-sep">
+<p><img src="./s-07.png" alt=""></p>
+<p>Part one: Polars as the DataFrame for the pharmaverse-py.</p>
+<hr class="slide-sep">
+<p><img src="./s-08.png" alt=""></p>
+<p>What&rsquo;s the <a href="https://pharmaverse.org">pharmaverse</a>? It&rsquo;s a collection of R packages that enable the full clinical trial reporting process in R. It includes tools like <a href="https://pharmaverse.github.io/admiral/">admiral</a> for producing ADaM data in R, and <a href="https://www.danieldsjoberg.com/gtsummary/">gtsummary</a> for creating tables as part of TFLs (tables, figures, and listings).</p>
+<hr class="slide-sep">
+<p><img src="./s-09.png" alt=""></p>
+<p>R&rsquo;s <a href="https://www.tidyverse.org">tidyverse</a> is the foundation of many pharmaverse packages. On the left are key tidyverse packages like dplyr and ggplot2. I&rsquo;ve also added <a href="https://gt.rstudio.com">gt</a>, an R package for making tables. It isn&rsquo;t part of the official tidyverse, but it&rsquo;s maintained by Posit.</p>
+<hr class="slide-sep">
+<p><img src="./s-10.png" alt=""></p>
+<p>Tools like dplyr are used inside admiral, and both gt and dplyr are used inside gtsummary.</p>
+<hr class="slide-sep">
+<p><img src="./s-11.png" alt=""></p>
+<p>So what would this look like for Python?</p>
+<hr class="slide-sep">
+<p><img src="./s-12.png" alt=""></p>
+<p>In my mind, Polars takes the role of dplyr, and gets used in a Python version of admiral. Great Tables, a port of gt to Python, could fill gt&rsquo;s role for something like gtsummary.</p>
+<hr class="slide-sep">
+<p><img src="./s-13.png" alt=""></p>
+<p>Here&rsquo;s the same relationship shown another way. Python and R side by side along the workflow of querying a database, wrangling the data, and producing TFLs.</p>
+<hr class="slide-sep">
+<p><img src="./s-14.png" alt=""></p>
+<p>In R, <a href="https://dbplyr.tidyverse.org">dbplyr</a> queries the database and collects the data, dplyr wrangles it, and gt and gtsummary produce the TFL (or at least the T).</p>
+<hr class="slide-sep">
+<p><img src="./s-15.png" alt=""></p>
+<p>In Python, narwhals queries the database, Polars wrangles the data, and Great Tables could produce the TFL. This also highlights the need for something to fill the role of gtsummary, for example by building on top of Great Tables.</p>
+<hr class="slide-sep">
+<p><img src="./s-16.png" alt=""></p>
+<p>Part two: if you like R, you&rsquo;ll love Polars. In this section I walk through some simple Polars code and highlight key features. If you use R libraries like dplyr, you might notice a lot of similarities.</p>
+<hr class="slide-sep">
+<p><img src="./s-17.png" alt=""></p>
+<p>Here&rsquo;s some Polars code. At the top we import polars, narwhals, and duckdb (that last one is for later in the example). In the section marked <em>data</em>, we define a DataFrame with one column named <code>x</code>.</p>
+<p>Then in the <em>analysis</em> section, we use <code>.with_columns()</code> to create a new column named <code>z</code>. Notice the special <code>pl.col(&quot;x&quot;)</code> syntax for referring to the <code>x</code> column. We compute <code>x - x.mean()</code>. These are called lazy expressions in Polars.</p>
+<hr class="slide-sep">
+<p><img src="./s-18.png" alt=""></p>
+<p>Polars runs everywhere, via narwhals. So I&rsquo;m going to take this same code and show how you&rsquo;d swap narwhals in.</p>
+<hr class="slide-sep">
+<p><img src="./s-19.png" alt=""></p>
+<p>Essentially we used a special <code>nw.from_native()</code> function to wrap our DataFrame, then swapped in <code>nw.col()</code> where we had <code>pl.col()</code>. That&rsquo;s it! This is a boring example, because it&rsquo;s narwhals running on Polars. But narwhals could run on things like pandas, DuckDB, and Snowflake. On the next slide we&rsquo;ll show it with DuckDB.</p>
+<hr class="slide-sep">
+<p><img src="./s-20.png" alt=""></p>
+<p>With DuckDB, we can delete the line importing polars, and replace the Polars DataFrame with a DuckDB one. That&rsquo;s it! The same analysis code still works.</p>
+<hr class="slide-sep">
+<p><img src="./s-21.png" alt=""></p>
+<p>So to summarize: Polars is a delightful DataFrame library that runs everywhere (thanks to narwhals). I&rsquo;m a huge Polars fan, and excited for the option it opens up: a really nice foundation for building pharmaverse packages in Python.</p>
+<hr class="slide-sep">
+<p><img src="./s-22.png" alt=""></p>
+<p>Thanks for your time. And a shoutout to my colleagues at this conference, Phil Bowsher and Sally Yang. If you want to learn more about Polars, I strongly recommend joining its <a href="https://discord.gg/4UfP5cfBE7">Discord community</a>, linked from the <a href="https://github.com/pola-rs/polars">Polars README</a>.</p>
+
+    </div>
+    
+  </div>
+  <div class="container-article--toc">
+    <div class="toc-content toc-hide"></div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>Follow on <a href="https://twitter.com/chowthedog" target="_blank">Twitter</a> | <a href="https://github.com/mgjohansen/hucore.git" target="_blank">Hucore theme</a> & <a href="http://gohugo.io" target="_blank">Hugo</a> ♥</p>
+  </div>
+</section>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z9YSMMH3Y"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-2Z9YSMMH3Y', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+
+<script>
+tocbot.init({
+  
+  tocSelector: '.toc-content',
+  
+  contentSelector: '.content-article',
+  
+  headingSelector: 'h1, h2, h3',
+  
+  hasInnerContainers: true,
+  collapseDepth: 3,
+  headingsOffset: 30
+});
+</script>
+</body>

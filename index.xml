@@ -31,6 +31,13 @@
       <description>This is an annotated version of my talk &amp;ldquo;The Curse of Documentation&amp;rdquo;, given at posit::conf(2025) in Atlanta in September 2025. You can watch the video or flip through the original slides. The talk is about why documentation sites so often have tons of information but not the information you need—and how a good user guide breaks that curse.&#xA;The takeaway: docs become cursed when there&amp;rsquo;s nothing between one polished example and an API reference of 105 tiny functions—and a user guide is the thing that fills that middle layer.</description>
     </item>
     <item>
+      <title>Polars: Laying the Foundation of the pharmaverse-py (PHUSE NJ 2025)</title>
+      <link>/posts/polars-pharmaverse-phuse-2025/</link>
+      <pubDate>Mon, 21 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>/posts/polars-pharmaverse-phuse-2025/</guid>
+      <description>This is an annotated version of my talk &amp;ldquo;Polars: laying the foundation of the pharmaverse-py&amp;rdquo;, given at the PHUSE Single Day Event in New Jersey in July 2025. You can flip through the original slides. The talk is a short pitch to clinical statistical programmers: if the pharmaverse is going to be ported to Python, Polars should be the DataFrame library it&amp;rsquo;s built on. (The following year&amp;rsquo;s talk at the same event picks up from a very different place.</description>
+    </item>
+    <item>
       <title>User Guides: engaging new users, delighting old ones (SciPy 2025)</title>
       <link>/posts/user-guides-scipy-2025/</link>
       <pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate>
@@ -238,7 +245,7 @@
       <link>/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>/projects/</guid>
-      <description>Work # Year Description 2023 great_tables - table styling taken to an unhealthy extreme (WIP; w/ Rich Ionnane). quartodoc - generate python API documentation in quarto. 2022 Wrote siuba.org guide. Wrote py-shiny guide. pins for python - save and share data using any cloud bucket. 2021 Consultant. Built out data team for warehousing all of California&amp;rsquo;s transit data (calitp.org, talk by Hunter Owens at rstudio::conf()). 2020 Spent the year working on siuba (rstudio::conf() talk).</description>
+      <description>Work # Year Description 2026 Python in late stage clinical trial submission (2026 PHUSE talk; 2025 PHUSE talk). Port of recipes from R to Python (WIP w/ tidymodels team). 2025 The Test Set podcast host (w/ Hadley Wickham and Wes McKinney; one year in). Designed Pointblank user guide, managed gt-extras internship (w/ Rich Iannone). 2024 Wrote the plotnine user guide. Two years at Posit (and one year). 2023 great_tables - table styling taken to an unhealthy extreme (w/ Rich Iannone).</description>
     </item>
   </channel>
 </rss>

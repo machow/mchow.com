@@ -9,8 +9,7 @@ type: pages
 | 2026 | Python in late stage clinical trial submission ([2026 PHUSE talk](/posts/pypharma-phuse-nj/); [2025 PHUSE talk](/posts/polars-pharmaverse-phuse-2025/)). |
 |  | Port of recipes from R to Python (WIP w/ tidymodels team). |
 | 2025 | [The Test Set](https://posit.co/thetestset) podcast host (w/ Hadley Wickham and Wes McKinney; [one year in](https://posit.co/blog/test-set-1-year)). |
-|  | Created and managed the [gt-extras](https://github.com/posit-dev/gt-extras) internship (w/ Jules Walzer-Goldfeld). |
-|  | [Pointblank user guide](https://posit-dev.github.io/pointblank/blog/overhauled-user-guide/) design (w/ Rich Iannone). |
+|  | Designed [Pointblank user guide](https://posit-dev.github.io/pointblank/blog/overhauled-user-guide/), managed [gt-extras](https://github.com/posit-dev/gt-extras) internship (w/ Rich Iannone). |
 | 2024 | Wrote the [plotnine user guide](https://plotnine.org/guide/). |
 |  | [Two years at Posit](/posts/two-years-at-rstudio/) (and [one year](/posts/one-year-at-rstudio/)). |
 | 2023 | [great_tables](https://github.com/posit-dev/great-tables) - table styling taken to an unhealthy extreme (w/ Rich Iannone). |

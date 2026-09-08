@@ -7,7 +7,7 @@ type: pages
 | Year | Description |
 |------|-------------|
 | 2026 | Python in late stage clinical trial submission ([2026 PHUSE talk](/posts/pypharma-phuse-nj/); [2025 PHUSE talk](/posts/polars-pharmaverse-phuse-2025/)). |
-|  | shoez - port of recipes from R to Python (WIP w/ tidymodels team). |
+|  | Port of recipes from R to Python (WIP w/ tidymodels team). |
 | 2025 | Created and managed the [gt-extras](https://github.com/posit-dev/gt-extras) internship (w/ Jules Walzer-Goldfeld). |
 |  | [Pointblank user guide](https://posit-dev.github.io/pointblank/blog/overhauled-user-guide/) design (w/ Rich Iannone). |
 |  | [The Test Set](https://posit.co/thetestset) podcast host (w/ Hadley Wickham and Wes McKinney; [one year in](https://posit.co/blog/test-set-1-year)). |

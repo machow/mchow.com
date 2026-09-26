@@ -87,6 +87,13 @@
       <description>This is an annotated version of a talk I gave at dbt Coalesce 2022 in New Orleans on October 18, 2022 — you can watch the video or flip through the original slides. It&amp;rsquo;s about how data scientists accidentally fall into analytics engineering, and a few things that make the landing softer.&#xA;The takeaway: there are two cultures of data science — the tidyverse worldview, focused on turning raw data into insight, and the modern data stack worldview, focused on serving clean data to end users — and data scientists fall into analytics engineering when their one-off analysis work quietly becomes a data-serving job.</description>
     </item>
     <item>
+      <title>Case study: PLSE criminal record expungement project</title>
+      <link>/posts/case-study-plse/</link>
+      <pubDate>Tue, 15 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>/posts/case-study-plse/</guid>
+      <description>This post explains how one of my favorite civic tech projects in Philadelphia got started. It&amp;rsquo;s a collaboration between Philadelphia Lawyers for Social Equity (PLSE) and Code for Philly (CfP) to expunge criminal records. I was the volunteer project lead at CfP at the time, working to get projects off the ground. The project took roughly 6 weeks from initial outreach to kickoff.&#xA;Who are Philly Lawyers for Social Equity? # Philadelphia Lawyers for Social Equity (PLSE) is a non-profit legal aid organization that focuses on helping people overcome the barriers they face as a result of criminal records.</description>
+    </item>
+    <item>
       <title>Pandas has a hard job (and does it well)</title>
       <link>/posts/pandas-has-a-hard-job/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>

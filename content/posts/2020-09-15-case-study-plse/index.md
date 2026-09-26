@@ -8,7 +8,7 @@ tags: []
 images: ["plse-launchpad-2019.jpg"]
 ---
 
-This post explains how one of my favorite civic tech projects in Philadelphia got started. It's a collaboration between Philadelphia Lawyers for Social Equity (PLSE) and Code for Philly (CfP) to expunge criminal records. I was the volunteer project lead at CfP at the time, working to get projects off the ground.
+This post explains how one of my favorite civic tech projects in Philadelphia got started. It's a collaboration between Philadelphia Lawyers for Social Equity (PLSE) and Code for Philly (CfP) to expunge criminal records. I was the volunteer project lead at CfP at the time, working to get projects off the ground. The project took roughly 6 weeks from initial outreach to kickoff.
 
 ## Who are Philly Lawyers for Social Equity?
 

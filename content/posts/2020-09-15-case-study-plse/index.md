@@ -12,7 +12,7 @@ This post explains how one of my favorite civic tech projects in Philadelphia go
 
 ## Who are Philly Lawyers for Social Equity?
 
-Philadelphia Lawyers for Social Equity (PLSE) is a non-profit legal aid organization that focuses on helping people overcome the barriers they face as a result of criminal records. PLSE initially contact Code for Philly via email. While working with PLSE, we were able to learn more about legal services in Philadelphia, and start collaborations with other organizations, such as Community Legal Services.
+Philadelphia Lawyers for Social Equity (PLSE) is a non-profit legal aid organization that focuses on helping people overcome the barriers they face as a result of criminal records. PLSE initially contacted Code for Philly via email. While working with PLSE, we were able to learn more about legal services in Philadelphia, and start collaborations with other organizations, such as Community Legal Services.
 
 {{< figure src="plse-launchpad-2019.jpg" caption="Kat Zuk from PLSE leading a brainstorming session, during CfP's September, 2019 Launchpad Event" >}}
 
@@ -39,7 +39,7 @@ However, two side effects arose from the data source restricting access to recor
 1. the dominant tool used to fill out expungement applications in Philly stopped working.
 2. PLSE’s access to future records would be restricted in some cases to paper documents.
 
-With these restrictions in mind, the PLSE expungement project turned its aim to creating a tool their staff could use during expungement clinics, to speed up the manual creation of expungement application. In order to bolster their numbers, Kat and Pablo used Code for Philly’s month long Launchpad event in September, 2019, to recruit and engage new volunteers.
+With these restrictions in mind, the PLSE expungement project turned its aim to creating a tool their staff could use during expungement clinics, to speed up the manual creation of expungement applications. In order to bolster their numbers, Kat and Pablo used Code for Philly’s month long Launchpad event in September, 2019, to recruit and engage new volunteers.
 
 ---
 

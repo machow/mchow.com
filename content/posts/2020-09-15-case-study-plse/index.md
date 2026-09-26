@@ -43,4 +43,4 @@ With these restrictions in mind, the PLSE expungement project turned its aim to 
 
 ---
 
-<small>This post is a copy of a case study I wrote in September 2020 for Code for Philly's partnerships guide. The original lives <a href="https://code-for-philly.gitbook.io/partnerships/creating-new-partnerships/case-study-plse">on GitBook</a>.</small>
+<small>This post is a copy of a case study I wrote in 2020 for Code for Philly's partnerships guide. The original lives <a href="https://code-for-philly.gitbook.io/partnerships/creating-new-partnerships/case-study-plse">on GitBook</a>.</small>
